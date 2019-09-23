@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("../../fonts/HelveticaNeue-Thin.otf");
+}
+
 @import "../variables.scss";
 
 * {
@@ -34,9 +39,22 @@ time, mark, audio, video {
 .App {
   width: 100vw;
   height: 100vh;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: $primaryBackground;
   color: $primaryColor;
 }
 
 .App-header {
+  padding: 0.5vh 1vw;
+  font-size: 3.8vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.App-header__icons {
+  display: flex;
+  justify-content: space-evenly;
+  div {
+    padding: 0.5vw;
+  }
 }
