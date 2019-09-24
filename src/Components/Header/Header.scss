@@ -26,7 +26,8 @@
     cursor: pointer;
     #Header__genres__options {
       position: absolute;
-      display: none;
+      border: 1px solid white;
+      border-top: none;
     }
   }
   
