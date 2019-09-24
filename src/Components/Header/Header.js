@@ -57,6 +57,12 @@ export default class Header extends Component {
 
 
 
+    renderGenreOptions(genres) {
+        return genres.map((genre, i) => <div key={i} className="Header__genres__option">{genre}</div>);
+    }
+
+
+
     render() {
         return (
             <header className="Header">
@@ -73,11 +79,8 @@ export default class Header extends Component {
                         <div
                             id="Header__genres__options"
                             style={{ visibility: this.state.openGenreOptions ? "visible" : "hidden" }}>
-                            <div className="Header__genres__option">Comedy</div>
 
-                            <div className="Header__genres__option">Horror</div>
-
-                            <div className="Header__genres__option">Thriller</div>
+                            {this.renderGenreOptions(this.state.genres || ["No Genres"])}
                         </div>
                     </div>
 
