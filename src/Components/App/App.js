@@ -4,18 +4,33 @@ import './App.scss';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { "greeting": "none" }
+    this.state = {}
   }
 
 
 
   componentDidMount() {
-    this.setState({ "greeting": "CSO" });
-    fetch("/api/greeting")
-      .then(res => res.json())
-      .then(hi => this.setState({ "greeting": hi.greeting }))
-      .catch(err => this.setState({ "greeting": "problemo" + err }));
+    const greeting = async () => {
+      try {
+        const response = await fetch("/home");
+        const greeting = await response.text();
+        const newState = this.state;
+        newState.greeting = greeting;
+        this.setState(newState);
+      } catch (exp) { console.error("ERROR WHILE FETCHING GREETINGS\n", exp); }
+    }
+    greeting();
 
+    const getGenres = async () => {
+      try {
+        const response = await fetch("/api/genres");
+        const genres = await response.text();
+        const newState = this.state;
+        newState.genres = genres.split(",");
+        this.setState(newState);
+      } catch (exp) { console.error("ERROR WHILE FETChiNG GENRES\n" + exp) }
+    }
+    getGenres();
   }
 
 
@@ -34,9 +49,10 @@ export default class App extends Component {
             <div className="App-header__icons__user">User</div>
           </div>
         </header>
-        <div>
-          {this.state.greeting}
-        </div>
+
+        <div>{this.state.greeting}</div>
+
+        <div>{this.state.genres}</div>
       </div>
     );
   }

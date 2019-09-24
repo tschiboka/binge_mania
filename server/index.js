@@ -1,10 +1,14 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3001;
+const homeRoute = require("./routes/home");
+const genresRoute = require("./routes/genres");
 
-app.get("/api/greeting", (req, res) => {
-    res.send({ "greeting": "HELLO" });
-});
+
+
+app.use(express.json());
+app.use("/home", homeRoute);
+app.use("/api/genres", genresRoute);
 
 
 
