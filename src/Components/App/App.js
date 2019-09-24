@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.scss';
 
+import Header from "../Header/Header";
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -20,17 +22,6 @@ export default class App extends Component {
       } catch (exp) { console.error("ERROR WHILE FETCHING GREETINGS\n", exp); }
     }
     greeting();
-
-    const getGenres = async () => {
-      try {
-        const response = await fetch("/api/genres");
-        const genres = await response.text();
-        const newState = this.state;
-        newState.genres = genres.split(",");
-        this.setState(newState);
-      } catch (exp) { console.error("ERROR WHILE FETChiNG GENRES\n" + exp) }
-    }
-    getGenres();
   }
 
 
@@ -38,21 +29,9 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <div className="App-header__logo">Binge Mania</div>
-
-          <div className="App-header__icons">
-            <div className="App-header__icons__genres">Genres</div>
-
-            <div className="App-header__icons__shopping-cart">Cart</div>
-
-            <div className="App-header__icons__user">User</div>
-          </div>
-        </header>
+        <Header />
 
         <div>{this.state.greeting}</div>
-
-        <div>{this.state.genres}</div>
       </div>
     );
   }

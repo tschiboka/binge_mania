@@ -43,18 +43,3 @@ time, mark, audio, video {
   background-color: $primaryBackground;
   color: $primaryColor;
 }
-
-.App-header {
-  padding: 0.5vh 1vw;
-  font-size: 3.8vh;
-  display: flex;
-  justify-content: space-between;
-}
-
-.App-header__icons {
-  display: flex;
-  justify-content: space-evenly;
-  div {
-    padding: 0.5vw;
-  }
-}

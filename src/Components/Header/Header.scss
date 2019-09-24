@@ -1,0 +1,32 @@
+@import "../variables.scss";
+
+.Header {
+    padding: 0.2vh 1vw;
+    font-size: $mainFontSize;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid white;
+  }
+  
+  .Header__icons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    div {
+      padding: 0.5vw;
+    }
+  }
+
+  // Custom select option for genres
+  #Header__genres {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    #Header__genres__options {
+      position: absolute;
+      display: none;
+    }
+  }
+  
