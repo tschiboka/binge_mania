@@ -6,8 +6,15 @@ const { Genre, validate } = require("../models/genre");
 
 
 
-router.get("/", (req, res) => {
-    res.send(genres.join(","));
+router.get("/", async (req, res) => {
+    try {
+        let genres = await Genre.find().sort({ name: 1 })
+        genres = genres
+            .map(genre => genre.name.replace(/^./g, ch => ch.toUpperCase()))
+            .join(",");
+
+        res.send(genres);
+    } catch (exp) { console.error("Error while getting Genres" + exp) }
 });
 
 
