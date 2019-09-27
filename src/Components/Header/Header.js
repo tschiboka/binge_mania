@@ -38,7 +38,15 @@ export default class Header extends Component {
         this.setState(newState);
 
         this.setGenresOptionsCoords();
-        console.log("Click", this.state.openGenreOptions);
+    }
+
+
+
+    handleGenresOnBlur() {
+        const newState = this.state;
+        newState.openGenreOptions = false;
+        this.setState(newState);
+        console.log("Blur");
     }
 
 
@@ -66,12 +74,18 @@ export default class Header extends Component {
     render() {
         return (
             <header className="Header">
-                <div className="Header__logo">Binge Mania</div>
+                <div className="Header__logo">
+                    <div className="Header__logo__img"></div>
+
+                    <div className="Header__logo__text">Binge Mania</div>
+                </div>
 
                 <div className="Header__icons">
                     <div
                         id="Header__genres"
                         onClick={() => this.handleGenresMenuClick()}
+                        onBlur={() => this.handleGenresOnBlur()}
+                        tabIndex={0}
                     >
                         Genres {this.state.openGenreOptions
                             ? <span>&#9652;</span> : <span>&#9662;</span>}

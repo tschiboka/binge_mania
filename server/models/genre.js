@@ -9,14 +9,14 @@ const genreSchema = new mongoose.Schema({
         required: true,
         unique: true,
         minlength: 3,
-        maxlength: 20
+        maxlength: 15
     }
 });
 
 
 
 validateGenre = genre => Joi.validate(genre, {
-    name: Joi.string().required().min(3).max(20)
+    name: Joi.string().required().min(3).max(15)
 });
 
 
