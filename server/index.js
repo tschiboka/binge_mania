@@ -3,7 +3,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const homeRoute = require("./routes/home");
 const genresRoute = require("./routes/genres");
+const usersRoute = require("./routes/users");
 const mongoose = require("mongoose");
+
 
 
 mongoose.connect("mongodb://localhost/binge_mania", { useNewUrlParser: true })
@@ -15,6 +17,7 @@ mongoose.connect("mongodb://localhost/binge_mania", { useNewUrlParser: true })
 app.use(express.json());
 app.use("/home", homeRoute);
 app.use("/api/genres", genresRoute);
+app.use("/api/users", usersRoute);
 
 
 
