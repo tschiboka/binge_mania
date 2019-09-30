@@ -4,8 +4,12 @@ const { User, validate } = require("../models/user");
 
 
 
-router.get("/", (req, res) => {
-    res.send("Get user");
+router.get("/", async (req, res) => {
+    try {
+        const users = await User.find();
+        res.send(users);
+    } catch (err) { res.status(500).send(`Error while getting users\n${err}`) }
+
 });
 
 
