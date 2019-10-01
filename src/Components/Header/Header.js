@@ -66,7 +66,9 @@ export default class Header extends Component {
 
 
     renderGenreOptions(genres) {
-        return genres.map((genre, i) => <div key={i} className="Header__genres__option">{genre}</div>);
+        return genres.map((genre, i) => <div key={i} className="Header__genres__option">
+            {genre.replace(/^./g, ch => ch.toUpperCase())}
+        </div>);
     }
 
 

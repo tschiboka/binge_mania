@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     try {
         let genres = await Genre.find().sort({ name: 1 })
         genres = genres
-            .map(genre => genre.name.replace(/^./g, ch => ch.toUpperCase()))
+            .map(genre => genre.name)
             .join(",");
 
         res.send(genres);

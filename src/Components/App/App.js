@@ -32,6 +32,7 @@ export default class App extends Component {
         <Header />
 
         <div>{this.state.greeting}</div>
+
       </div>
     );
   }

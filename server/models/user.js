@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 
 
 const userSchema = mongoose.Schema({
-    name: { type: String, required: true, maxlength: 50, minlength: 3 },
+    name: { type: String, required: true, maxlength: 50, minlength: 3, trim: true },
     isAdmin: { type: Boolean, default: false },
-    password: { type: String, required: true, minlength: 8 }, // no maxlength, password will be crypted
-    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true, minlength: 8, trim: true }, // no maxlength, password will be crypted
+    email: { type: String, required: true, unique: true, trim: true },
     transactions: [String]
 });
 

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const { genreSchema } = require("./genre");
 
 
 
@@ -7,18 +8,25 @@ const movieSchema = mongoose.Schema({
     title: {
         type: String,
         required: true,
+        unique: true,
         minlength: 1,
         maxlength: 100,
+        trim: true
     },
-    coverImg: String,
+    coverImgUrl: {
+        type: String,
+        default: "none"
+    },
     description: {
         type: String,
         required: true,
         minlength: 10,
-        maxlenght: 300
+        maxlenght: 300,
+        trim: true
     },
-    genre: {
-        type: String,
+    genres: {
+        type: [genreSchema],
+        required: true,
     },
     year: {
         type: Number,
@@ -35,7 +43,8 @@ const movieSchema = mongoose.Schema({
     lang: {
         type: String,
         minlength: 1,
-        maxlength: 10
+        maxlength: 10,
+        trim: true
     },
     cast: [String]
 });
@@ -43,6 +52,18 @@ const movieSchema = mongoose.Schema({
 
 
 const Movie = new mongoose.model("Movie", movieSchema);
+
+
+
+const validate = movie => Joi.validate(movie, {
+    title: Joi.string().required().min(1).max(100),
+    coverImgUrl: Joi.string(),
+    description: Joi.string().required().min(10).max(300),
+    genres: Joi.array().items(Joi.objecId().required()),
+    year: Joi.number().required().min(1900).max(new Date().getFullYear()),
+    time: Joi.number().required().min(1).max(240),
+    lang: Joi.string().min(1).max(10)
+})
 
 
 
