@@ -11,7 +11,8 @@ const movieSchema = mongoose.Schema({
         unique: true,
         minlength: 1,
         maxlength: 100,
-        trim: true
+        trim: true,
+        lowercase: true
     },
     coverImgUrl: {
         type: String,
@@ -55,11 +56,11 @@ const Movie = new mongoose.model("Movie", movieSchema);
 
 
 
-const validate = movie => Joi.validate(movie, {
+const validateMovie = movie => Joi.validate(movie, {
     title: Joi.string().required().min(1).max(100),
     coverImgUrl: Joi.string(),
     description: Joi.string().required().min(10).max(300),
-    genres: Joi.array().items(Joi.objecId().required()),
+    genreIds: Joi.array().items(Joi.string().required()),
     year: Joi.number().required().min(1900).max(new Date().getFullYear()),
     time: Joi.number().required().min(1).max(240),
     lang: Joi.string().min(1).max(10)
@@ -67,4 +68,5 @@ const validate = movie => Joi.validate(movie, {
 
 
 
+module.exports.validate = validateMovie;
 module.exports.Movie = Movie;
