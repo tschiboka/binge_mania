@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Header.scss";
+import GenresMenu from "../GenresMenu/GenresMenu";
 import UserMenu from "../UserMenu/UserMenu";
 
 export default class Header extends Component {
@@ -35,7 +36,7 @@ export default class Header extends Component {
 
     handleGenresMenuClick() {
         const newState = this.state;
-        newState.openGenreOptions = !newState.openGenreOptions;
+        newState.openGenreMenu = !newState.openGenreMenu;
         this.setState(newState);
 
         this.setGenresOptionsCoords();
@@ -55,7 +56,7 @@ export default class Header extends Component {
 
     handleGenresOnBlur() {
         const newState = this.state;
-        newState.openGenreOptions = false;
+        newState.openGenreMenu = false;
         this.setState(newState);
         console.log("Blur");
     }
@@ -75,15 +76,6 @@ export default class Header extends Component {
     }
 
 
-
-    renderGenreOptions(genres) {
-        return genres.map((genre, i) => <div key={i} className="Header__genres__option">
-            {genre.replace(/^./g, ch => ch.toUpperCase())}
-        </div>);
-    }
-
-
-
     render() {
         return (
             <header className="Header">
@@ -100,15 +92,12 @@ export default class Header extends Component {
                         onBlur={() => this.handleGenresOnBlur()}
                         tabIndex={0}
                     >
-                        Genres {this.state.openGenreOptions
+                        Genres {this.state.openGenreMenu
                             ? <span>&#9652;</span> : <span>&#9662;</span>}
 
-                        <div
-                            id="Header__genres__options"
-                            style={{ visibility: this.state.openGenreOptions ? "visible" : "hidden" }}>
-
-                            {this.renderGenreOptions(this.state.genres || ["No Genres"])}
-                        </div>
+                        <GenresMenu
+                            visible={this.state.openGenreMenu}
+                            genres={this.state.genres} />
                     </div>
 
                     <div className="Header__icons__shopping-cart">Cart</div>
