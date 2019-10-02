@@ -26,7 +26,7 @@ const movieSchema = mongoose.Schema({
         trim: true
     },
     genres: {
-        type: [genreSchema],
+        type: [Object],
         required: true,
     },
     year: {
@@ -45,9 +45,15 @@ const movieSchema = mongoose.Schema({
         type: String,
         minlength: 1,
         maxlength: 10,
-        trim: true
+        trim: true,
+        lowercase: true
     },
-    cast: [String]
+    cast: [String],
+    inStock: {
+        type: Number,
+        min: 0,
+        default: 0
+    }
 });
 
 
@@ -63,8 +69,9 @@ const validateMovie = movie => Joi.validate(movie, {
     genreIds: Joi.array().items(Joi.string().required()),
     year: Joi.number().required().min(1900).max(new Date().getFullYear()),
     time: Joi.number().required().min(1).max(240),
-    lang: Joi.string().min(1).max(10)
-})
+    lang: Joi.string().min(1).max(10),
+    inStock: Joi.string().min(0)
+});
 
 
 

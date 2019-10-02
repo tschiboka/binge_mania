@@ -33,6 +33,8 @@ export default class App extends Component {
 
         <div>{this.state.greeting}</div>
 
+        <img src="http://image.tmdb.org/t/p/w185//adw6Lq9FiC9zjYEpOqfq03ituwp.jpg" alt="fightclub" />
+
       </div>
     );
   }

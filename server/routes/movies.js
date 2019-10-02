@@ -15,18 +15,22 @@ route.post("/", async (req, res) => {
     try {
         const { error } = validate(req.body);
         if (error) return res.status(400).send(error.details[0].message);
-
-        console.log(req.body.genreIds);
-        // validate genres
         const genres = await Promise.all(
             req.body.genreIds
                 .map(async genreId => await Genre.findById(genreId)));
-        console.log(genres);
-        res.send(genres);
 
-        const movie = new Movie(req.body);
-        console.log("POSTING...");
-        res.send("Post movies");
+
+        const movie = new Movie({
+            title: req.body.title,
+            description: req.body.description,
+            genres: genres,
+            year: req.body.year,
+            time: req.body.time,
+            coverImgUrl: req.body.coverImgUrl,
+            cast: req.cast
+        });
+
+        res.send(movie);
     } catch (err) { res.status(500).send(`Error while posting new Movie\n${err}`) }
 });
 

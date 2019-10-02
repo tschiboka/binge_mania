@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Header.scss";
+import UserMenu from "../UserMenu/UserMenu";
 
 export default class Header extends Component {
     constructor(props) {
@@ -35,6 +36,16 @@ export default class Header extends Component {
     handleGenresMenuClick() {
         const newState = this.state;
         newState.openGenreOptions = !newState.openGenreOptions;
+        this.setState(newState);
+
+        this.setGenresOptionsCoords();
+    }
+
+
+
+    handleUserBtnClick() {
+        const newState = this.state;
+        newState.openUserMenu = !newState.openUserMenu;
         this.setState(newState);
 
         this.setGenresOptionsCoords();
@@ -102,7 +113,13 @@ export default class Header extends Component {
 
                     <div className="Header__icons__shopping-cart">Cart</div>
 
-                    <div className="Header__icons__user">User</div>
+                    <div
+                        className="Header__icons__user"
+                        onClick={() => this.handleUserBtnClick()}
+                    >
+                        User
+                        {this.state.openUserMenu && <UserMenu />}
+                    </div>
                 </div>
             </header>
         );
