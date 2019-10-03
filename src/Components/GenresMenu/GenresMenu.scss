@@ -1,0 +1,21 @@
+@import "../variables.scss";
+
+#Header__genres__options {
+    position: absolute;
+    border: $borderLight;
+    border-top: none;
+    text-align: center;
+    div {
+      font-size: $mediumFontSize;
+    }
+    div:nth-child(even) {
+      background: rgba(255, 255, 255, 0.025);
+    }
+    div:nth-child(odd) {
+      background: rgba(0, 0, 0, 0.025);
+    }
+    div:hover {
+      border-bottom: $borderLight;
+      transform: scaleY(1.2);
+    }
+  }

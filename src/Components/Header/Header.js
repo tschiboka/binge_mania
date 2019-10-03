@@ -12,7 +12,10 @@ export default class Header extends Component {
 
 
     componentDidMount() {
-        window.addEventListener('resize', this.setGenresOptionsCoords);
+        window.addEventListener('resize', () => {
+            this.setGenresMenuCoords.bind(this);
+            this.setUserMenuCoords.bind(this);
+        });
 
         const getGenres = async () => {
             try {
@@ -29,50 +32,66 @@ export default class Header extends Component {
 
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.setGenresOptionsCoords);
+        window.removeEventListener('resize', () => {
+            this.setGenresMenuCoords.bind(this);
+            this.setUserMenuCoords.bind(this);
+        });
     }
 
 
 
     handleGenresMenuClick() {
         const newState = this.state;
-        newState.openGenreMenu = !newState.openGenreMenu;
+        newState.genreMenuIsOpen = !newState.genreMenuIsOpen;
         this.setState(newState);
 
-        this.setGenresOptionsCoords();
+        if (this.state.genreMenuIsOpen) this.setGenresMenuCoords();
     }
 
 
 
-    handleUserBtnClick() {
+    handleUserMenuClick() {
         const newState = this.state;
-        newState.openUserMenu = !newState.openUserMenu;
+        newState.userMenuIsOpen = !newState.userMenuIsOpen;
         this.setState(newState);
 
-        this.setGenresOptionsCoords();
+        if (this.state.userMenuIsOpen) this.setUserMenuCoords();
     }
 
 
 
     handleGenresOnBlur() {
         const newState = this.state;
-        newState.openGenreMenu = false;
+        newState.genreMenuIsOpen = false;
         this.setState(newState);
-        console.log("Blur");
     }
 
 
 
-    setGenresOptionsCoords() {
-        // adjust options div coordinates to genres
-        const genresDiv = document.getElementById("Header__genres");
-        const genreRect = genresDiv.getBoundingClientRect();
-        const headerDiv = document.getElementsByClassName("Header")[0];
-        const headerRect = headerDiv.getBoundingClientRect();
-        const genresOpts = document.getElementById("Header__genres__options");
+    setGenresMenuCoords() {
+        if (this.state.genreMenuIsOpen) {
+            // adjust options div coordinates to genres
+            const genresDiv = document.getElementById("Header__genres");
+            const genreRect = genresDiv.getBoundingClientRect();
+            const headerDiv = document.getElementsByClassName("Header")[0];
+            const headerRect = headerDiv.getBoundingClientRect();
+            const genresOpts = document.getElementById("Header__genres__options");
 
-        genresOpts.style.left = genreRect.left + "px";
-        genresOpts.style.top = headerRect.bottom + "px";
+            genresOpts.style.left = genreRect.left + "px";
+            genresOpts.style.top = headerRect.bottom + "px";
+        }
+    }
+
+
+
+    setUserMenuCoords() {
+        if (this.state.userMenuIsOpen) {
+            const headerDiv = document.getElementsByClassName("Header")[0];
+            const headerRect = headerDiv.getBoundingClientRect();
+            const userMenu = document.getElementById("User-menu");
+
+            userMenu.style.top = headerRect.bottom + "px";
+        }
     }
 
 
@@ -92,11 +111,11 @@ export default class Header extends Component {
                         onBlur={() => this.handleGenresOnBlur()}
                         tabIndex={0}
                     >
-                        Genres {this.state.openGenreMenu
+                        Genres {this.state.genreMenuIsOpen
                             ? <span>&#9652;</span> : <span>&#9662;</span>}
 
                         <GenresMenu
-                            visible={this.state.openGenreMenu}
+                            visible={this.state.genreMenuIsOpen}
                             genres={this.state.genres} />
                     </div>
 
@@ -104,10 +123,10 @@ export default class Header extends Component {
 
                     <div
                         className="Header__icons__user"
-                        onClick={() => this.handleUserBtnClick()}
+                        onClick={() => this.handleUserMenuClick()}
                     >
                         User
-                        {this.state.openUserMenu && <UserMenu />}
+                        <UserMenu visible={this.state.userMenuIsOpen} />
                     </div>
                 </div>
             </header>
