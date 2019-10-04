@@ -51,6 +51,7 @@ export default class Header extends Component {
 
 
     handleUserMenuClick() {
+        console.log("Click");
         const newState = this.state;
         newState.userMenuIsOpen = !newState.userMenuIsOpen;
         this.setState(newState);
@@ -67,11 +68,19 @@ export default class Header extends Component {
     }
 
 
+    toggleUserIconMouseOver(isOver) {
+        console.log(isOver);
+        const newState = this.state;
+        newState.userIconMouseOver = isOver;
+        this.setState(newState);
+    }
+
+
 
     setGenresMenuCoords() {
         if (this.state.genreMenuIsOpen) {
             // adjust options div coordinates to genres
-            const genresDiv = document.getElementById("Header__genres");
+            const genresDiv = document.getElementById("Header__icons__genres");
             const genreRect = genresDiv.getBoundingClientRect();
             const headerDiv = document.getElementsByClassName("Header")[0];
             const headerRect = headerDiv.getBoundingClientRect();
@@ -95,6 +104,7 @@ export default class Header extends Component {
     }
 
 
+
     render() {
         return (
             <header className="Header">
@@ -106,7 +116,7 @@ export default class Header extends Component {
 
                 <div className="Header__icons">
                     <div
-                        id="Header__genres"
+                        id="Header__icons__genres"
                         onClick={() => this.handleGenresMenuClick()}
                         onBlur={() => this.handleGenresOnBlur()}
                         tabIndex={0}
@@ -124,11 +134,23 @@ export default class Header extends Component {
                     <div
                         className="Header__icons__user"
                         onClick={() => this.handleUserMenuClick()}
+                        onMouseOver={() => this.toggleUserIconMouseOver(true)}
+                        onMouseOut={() => this.toggleUserIconMouseOver(false)}
+                        tabIndex={0}
                     >
                         User
-                        <UserMenu visible={this.state.userMenuIsOpen} />
                     </div>
                 </div>
+
+                <UserMenu
+                    visible={this.state.userMenuIsOpen}
+                    tabIndex={0}
+                    blur={() => { // quirky soluton here, something went really wrong binding a handleOnBlur function
+                        if (this.state.userIconMouseOver) return; // if mouse is over user icon blur is not happening
+                        const newState = this.state;
+                        newState.userMenuIsOpen = false;
+                        this.setState(newState);
+                    }} />
             </header>
         );
     }

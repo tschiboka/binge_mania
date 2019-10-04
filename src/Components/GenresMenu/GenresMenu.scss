@@ -1,5 +1,13 @@
 @import "../variables.scss";
 
+// Custom select option for genres
+#Header__icons__genres {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+
 #Header__genres__options {
     position: absolute;
     border: $borderLight;
@@ -18,4 +26,4 @@
       border-bottom: $borderLight;
       transform: scaleY(1.2);
     }
-  }
+}

@@ -54,14 +54,9 @@
     align-items: center;
     div {
       padding: 0.5vw;
+      cursor: pointer;
+    }
+    & > div:hover {
+      background: rgba(255, 255, 255, 0.05);
     }
   }
-
-  // Custom select option for genres
-  #Header__genres {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  
