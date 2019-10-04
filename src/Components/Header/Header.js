@@ -145,6 +145,8 @@ export default class Header extends Component {
                     tabIndex={0}
                     blur={() => { // quirky soluton here, something went really wrong binding a handleOnBlur function
                         if (this.state.userIconMouseOver) return; // if mouse is over user icon blur is not happening
+
+                        console.log("Blur");
                         const newState = this.state;
                         newState.userMenuIsOpen = false;
                         this.setState(newState);

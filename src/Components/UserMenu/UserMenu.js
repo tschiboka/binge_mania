@@ -9,7 +9,8 @@ export default class UserMenu extends Component {
         super(props);
 
         this.userMenu = null;
-        this.state = {}
+        this.state = { signInFormVisible: false }
+        console.log(this.state.signInFormVisible);
     }
 
 
@@ -18,7 +19,10 @@ export default class UserMenu extends Component {
 
 
 
-    handleUserMenuOnBlur() { this.props.blur(); }
+    handleUserMenuOnBlur() {
+        console.log("Sholud blur " + this.state.userMenuBluring);
+        if (!this.state.signInFormVisible) this.props.blur();
+    }
 
 
 
@@ -26,7 +30,7 @@ export default class UserMenu extends Component {
         const newState = this.state;
         newState.signInFormVisible = !newState.signInFormVisible;
         this.setState(newState);
-        console.log(this.state.signInFormVisible);
+        console.log(this.state.signInFormVisible)
     }
 
 
@@ -48,7 +52,27 @@ export default class UserMenu extends Component {
                         id="User-menu__sign-in"
                         onClick={() => this.handleSignInClick()}
                     >Sign In</li>
-
+                    {
+                        this.state.signInFormVisible &&
+                        <form>
+                            <div>User Name</div>
+                            <div>
+                                <input
+                                    type="text"
+                                    name=""
+                                    id=""
+                                />
+                            </div>
+                            <div>Password</div>
+                            <div>
+                                <input
+                                    type="password"
+                                    name=""
+                                    id=""
+                                />
+                            </div>
+                        </form>
+                    }
                     {localStorage.binge_mania__currentUser && <li className="User-menu__list__item" id="User-menu__sign-out">Sign Out</li>}
                 </ul>
             </div>
