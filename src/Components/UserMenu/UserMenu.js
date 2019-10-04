@@ -9,7 +9,11 @@ export default class UserMenu extends Component {
         super(props);
 
         this.userMenu = null;
-        this.state = { signInFormVisible: false }
+        this.state = {
+            signInFormVisible: false,
+            signInUserNameWarning: "",
+            signInPasswordWarning: ""
+        }
         console.log(this.state.signInFormVisible);
     }
 
@@ -35,6 +39,22 @@ export default class UserMenu extends Component {
 
 
 
+    handleSignInSubmit(event) {
+        const newState = this.state;
+        event.preventDefault();
+
+        const userName = document.getElementById("User-menu__signin__username").value;
+        const password = document.getElementById("User-menu__signin__password").value;
+        console.log(userName, password);
+
+        if (userName.length === 0) newState.signInUserNameWarning = "username must be filled out";
+        if (password.length === 0) newState.signInPasswordWarning = "password must be filled out";
+
+        if (newState.signInUserNameWarning || newState.signInPasswordWarning) return this.setState(newState);
+    }
+
+
+
     render() {
         return (
             <div
@@ -54,23 +74,30 @@ export default class UserMenu extends Component {
                     >Sign In</li>
                     {
                         this.state.signInFormVisible &&
-                        <form>
+                        <form onSubmit={e => this.handleSignInSubmit(e)}>
                             <div>User Name</div>
+
+                            {this.state.signInUserNameWarning && <div>{this.state.signInUserNameWarning}</div>}
+
                             <div>
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
+                                    id="User-menu__signin__username"
                                 />
                             </div>
+
                             <div>Password</div>
+
+                            {this.state.signInPasswordWarning && <div>{this.state.signInPasswordWarning}</div>}
+
                             <div>
                                 <input
                                     type="password"
-                                    name=""
-                                    id=""
+                                    id="User-menu__signin__password"
                                 />
                             </div>
+
+                            <div><button>Sign In</button></div>
                         </form>
                     }
                     {localStorage.binge_mania__currentUser && <li className="User-menu__list__item" id="User-menu__sign-out">Sign Out</li>}
