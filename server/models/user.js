@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 
 
 const userSchema = mongoose.Schema({
-    name: { type: String, required: true, maxlength: 50, minlength: 3, trim: true },
+    name: { type: String, required: true, maxlength: 20, minlength: 3, trim: true },
     isAdmin: { type: Boolean, default: false },
-    password: { type: String, required: true, minlength: 8, trim: true }, // no maxlength, password will be crypted
+    password: { type: String, required: true, minlength: 8, maxlength: 20 trim: true }, // no maxlength, password will be crypted
     email: { type: String, required: true, unique: true, trim: true },
     transactions: [String]
 });
@@ -19,9 +19,9 @@ const User = new mongoose.model("User", userSchema);
 
 const validateUser = user => {
     return Joi.validate(user, {
-        name: Joi.string().required().max(50).min(3),
+        name: Joi.string().required().max(20).min(3),
         isAdmin: Joi.boolean().default(false),
-        password: Joi.string().required().max(50).min(8),
+        password: Joi.string().required().max(20).min(8),
         email: Joi.string().required().email(),
         transactions: Joi.array()
     });

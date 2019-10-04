@@ -50,6 +50,12 @@ export default class UserMenu extends Component {
         if (userName.length === 0) newState.signInUserNameWarning = "username must be filled out";
         if (password.length === 0) newState.signInPasswordWarning = "password must be filled out";
 
+        if (userName.length < 3) newState.signInUserNameWarning = "username is at least 3 char";
+        if (password.length < 8) newState.signInPasswordWarning = "password is at least 8 char";
+
+        if (userName.length > 20) newState.signInUserNameWarning = "username is max 20 char";
+        if (password.length > 20) newState.signInPasswordWarning = "password is max 20 char";
+
         if (newState.signInUserNameWarning || newState.signInPasswordWarning) return this.setState(newState);
     }
 
