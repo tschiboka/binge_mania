@@ -51,7 +51,6 @@ export default class Header extends Component {
 
 
     handleUserMenuClick() {
-        console.log("Click");
         const newState = this.state;
         newState.userMenuIsOpen = !newState.userMenuIsOpen;
         this.setState(newState);
@@ -69,7 +68,6 @@ export default class Header extends Component {
 
 
     toggleUserIconMouseOver(isOver) {
-        console.log(isOver);
         const newState = this.state;
         newState.userIconMouseOver = isOver;
         this.setState(newState);

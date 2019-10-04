@@ -7,7 +7,9 @@ import NewUser from "../NewUser/NewUser";
 export default class UserMenu extends Component {
     constructor(props) {
         super(props);
+
         this.userMenu = null;
+        this.state = {}
     }
 
 
@@ -17,6 +19,15 @@ export default class UserMenu extends Component {
 
 
     handleUserMenuOnBlur() { this.props.blur(); }
+
+
+
+    handleSignInClick() {
+        const newState = this.state;
+        newState.signInFormVisible = !newState.signInFormVisible;
+        this.setState(newState);
+        console.log(this.state.signInFormVisible);
+    }
 
 
 
@@ -32,9 +43,13 @@ export default class UserMenu extends Component {
                 <ul className="User-menu__list">
                     <li className="User-menu__list__item" id="User-menu__new-user">New User</li>
 
-                    <li className="User-menu__list__item" id="User-menu__sign-in">Sign In</li>
+                    <li
+                        className="User-menu__list__item"
+                        id="User-menu__sign-in"
+                        onClick={() => this.handleSignInClick()}
+                    >Sign In</li>
 
-                    <li className="User-menu__list__item" id="User-menu__sign-out">Sign Out</li>
+                    {localStorage.binge_mania__currentUser && <li className="User-menu__list__item" id="User-menu__sign-out">Sign Out</li>}
                 </ul>
             </div>
         );
