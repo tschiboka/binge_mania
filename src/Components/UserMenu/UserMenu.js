@@ -45,7 +45,6 @@ export default class UserMenu extends Component {
 
         const userName = document.getElementById("User-menu__signin__username").value;
         const password = document.getElementById("User-menu__signin__password").value;
-        console.log(userName, password);
 
         if (userName.length === 0) newState.signInUserNameWarning = "username must be filled out";
         if (password.length === 0) newState.signInPasswordWarning = "password must be filled out";
@@ -57,6 +56,16 @@ export default class UserMenu extends Component {
         if (password.length > 20) newState.signInPasswordWarning = "password is max 20 char";
 
         if (newState.signInUserNameWarning || newState.signInPasswordWarning) return this.setState(newState);
+
+        const signInUser = async () => {
+            try {
+                const response = await fetch("/api/signin/" + userName);
+            } catch (err) { console.log(err); }
+        }
+
+        signInUser();
+
+        this.props.login();
     }
 
 

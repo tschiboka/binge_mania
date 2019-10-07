@@ -6,7 +6,11 @@ import Header from "../Header/Header";
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+
+    this.state = {
+      logged_in: false,
+      user: {}
+    }
   }
 
 
@@ -26,10 +30,16 @@ export default class App extends Component {
 
 
 
+  login() {
+    console.log("LOGIN");
+  }
+
+
+
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header login={this.login.bind(this)} />
 
         <div>{this.state.greeting}</div>
 

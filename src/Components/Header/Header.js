@@ -143,6 +143,7 @@ export default class Header extends Component {
                 <UserMenu
                     visible={this.state.userMenuIsOpen}
                     tabIndex={0}
+                    login={this.props.login}
                     blur={() => { // quirky soluton here, something went really wrong binding a handleOnBlur function
                         if (this.state.userIconMouseOver) return; // if mouse is over user icon blur is not happening
 
