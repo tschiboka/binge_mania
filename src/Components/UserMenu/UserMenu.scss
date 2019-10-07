@@ -12,4 +12,11 @@
       padding: 0.5vh 1vw;
       cursor: pointer;
     }
+    .username {
+      color: #c0c0c0;
+    }
+    .warning{
+      color: $userWarningColor;
+      font-size: 2vh;
+    }
 }

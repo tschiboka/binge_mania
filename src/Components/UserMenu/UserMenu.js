@@ -44,7 +44,7 @@ export default class UserMenu extends Component {
         const password = document.getElementById("User-menu__newuser__password").value;
         const email = document.getElementById("User-menu__newuser__email").value;
 
-        // in case user hits enter and state is not updated by onBlur on inputs
+        // in case user hits enter and state input errors are not updated by onBlur on inputs
         if (userName.length < 3) newState.newUser__userNameWarning = "Username is min 3 char long";
         if (!userName) newState.newUser__userNameWarning = "Username must not be empty";
         if (userName.length > 20) newState.newUser__userNameWarning = "Username max 20 char long";
@@ -94,7 +94,7 @@ export default class UserMenu extends Component {
         const userName = document.getElementById("User-menu__signin__username").value;
         const password = document.getElementById("User-menu__signin__password").value;
 
-        // in case user hits enter and state is not updated by onBlur on inputs
+        // in case user hits enter and state input errors are not updated by onBlur on inputs
         if (userName.length < 3) newState.signIn__userNameWarning = "Username is min 3 char long";
         if (!userName) newState.signIn__userNameWarning = "Username must not be empty";
         if (userName.length > 20) newState.signIn__userNameWarning = "Username max 20 char long";
@@ -203,7 +203,6 @@ export default class UserMenu extends Component {
 
 
 
-
     render() {
         return (
             <div
@@ -214,7 +213,8 @@ export default class UserMenu extends Component {
                 ref={elem => (this.userMenu = elem)} // give focus in order to be able to call onBlur
             >
                 <ul className="User-menu__list">
-                    {this.props.user && <li>{this.props.user.name}</li>}
+                    {this.props.user && <li className="username">{this.props.user.name}</li>}
+
                     <li
                         className="User-menu__list__item"
                         id="User-menu__new-user"
@@ -226,23 +226,23 @@ export default class UserMenu extends Component {
                             <form onSubmit={e => this.handleNewUserSubmit(e)}>
                                 <div>User Name</div>
 
-                                {this.state.newUser__userNameWarning && <div>{this.state.newUser__userNameWarning}</div>}
+                                {this.state.newUser__userNameWarning && <div className="warning">{this.state.newUser__userNameWarning}</div>}
 
                                 <div><input type="text" id="User-menu__newuser__username" onBlur={() => this.validateNewUserUserName()} /></div>
 
                                 <div>Email</div>
 
-                                {this.state.newUser__emailWarning && <div>{this.state.newUser__emailWarning}</div>}
+                                {this.state.newUser__emailWarning && <div className="warning">{this.state.newUser__emailWarning}</div>}
 
                                 <div><input type="email" id="User-menu__newuser__email" onBlur={() => this.validateNewUserEmail()} /></div>
 
                                 <div>Password</div>
 
-                                {this.state.newUser__passwordWarning && <div>{this.state.newUser__passwordWarning}</div>}
+                                {this.state.newUser__passwordWarning && <div className="warning">{this.state.newUser__passwordWarning}</div>}
 
                                 <div><input type="password" id="User-menu__newuser__password" onBlur={() => this.validateNewUserPassword()} /></div>
 
-                                {this.state.userExist && <div>User exists on this email</div>}
+                                {this.state.userExist && <div className="warning">User exists on this email</div>}
 
                                 <div><button>Create User</button></div>
                             </form>
@@ -259,22 +259,22 @@ export default class UserMenu extends Component {
                         <form onSubmit={e => this.handleSignInSubmit(e)}>
                             <div>User Name</div>
 
-                            {this.state.signIn__userNameWarning && <div>{this.state.signIn__userNameWarning}</div>}
+                            {this.state.signIn__userNameWarning && <div className="warning">{this.state.signIn__userNameWarning}</div>}
 
                             <div><input type="text" id="User-menu__signin__username" onBlur={() => this.validateSignInUserName()} /></div>
 
                             <div>Password</div>
 
-                            {this.state.signIn__passwordWarning && <div>{this.state.signIn__passwordWarning}</div>}
+                            {this.state.signIn__passwordWarning && <div className="warning">{this.state.signIn__passwordWarning}</div>}
 
                             <div><input type="password" id="User-menu__signin__password" onBlur={() => this.validateSignInPassword()} /></div>
 
-                            {this.state.wrongUserOrPasswordMsg && <div>Wrong Username or Password</div>}
+                            {this.state.wrongUserOrPasswordMsg && <div className="warning">Wrong Username or Password</div>}
 
                             <div><button>Sign In</button></div>
                         </form>}
 
-                    {this.props.user.isAdmin && <li>Admin</li>}
+                    {this.props.user.isAdmin && <li onClick={() => this.props.showAdmin(true)}>Admin</li>}
 
                     {this.state.signOutVisible &&
                         <li

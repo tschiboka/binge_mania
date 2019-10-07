@@ -9,6 +9,7 @@ export default class App extends Component {
 
     this.state = {
       user: {},
+      showAdmin: false
     }
   }
 
@@ -37,10 +38,18 @@ export default class App extends Component {
 
 
 
+  showAdmin(adminIsVisible) { this.setState({ ...this.state, showAdmin: adminIsVisible }); }
+
+
+
   render() {
     return (
       <div className="App">
-        <Header login={this.login.bind(this)} logout={this.logout.bind(this)} user={this.state.user} />
+        <Header
+          login={this.login.bind(this)}
+          logout={this.logout.bind(this)}
+          showAdmin={this.showAdmin.bind(this)}
+          user={this.state.user} />
 
         <div>{this.state.greeting}</div>
 
