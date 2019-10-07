@@ -34,8 +34,9 @@ router.post("/", async (req, res) => {
         user.password = await bcrypt.hash(user.password, salt);
 
         await user.save();
-        user.password = ""; // don't return password
-        console.log(user);
+
+        user.password = undefined; // don't return password
+
         res.send(user);
     } catch (err) { res.status(500).send(`Error while posting User:\n${err}`) }
 });
