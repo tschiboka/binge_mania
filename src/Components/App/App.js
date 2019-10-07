@@ -8,8 +8,7 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      logged_in: false,
-      user: {}
+      user: {},
     }
   }
 
@@ -30,8 +29,8 @@ export default class App extends Component {
 
 
 
-  login() {
-    console.log("LOGIN");
+  login(user) {
+    if (user) this.setState({ ...this.state, user: JSON.parse(user) });
   }
 
 

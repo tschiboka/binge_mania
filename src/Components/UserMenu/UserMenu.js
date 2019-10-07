@@ -12,7 +12,8 @@ export default class UserMenu extends Component {
         this.state = {
             signInFormVisible: false,
             signInUserNameWarning: "",
-            signInPasswordWarning: ""
+            signInPasswordWarning: "",
+            wrongUserOrPasswordMsg: false
         }
         console.log(this.state.signInFormVisible);
     }
@@ -59,13 +60,19 @@ export default class UserMenu extends Component {
 
         const signInUser = async () => {
             try {
-                const response = await fetch("/api/signin/" + userName);
+                const response = await fetch("/api/signin/" + userName, 
+                {method: "POST", body: JSON.stringify({"password": password}), headers: { 'Content-type': 'application/json' }});
+                const user = await response.text();
+
+                if (user) this.props.login(user);
+                else {
+                    newState.wrongUserOrPasswordMsg = true;
+                    this.setState(newState);
+                }
             } catch (err) { console.log(err); }
         }
 
         signInUser();
-
-        this.props.login();
     }
 
 
@@ -91,6 +98,8 @@ export default class UserMenu extends Component {
                         this.state.signInFormVisible &&
                         <form onSubmit={e => this.handleSignInSubmit(e)}>
                             <div>User Name</div>
+
+                            {this.state.wrongUserOrPasswordMsg && <div>Wrong Username or Password</div>}
 
                             {this.state.signInUserNameWarning && <div>{this.state.signInUserNameWarning}</div>}
 
