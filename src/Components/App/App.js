@@ -40,7 +40,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header login={this.login.bind(this)} logout={this.logout.bind(this)} />
+        <Header login={this.login.bind(this)} logout={this.logout.bind(this)} user={this.state.user} />
 
         <div>{this.state.greeting}</div>
 

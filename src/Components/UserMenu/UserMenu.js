@@ -11,7 +11,7 @@ export default class UserMenu extends Component {
         this.state = {
             signInVisible: true,
             signInFormVisible: false,
-            signOutVisible: true,
+            signOutVisible: false,
             signInUserNameWarning: "",
             signInPasswordWarning: "",
             wrongUserOrPasswordMsg: false
@@ -28,17 +28,12 @@ export default class UserMenu extends Component {
 
 
 
-    handleSignInClick() {
-        const newState = this.state;
-        newState.signInFormVisible = !newState.signInFormVisible;
-        this.setState(newState);
-        console.log(this.state.signInFormVisible)
-    }
+    handleSignInClick() { this.setState({ ...this.state, signInFormVisible: !this.state.signInFormVisible }); }
 
 
 
     handleSignInSubmit(event) {
-        const newState = Object.assign({}, this.state);
+        const newState = { ...this.state };
         event.preventDefault();
 
         const userName = document.getElementById("User-menu__signin__username").value;
@@ -64,7 +59,8 @@ export default class UserMenu extends Component {
                 if (user) {
                     this.props.login(user);
                     newState.signInFormVisible = false;
-                    //newState.signInVisible = false;
+                    newState.signInVisible = false;
+                    newState.signOutVisible = true;
                     this.setState(newState);
                 }
                 else {
@@ -79,10 +75,10 @@ export default class UserMenu extends Component {
 
 
 
-    //handleSignOutClick() {
-    //    this.setState(Object.assign({}, { ...this.state, signInFormVisible: true }));
-    //    this.props.logout();
-    //}
+    handleSignOutClick() {
+        this.setState({ ...this.state, signInVisible: true, signOutVisible: false });
+        this.props.logout();
+    }
 
 
 
@@ -139,6 +135,8 @@ export default class UserMenu extends Component {
                             id="User-menu__sign-out"
                             onClick={() => this.handleSignOutClick()}
                         >Sign Out</li>}
+
+                    {this.props.user.isAdmin && <li>Admin</li>}
                 </ul>
             </div>
         );

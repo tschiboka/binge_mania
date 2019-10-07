@@ -139,6 +139,7 @@ export default class Header extends Component {
                     tabIndex={0}
                     login={this.props.login}
                     logout={this.props.logout}
+                    user={this.props.user}
                     blur={() => this.handleUserOnBlur()} />
             </header>
         );
