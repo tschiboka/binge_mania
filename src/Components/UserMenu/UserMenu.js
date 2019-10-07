@@ -17,7 +17,8 @@ export default class UserMenu extends Component {
             newUser__userNameWarning: "",
             newUser__passwordWarning: "",
             newUser__emailWarning: "",
-            wrongUserOrPasswordMsg: false
+            wrongUserOrPasswordMsg: false,
+            userExist: false
         }
     }
 
@@ -55,6 +56,33 @@ export default class UserMenu extends Component {
         if (!/(.+)@(.+){2,}\.(.+){2,}/.test(email)) newState.newUser__emailWarning = "Invalid email";
 
         if (newState.newUser__userNameWarning || newState.newUser__passwordWarning || newState.newUser__emailWarning) return this.setState(newState);
+
+        const addNewUser = async () => {
+            try {
+                console.log("HERE");
+                const response = await fetch("/api/users",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({ "email": email, name: userName, password: password }),
+                        headers: { 'Content-type': 'application/json' }
+                    });
+                const user = await response.text();
+
+                if (user === "USER EXISTS") return this.setState({ ...this.state, userExist: true });
+
+                if (user) {
+                    this.props.login(user);
+                    newState.newUserFormVisible = false;
+                    newState.signInVisible = false;
+                    newState.signOutVisible = true;
+                    this.setState(newState);
+                }
+
+                console.log(user);
+            } catch (err) { console.log(err); }
+        }
+
+        addNewUser();
     }
 
 
@@ -186,6 +214,7 @@ export default class UserMenu extends Component {
                 ref={elem => (this.userMenu = elem)} // give focus in order to be able to call onBlur
             >
                 <ul className="User-menu__list">
+                    {this.props.user && <li>{this.props.user.name}</li>}
                     <li
                         className="User-menu__list__item"
                         id="User-menu__new-user"
@@ -212,6 +241,8 @@ export default class UserMenu extends Component {
                                 {this.state.newUser__passwordWarning && <div>{this.state.newUser__passwordWarning}</div>}
 
                                 <div><input type="password" id="User-menu__newuser__password" onBlur={() => this.validateNewUserPassword()} /></div>
+
+                                {this.state.userExist && <div>User exists on this email</div>}
 
                                 <div><button>Create User</button></div>
                             </form>
