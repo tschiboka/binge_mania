@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./UserMenu.scss";
-import NewUser from "../NewUser/NewUser";
 
 
 
@@ -10,12 +9,13 @@ export default class UserMenu extends Component {
 
         this.userMenu = null;
         this.state = {
+            signInVisible: true,
             signInFormVisible: false,
+            signOutVisible: true,
             signInUserNameWarning: "",
             signInPasswordWarning: "",
             wrongUserOrPasswordMsg: false
         }
-        console.log(this.state.signInFormVisible);
     }
 
 
@@ -24,10 +24,7 @@ export default class UserMenu extends Component {
 
 
 
-    handleUserMenuOnBlur() {
-        console.log("Sholud blur " + this.state.userMenuBluring);
-        if (!this.state.signInFormVisible) this.props.blur();
-    }
+    handleUserMenuOnBlur() { if (!this.state.signInFormVisible) this.props.blur(); }
 
 
 
@@ -41,7 +38,7 @@ export default class UserMenu extends Component {
 
 
     handleSignInSubmit(event) {
-        const newState = this.state;
+        const newState = Object.assign({}, this.state);
         event.preventDefault();
 
         const userName = document.getElementById("User-menu__signin__username").value;
@@ -60,11 +57,16 @@ export default class UserMenu extends Component {
 
         const signInUser = async () => {
             try {
-                const response = await fetch("/api/signin/" + userName, 
-                {method: "POST", body: JSON.stringify({"password": password}), headers: { 'Content-type': 'application/json' }});
+                const response = await fetch("/api/signin/" + userName,
+                    { method: "POST", body: JSON.stringify({ "password": password }), headers: { 'Content-type': 'application/json' } });
                 const user = await response.text();
 
-                if (user) this.props.login(user);
+                if (user) {
+                    this.props.login(user);
+                    newState.signInFormVisible = false;
+                    //newState.signInVisible = false;
+                    this.setState(newState);
+                }
                 else {
                     newState.wrongUserOrPasswordMsg = true;
                     this.setState(newState);
@@ -74,6 +76,13 @@ export default class UserMenu extends Component {
 
         signInUser();
     }
+
+
+
+    //handleSignOutClick() {
+    //    this.setState(Object.assign({}, { ...this.state, signInFormVisible: true }));
+    //    this.props.logout();
+    //}
 
 
 
@@ -89,13 +98,14 @@ export default class UserMenu extends Component {
                 <ul className="User-menu__list">
                     <li className="User-menu__list__item" id="User-menu__new-user">New User</li>
 
-                    <li
-                        className="User-menu__list__item"
-                        id="User-menu__sign-in"
-                        onClick={() => this.handleSignInClick()}
-                    >Sign In</li>
-                    {
-                        this.state.signInFormVisible &&
+                    {this.state.signInVisible &&
+                        <li
+                            className="User-menu__list__item"
+                            id="User-menu__sign-in"
+                            onClick={() => this.handleSignInClick()}
+                        >Sign In
+                    </li>}
+                    {this.state.signInFormVisible &&
                         <form onSubmit={e => this.handleSignInSubmit(e)}>
                             <div>User Name</div>
 
@@ -122,9 +132,13 @@ export default class UserMenu extends Component {
                             </div>
 
                             <div><button>Sign In</button></div>
-                        </form>
-                    }
-                    {localStorage.binge_mania__currentUser && <li className="User-menu__list__item" id="User-menu__sign-out">Sign Out</li>}
+                        </form>}
+                    {this.state.signOutVisible &&
+                        <li
+                            className="User-menu__list__item"
+                            id="User-menu__sign-out"
+                            onClick={() => this.handleSignOutClick()}
+                        >Sign Out</li>}
                 </ul>
             </div>
         );

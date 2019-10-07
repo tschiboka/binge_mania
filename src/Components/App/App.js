@@ -29,16 +29,18 @@ export default class App extends Component {
 
 
 
-  login(user) {
-    if (user) this.setState({ ...this.state, user: JSON.parse(user) });
-  }
+  login(user) { if (user) this.setState({ ...this.state, user: JSON.parse(user) }); }
+
+
+
+  logout() { this.setState({ ...this.state, user: {} }); }
 
 
 
   render() {
     return (
       <div className="App">
-        <Header login={this.login.bind(this)} />
+        <Header login={this.login.bind(this)} logout={this.logout.bind(this)} />
 
         <div>{this.state.greeting}</div>
 

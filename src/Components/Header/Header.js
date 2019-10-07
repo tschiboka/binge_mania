@@ -24,7 +24,7 @@ export default class Header extends Component {
                 const newState = this.state;
                 newState.genres = genres.split(",");
                 this.setState(newState);
-            } catch (exp) { console.error("ERROR WHILE FETChiNG GENRES\n" + exp) }
+            } catch (exp) { console.error("ERROR WHILE FETCHING GENRES\n" + exp) }
         }
         getGenres();
     }
@@ -41,37 +41,31 @@ export default class Header extends Component {
 
 
     handleGenresMenuClick() {
-        const newState = this.state;
-        newState.genreMenuIsOpen = !newState.genreMenuIsOpen;
-        this.setState(newState);
-
-        if (this.state.genreMenuIsOpen) this.setGenresMenuCoords();
+        this.setState({ ...this.state, genreMenuIsOpen: !this.state.genreMenuIsOpen },
+            () => { if (this.state.genreMenuIsOpen) this.setGenresMenuCoords(); });
     }
 
 
 
     handleUserMenuClick() {
-        const newState = this.state;
-        newState.userMenuIsOpen = !newState.userMenuIsOpen;
-        this.setState(newState);
-
-        if (this.state.userMenuIsOpen) this.setUserMenuCoords();
+        this.setState({ ...this.state, userMenuIsOpen: !this.state.userMenuIsOpen },
+            () => { if (this.state.userMenuIsOpen) this.setUserMenuCoords(); });
     }
 
 
 
-    handleGenresOnBlur() {
-        const newState = this.state;
-        newState.genreMenuIsOpen = false;
-        this.setState(newState);
+    handleGenresOnBlur() { this.setState({ ...this.state, genreMenuIsOpen: false }); }
+
+
+
+    handleUserOnBlur() {
+        if (this.state.userIconMouseOver) return; // if mouse is over user icon blur is not happening
+        this.setState({ ...this.state, userMenuIsOpen: false });
     }
 
 
-    toggleUserIconMouseOver(isOver) {
-        const newState = this.state;
-        newState.userIconMouseOver = isOver;
-        this.setState(newState);
-    }
+
+    toggleUserIconMouseOver(isOver) { this.setState({ ...this.state, userIconMouseOver: isOver }); }
 
 
 
@@ -144,14 +138,8 @@ export default class Header extends Component {
                     visible={this.state.userMenuIsOpen}
                     tabIndex={0}
                     login={this.props.login}
-                    blur={() => { // quirky soluton here, something went really wrong binding a handleOnBlur function
-                        if (this.state.userIconMouseOver) return; // if mouse is over user icon blur is not happening
-
-                        console.log("Blur");
-                        const newState = this.state;
-                        newState.userMenuIsOpen = false;
-                        this.setState(newState);
-                    }} />
+                    logout={this.props.logout}
+                    blur={() => this.handleUserOnBlur()} />
             </header>
         );
     }
