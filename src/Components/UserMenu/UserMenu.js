@@ -12,8 +12,11 @@ export default class UserMenu extends Component {
             signInVisible: true,
             signInFormVisible: false,
             signOutVisible: false,
-            signInUserNameWarning: "",
-            signInPasswordWarning: "",
+            signIn__userNameWarning: "",
+            signIn__passwordWarning: "",
+            newUser__userNameWarning: "",
+            newUser__passwordWarning: "",
+            newUser__emailWarning: "",
             wrongUserOrPasswordMsg: false
         }
     }
@@ -24,11 +27,35 @@ export default class UserMenu extends Component {
 
 
 
-    handleUserMenuOnBlur() { if (!this.state.signInFormVisible) this.props.blur(); }
+    handleUserMenuOnBlur() { if (!this.state.signInFormVisible && !this.state.newUserFormVisible) this.props.blur(); }
 
 
 
     handleSignInClick() { this.setState({ ...this.state, signInFormVisible: !this.state.signInFormVisible }); }
+
+
+
+    handleNewUserSubmit(event) {
+        const newState = { ...this.state };
+        event.preventDefault();
+
+        const userName = document.getElementById("User-menu__newuser__username").value;
+        const password = document.getElementById("User-menu__newuser__password").value;
+        const email = document.getElementById("User-menu__newuser__email").value;
+
+        // in case user hits enter and state is not updated by onBlur on inputs
+        if (userName.length < 3) newState.newUser__userNameWarning = "Username is min 3 char long";
+        if (!userName) newState.newUser__userNameWarning = "Username must not be empty";
+        if (userName.length > 20) newState.newUser__userNameWarning = "Username max 20 char long";
+
+        if (password.length < 8) newState.newUser__passwordWarning = "Password is min 8 char long";
+        if (!password) newState.newUser__passwordWarning = "Password must not be empty";
+        if (password.length > 20) newState.newUser__passwordWarning = "Password max 20 char long";
+
+        if (!/(.+)@(.+){2,}\.(.+){2,}/.test(email)) newState.newUser__emailWarning = "Invalid email";
+
+        if (newState.newUser__userNameWarning || newState.newUser__passwordWarning || newState.newUser__emailWarning) return this.setState(newState);
+    }
 
 
 
@@ -39,16 +66,16 @@ export default class UserMenu extends Component {
         const userName = document.getElementById("User-menu__signin__username").value;
         const password = document.getElementById("User-menu__signin__password").value;
 
-        if (userName.length === 0) newState.signInUserNameWarning = "username must be filled out";
-        if (password.length === 0) newState.signInPasswordWarning = "password must be filled out";
+        // in case user hits enter and state is not updated by onBlur on inputs
+        if (userName.length < 3) newState.signIn__userNameWarning = "Username is min 3 char long";
+        if (!userName) newState.signIn__userNameWarning = "Username must not be empty";
+        if (userName.length > 20) newState.signIn__userNameWarning = "Username max 20 char long";
 
-        if (userName.length < 3) newState.signInUserNameWarning = "username is at least 3 char";
-        if (password.length < 8) newState.signInPasswordWarning = "password is at least 8 char";
+        if (password.length < 8) newState.signIn__passwordWarning = "Password is min 8 char long";
+        if (!password) newState.signIn__passwordWarning = "Password must not be empty";
+        if (password.length > 20) newState.signIn__passwordWarning = "Password max 20 char long";
 
-        if (userName.length > 20) newState.signInUserNameWarning = "username is max 20 char";
-        if (password.length > 20) newState.signInPasswordWarning = "password is max 20 char";
-
-        if (newState.signInUserNameWarning || newState.signInPasswordWarning) return this.setState(newState);
+        if (newState.signIn__userNameWarning || newState.signIn__passwordWarning) return this.setState(newState);
 
         const signInUser = async () => {
             try {
@@ -56,6 +83,7 @@ export default class UserMenu extends Component {
                     { method: "POST", body: JSON.stringify({ "password": password }), headers: { 'Content-type': 'application/json' } });
                 const user = await response.text();
 
+                console.log("USER : ", user);
                 if (user) {
                     this.props.login(user);
                     newState.signInFormVisible = false;
@@ -82,6 +110,72 @@ export default class UserMenu extends Component {
 
 
 
+    handleNewUserClick() { this.setState({ ...this.state, newUserFormVisible: !this.state.newUserFormVisible }); }
+
+
+
+    validateSignInUserName() {
+        const userName = document.getElementById("User-menu__signin__username").value;
+        let msg = "";
+
+        if (userName.length < 3) msg = "Username is min 3 char long";
+        if (userName.length === 0) msg = "Username must not be empty";
+        if (userName.length > 20) msg = "Username max 20 char long";
+
+        this.setState({ ...this.state, signIn__userNameWarning: msg });
+    }
+
+
+
+    validateSignInPassword() {
+        const userName = document.getElementById("User-menu__signin__password").value;
+        let msg = "";
+
+        if (userName.length < 8) msg = "Password is min 8 char long";
+        if (userName.length === 0) msg = "Password must not be empty";
+        if (userName.length > 20) msg = "Password max 20 char long";
+
+        this.setState({ ...this.state, signIn__passwordWarning: msg });
+    }
+
+
+
+    validateNewUserUserName() {
+        const userName = document.getElementById("User-menu__newuser__username").value;
+        let msg = "";
+
+        if (userName.length < 3) msg = "Username is min 3 char long";
+        if (userName.length === 0) msg = "Username must not be empty";
+        if (userName.length > 20) msg = "Username max 20 char long";
+
+        this.setState({ ...this.state, newUser__userNameWarning: msg });
+    }
+
+
+
+    validateNewUserPassword() {
+        const userName = document.getElementById("User-menu__newuser__password").value;
+        let msg = "";
+
+        if (userName.length < 8) msg = "Password is min 8 char long";
+        if (userName.length === 0) msg = "Password must not be empty";
+        if (userName.length > 20) msg = "Password max 20 char long";
+
+        this.setState({ ...this.state, newUser__passwordWarning: msg });
+    }
+
+
+
+    validateNewUserEmail() {
+        const email = document.getElementById("User-menu__newuser__email").value;
+        const msg = !/(.+)@(.+){2,}\.(.+){2,}/.test(email) ? "Invalid email" : "";
+
+        this.setState({ ...this.state, newUser__emailWarning: msg });
+    }
+
+
+
+
     render() {
         return (
             <div
@@ -92,7 +186,36 @@ export default class UserMenu extends Component {
                 ref={elem => (this.userMenu = elem)} // give focus in order to be able to call onBlur
             >
                 <ul className="User-menu__list">
-                    <li className="User-menu__list__item" id="User-menu__new-user">New User</li>
+                    <li
+                        className="User-menu__list__item"
+                        id="User-menu__new-user"
+                        onClick={() => this.handleNewUserClick()}
+                    >New User</li>
+
+                    {this.state.newUserFormVisible &&
+                        <li>
+                            <form onSubmit={e => this.handleNewUserSubmit(e)}>
+                                <div>User Name</div>
+
+                                {this.state.newUser__userNameWarning && <div>{this.state.newUser__userNameWarning}</div>}
+
+                                <div><input type="text" id="User-menu__newuser__username" onBlur={() => this.validateNewUserUserName()} /></div>
+
+                                <div>Email</div>
+
+                                {this.state.newUser__emailWarning && <div>{this.state.newUser__emailWarning}</div>}
+
+                                <div><input type="email" id="User-menu__newuser__email" onBlur={() => this.validateNewUserEmail()} /></div>
+
+                                <div>Password</div>
+
+                                {this.state.newUser__passwordWarning && <div>{this.state.newUser__passwordWarning}</div>}
+
+                                <div><input type="password" id="User-menu__newuser__password" onBlur={() => this.validateNewUserPassword()} /></div>
+
+                                <div><button>Create User</button></div>
+                            </form>
+                        </li>}
 
                     {this.state.signInVisible &&
                         <li
@@ -105,38 +228,29 @@ export default class UserMenu extends Component {
                         <form onSubmit={e => this.handleSignInSubmit(e)}>
                             <div>User Name</div>
 
-                            {this.state.wrongUserOrPasswordMsg && <div>Wrong Username or Password</div>}
+                            {this.state.signIn__userNameWarning && <div>{this.state.signIn__userNameWarning}</div>}
 
-                            {this.state.signInUserNameWarning && <div>{this.state.signInUserNameWarning}</div>}
-
-                            <div>
-                                <input
-                                    type="text"
-                                    id="User-menu__signin__username"
-                                />
-                            </div>
+                            <div><input type="text" id="User-menu__signin__username" onBlur={() => this.validateSignInUserName()} /></div>
 
                             <div>Password</div>
 
-                            {this.state.signInPasswordWarning && <div>{this.state.signInPasswordWarning}</div>}
+                            {this.state.signIn__passwordWarning && <div>{this.state.signIn__passwordWarning}</div>}
 
-                            <div>
-                                <input
-                                    type="password"
-                                    id="User-menu__signin__password"
-                                />
-                            </div>
+                            <div><input type="password" id="User-menu__signin__password" onBlur={() => this.validateSignInPassword()} /></div>
+
+                            {this.state.wrongUserOrPasswordMsg && <div>Wrong Username or Password</div>}
 
                             <div><button>Sign In</button></div>
                         </form>}
+
+                    {this.props.user.isAdmin && <li>Admin</li>}
+
                     {this.state.signOutVisible &&
                         <li
                             className="User-menu__list__item"
                             id="User-menu__sign-out"
                             onClick={() => this.handleSignOutClick()}
                         >Sign Out</li>}
-
-                    {this.props.user.isAdmin && <li>Admin</li>}
                 </ul>
             </div>
         );

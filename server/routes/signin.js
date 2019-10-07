@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 router.post("/:user_name", async (req, res) => {
     try {
         const user = await User.findOne({ name: req.params.user_name });
+        if (!user) return res.send("");
         const match = await bcrypt.compare(req.body.password, user.password);
 
         user.password = user.__v = undefined; // Don't return password
