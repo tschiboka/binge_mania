@@ -5,26 +5,17 @@ import "./Admin__users.scss";
 
 
 export default class Admin__users extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { users: [] }
-    }
-
-
-
-    componentDidMount() { this.getUsers(); }
+    componentDidMount() { if (!this.props.users.length) this.getUsers(); }
 
 
 
     getUsers() {
         const getUsersFromDb = async () => {
-            console.log("HERE");
             try {
                 const response = await fetch("/api/users");
                 const text = await response.text();
 
-                this.setState({ ...this.state, users: JSON.parse(text) });
+                this.props.setUsers(JSON.parse(text));
             } catch (err) { console.log(err); }
         }
 
@@ -34,7 +25,7 @@ export default class Admin__users extends Component {
 
 
     renderUsers() {
-        return this.state.users.map(user => (<tr>
+        return (this.props.users).map((user, i) => (<tr key={"userTable" + i}>
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>{user._id}</td>
@@ -48,8 +39,11 @@ export default class Admin__users extends Component {
         return (
             <div className="Admin__user">
                 <table>
-                    <tr><th>Name</th><th>Email</th><th>id</th><th>Admin</th></tr>
-                    {this.renderUsers()}
+                    <tbody>
+                        <tr><th>Name</th><th>Email</th><th>id</th><th>Admin</th></tr>
+
+                        {this.renderUsers()}
+                    </tbody>
                 </table>
             </div>
         );

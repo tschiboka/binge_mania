@@ -32,6 +32,10 @@ export default class Admin extends Component {
 
 
 
+    setUsers(users) { this.setState({ ...this.state, users: users }) }
+
+
+
     componentDidMount() { this.checkAdmin(); }
 
 
@@ -44,22 +48,32 @@ export default class Admin extends Component {
 
 
 
+    handleHeaderClick(activeTag) { this.setState({ ...this.state, activeTag: activeTag }); }
+
+
+
     renderAdmin() {
         return <div className="Admin">
             <div className="Admin__header">
-                <div className="Admin__header__tag active"><div>Users</div></div>
+                <div className="Admin__header__tag active"><div onClick={() => this.handleHeaderClick("users")}>Users</div></div>
 
-                <div className="Admin__header__tag"> <div>Movies</div> </div>
+                <div className="Admin__header__tag"> <div onClick={() => this.handleHeaderClick("movies")}>Movies</div> </div>
 
-                <div className="Admin__header__tag"><div>Transactions</div></div>
+                <div className="Admin__header__tag"><div onClick={() => this.handleHeaderClick("transactions")}>Transactions</div></div>
 
-                <div className="Admin__header__tag"><div>Genres</div></div>
+                <div className="Admin__header__tag"><div onClick={() => this.handleHeaderClick("genres")}>Genres</div></div>
 
                 <div id="Admin__close-btn" onClick={() => this.handleCloseBtnClick()}>&times;</div>
             </div>
 
             <div className="Admin__body">
-                {this.state.activeTag === "users" && <Admin__users />}
+                {this.state.activeTag === "users" && <Admin__users users={this.state.users || []} setUsers={this.setUsers.bind(this)} />}
+
+                {this.state.activeTag === "movies" && <div>Movies</div>}
+
+                {this.state.activeTag === "transactions" && <div>Transactions</div>}
+
+                {this.state.activeTag === "genres" && <div>Genres</div>}
             </div>
         </div>
     }
