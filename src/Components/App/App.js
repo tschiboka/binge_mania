@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.scss';
 
 import Header from "../Header/Header";
+import Admin from "../Admin/Admin";
 
 export default class App extends Component {
   constructor(props) {
@@ -9,23 +10,7 @@ export default class App extends Component {
 
     this.state = {
       user: {},
-      showAdmin: false
     }
-  }
-
-
-
-  componentDidMount() {
-    const greeting = async () => {
-      try {
-        const response = await fetch("/home");
-        const greeting = await response.text();
-        const newState = this.state;
-        newState.greeting = greeting;
-        this.setState(newState);
-      } catch (exp) { console.error("ERROR WHILE FETCHING GREETINGS\n", exp); }
-    }
-    greeting();
   }
 
 
@@ -34,7 +19,10 @@ export default class App extends Component {
 
 
 
-  logout() { this.setState({ ...this.state, user: {} }); }
+  logout() {
+    console.log("HERE");
+    this.setState({ ...this.state, user: {}, showAdmin: false });
+  }
 
 
 
@@ -54,6 +42,8 @@ export default class App extends Component {
         <div>{this.state.greeting}</div>
 
         <img src="http://image.tmdb.org/t/p/w185//adw6Lq9FiC9zjYEpOqfq03ituwp.jpg" alt="fightclub" />
+
+        {this.state.showAdmin && <Admin user={this.state.user} />}
 
       </div>
     );

@@ -7,6 +7,10 @@ export default class UserMenu extends Component {
     constructor(props) {
         super(props);
 
+        String.prototype.trim = String.prototype.trim || function () {
+            return this.replace(/^\s+/, '').replace(/\s+$/, '');
+        }
+
         this.userMenu = null;
         this.state = {
             signInVisible: true,
@@ -40,9 +44,9 @@ export default class UserMenu extends Component {
         const newState = { ...this.state };
         event.preventDefault();
 
-        const userName = document.getElementById("User-menu__newuser__username").value;
-        const password = document.getElementById("User-menu__newuser__password").value;
-        const email = document.getElementById("User-menu__newuser__email").value;
+        const userName = document.getElementById("User-menu__newuser__username").value.trim();
+        const password = document.getElementById("User-menu__newuser__password").value.trim();
+        const email = document.getElementById("User-menu__newuser__email").value.trim();
 
         // in case user hits enter and state input errors are not updated by onBlur on inputs
         if (userName.length < 3) newState.newUser__userNameWarning = "Username is min 3 char long";
@@ -91,8 +95,8 @@ export default class UserMenu extends Component {
         const newState = { ...this.state };
         event.preventDefault();
 
-        const userName = document.getElementById("User-menu__signin__username").value;
-        const password = document.getElementById("User-menu__signin__password").value;
+        const userName = document.getElementById("User-menu__signin__username").value.trim();
+        const password = document.getElementById("User-menu__signin__password").value.trim();
 
         // in case user hits enter and state input errors are not updated by onBlur on inputs
         if (userName.length < 3) newState.signIn__userNameWarning = "Username is min 3 char long";
@@ -111,7 +115,6 @@ export default class UserMenu extends Component {
                     { method: "POST", body: JSON.stringify({ "password": password }), headers: { 'Content-type': 'application/json' } });
                 const user = await response.text();
 
-                console.log("USER : ", user);
                 if (user) {
                     this.props.login(user);
                     newState.signInFormVisible = false;
@@ -133,6 +136,7 @@ export default class UserMenu extends Component {
 
     handleSignOutClick() {
         this.setState({ ...this.state, signInVisible: true, signOutVisible: false });
+        this.props.showAdmin(false);
         this.props.logout();
     }
 
@@ -143,7 +147,7 @@ export default class UserMenu extends Component {
 
 
     validateSignInUserName() {
-        const userName = document.getElementById("User-menu__signin__username").value;
+        const userName = document.getElementById("User-menu__signin__username").value.trim();
         let msg = "";
 
         if (userName.length < 3) msg = "Username is min 3 char long";
@@ -156,7 +160,7 @@ export default class UserMenu extends Component {
 
 
     validateSignInPassword() {
-        const userName = document.getElementById("User-menu__signin__password").value;
+        const userName = document.getElementById("User-menu__signin__password").value.trim();
         let msg = "";
 
         if (userName.length < 8) msg = "Password is min 8 char long";
@@ -169,7 +173,7 @@ export default class UserMenu extends Component {
 
 
     validateNewUserUserName() {
-        const userName = document.getElementById("User-menu__newuser__username").value;
+        const userName = document.getElementById("User-menu__newuser__username").value.trim();
         let msg = "";
 
         if (userName.length < 3) msg = "Username is min 3 char long";
@@ -182,7 +186,7 @@ export default class UserMenu extends Component {
 
 
     validateNewUserPassword() {
-        const userName = document.getElementById("User-menu__newuser__password").value;
+        const userName = document.getElementById("User-menu__newuser__password").value.trim();
         let msg = "";
 
         if (userName.length < 8) msg = "Password is min 8 char long";
@@ -195,10 +199,18 @@ export default class UserMenu extends Component {
 
 
     validateNewUserEmail() {
-        const email = document.getElementById("User-menu__newuser__email").value;
+        const email = document.getElementById("User-menu__newuser__email").value.trim();
         const msg = !/(.+)@(.+){2,}\.(.+){2,}/.test(email) ? "Invalid email" : "";
 
         this.setState({ ...this.state, newUser__emailWarning: msg });
+    }
+
+
+
+    showAdmin() {
+        this.setState({ ...this.state, signInFormVisible: false, newUserFormVisible: false });
+
+        this.props.showAdmin(true);
     }
 
 
@@ -274,7 +286,7 @@ export default class UserMenu extends Component {
                             <div><button>Sign In</button></div>
                         </form>}
 
-                    {this.props.user.isAdmin && <li onClick={() => this.props.showAdmin(true)}>Admin</li>}
+                    {this.props.user.isAdmin && <li onClick={() => this.showAdmin()}>Admin</li>}
 
                     {this.state.signOutVisible &&
                         <li

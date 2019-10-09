@@ -16,8 +16,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
+        console.log(req.params.id);
         const user = await User.findById(req.params.id).select("-password");
 
+        console.log("USER", user);
         res.send(user);
     } catch (err) { res.status(500).send(`Error while getting user ${req.params.id}.\n${err}`) }
 });
