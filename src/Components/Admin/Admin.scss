@@ -10,13 +10,15 @@
     overflow: hidden;
     .Admin__body {
         width: 100%;  height: 95%;
+        border: $borderLight;
+        background: rgba(0, 0, 0, 0.8);
     }
 };
 
 .Admin__header {        
     width: 100%; height: 5%;
     display: flex;
-    border-bottom: $borderLight;
+    background: rgba(0, 0, 0, 0.95);
     filter: blur(0);
     -webkit-filter: blur(0);    
     .Admin__header__tag {
@@ -24,15 +26,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
         div { // reason of wrapping is text truncation => flex won't let text-overflow-ellipsis
             overflow: hidden;
             min-width: 0;
             white-space: nowrap; 
-            text-overflow: ellipsis;     
+            text-overflow: ellipsis;
         }
     }
-    .active {
+    .active { 
         min-width: 80px;
+        border: $borderLight;
     }
     #Admin__close-btn {
         height: 100%; width: 5%;
@@ -41,5 +45,6 @@
         margin-left: auto; // last item takes rest of space => falls to right
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
 }

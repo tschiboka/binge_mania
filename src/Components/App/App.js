@@ -40,7 +40,12 @@ export default class App extends Component {
           <img src="http://image.tmdb.org/t/p/w185//adw6Lq9FiC9zjYEpOqfq03ituwp.jpg" alt="fightclub" />
         </div>
 
-        <div className="App__admin">{this.state.showAdmin && <Admin user={this.state.user} />}        </div>
+        <div className="App__admin">
+          {this.state.showAdmin &&
+            <Admin
+              user={this.state.user}
+              showAdmin={this.showAdmin.bind(this)} />}
+        </div>
       </div>
     );
   }

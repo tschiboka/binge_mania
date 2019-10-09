@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import "./Admin.scss";
 
+import Admin__users from "../Admin__users/Admin__users";
+
 
 
 export default class Admin extends Component {
@@ -23,11 +25,9 @@ export default class Admin extends Component {
                 const response = await fetch("/api/users/" + this.props.user._id);
                 const user = response ? await response.json() : undefined;
 
-                console.log(user);
                 return resolve(user && user.isAdmin);
             } catch (err) { console.log(err) }
-        }).then(res => { console.log(res); if (res) this.setState({ ...this.state, visible: true }); });
-
+        }).then(res => { if (res) this.setState({ ...this.state, visible: true }); });
     }
 
 
@@ -37,6 +37,10 @@ export default class Admin extends Component {
 
 
     componentDidUpdate(prevProps) { if (prevProps.user._id !== this.props.user._id) this.checkAdmin(); }
+
+
+
+    handleCloseBtnClick() { this.props.showAdmin(false); }
 
 
 
@@ -51,11 +55,11 @@ export default class Admin extends Component {
 
                 <div className="Admin__header__tag"><div>Genres</div></div>
 
-                <div id="Admin__close-btn">&times;</div>
+                <div id="Admin__close-btn" onClick={() => this.handleCloseBtnClick()}>&times;</div>
             </div>
 
             <div className="Admin__body">
-
+                {this.state.activeTag === "users" && <Admin__users />}
             </div>
         </div>
     }
