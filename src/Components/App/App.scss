@@ -44,3 +44,8 @@ time, mark, audio, video {
   background-image: url("../../images/background-tile.png");
   color: $primaryColor;
 }
+
+.blurred {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);  
+}

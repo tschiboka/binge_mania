@@ -1,0 +1,45 @@
+@import "../variables.scss";
+
+.Admin {
+    position: absolute;
+    margin: 0;
+    padding: 2.5vh 2.5vw;
+    top: 0; left: 0;
+    width: 95vw; height: 95vh;
+    background: rgba(7, 3, 7, 0.8);
+    overflow: hidden;
+    .Admin__body {
+        width: 100%;  height: 95%;
+    }
+};
+
+.Admin__header {        
+    width: 100%; height: 5%;
+    display: flex;
+    border-bottom: $borderLight;
+    filter: blur(0);
+    -webkit-filter: blur(0);    
+    .Admin__header__tag {
+        height: 100%; width: 23.75%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div { // reason of wrapping is text truncation => flex won't let text-overflow-ellipsis
+            overflow: hidden;
+            min-width: 0;
+            white-space: nowrap; 
+            text-overflow: ellipsis;     
+        }
+    }
+    .active {
+        min-width: 80px;
+    }
+    #Admin__close-btn {
+        height: 100%; width: 5%;
+        min-width: 20px;
+        display: flex;
+        margin-left: auto; // last item takes rest of space => falls to right
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -19,10 +19,7 @@ export default class App extends Component {
 
 
 
-  logout() {
-    console.log("HERE");
-    this.setState({ ...this.state, user: {}, showAdmin: false });
-  }
+  logout() { this.setState({ ...this.state, user: {}, showAdmin: false }); }
 
 
 
@@ -33,18 +30,17 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header
-          login={this.login.bind(this)}
-          logout={this.logout.bind(this)}
-          showAdmin={this.showAdmin.bind(this)}
-          user={this.state.user} />
+        <div className={"App__main" + (this.state.showAdmin && " blurred")}>
+          <Header
+            login={this.login.bind(this)}
+            logout={this.logout.bind(this)}
+            showAdmin={this.showAdmin.bind(this)}
+            user={this.state.user} />
 
-        <div>{this.state.greeting}</div>
+          <img src="http://image.tmdb.org/t/p/w185//adw6Lq9FiC9zjYEpOqfq03ituwp.jpg" alt="fightclub" />
+        </div>
 
-        <img src="http://image.tmdb.org/t/p/w185//adw6Lq9FiC9zjYEpOqfq03ituwp.jpg" alt="fightclub" />
-
-        {this.state.showAdmin && <Admin user={this.state.user} />}
-
+        <div className="App__admin">{this.state.showAdmin && <Admin user={this.state.user} />}        </div>
       </div>
     );
   }

@@ -8,7 +8,9 @@ export default class Admin extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            activeTag: "users"
+        };
     }
 
     checkAdmin() {
@@ -38,10 +40,32 @@ export default class Admin extends Component {
 
 
 
+    renderAdmin() {
+        return <div className="Admin">
+            <div className="Admin__header">
+                <div className="Admin__header__tag active"><div>Users</div></div>
+
+                <div className="Admin__header__tag"> <div>Movies</div> </div>
+
+                <div className="Admin__header__tag"><div>Transactions</div></div>
+
+                <div className="Admin__header__tag"><div>Genres</div></div>
+
+                <div id="Admin__close-btn">&times;</div>
+            </div>
+
+            <div className="Admin__body">
+
+            </div>
+        </div>
+    }
+
+
+
     render() {
-        return (
-            this.props.user && this.props.user.isAdmin && this.state.visible ? <div>HEY</div> : <div></div>
-        );
+        return this.props.user && this.props.user.isAdmin && this.state.visible
+            ? <div>{this.renderAdmin()}</div>
+            : <div></div>
     }
 }
 
