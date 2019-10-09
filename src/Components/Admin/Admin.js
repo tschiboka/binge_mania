@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import "./Admin.scss";
 
 import Admin__users from "../Admin__users/Admin__users";
+import Admin__movies from "../Admin__movies/Admin__movies";
 
 
 
@@ -33,6 +34,10 @@ export default class Admin extends Component {
 
 
     setUsers(users) { this.setState({ ...this.state, users: users }) }
+
+
+
+    setMovies(movies) { this.setState({ ...this.state, movies: movies }) }
 
 
 
@@ -69,7 +74,7 @@ export default class Admin extends Component {
             <div className="Admin__body">
                 {this.state.activeTag === "users" && <Admin__users users={this.state.users || []} setUsers={this.setUsers.bind(this)} />}
 
-                {this.state.activeTag === "movies" && <div>Movies</div>}
+                {this.state.activeTag === "movies" && <Admin__movies movies={this.state.movies || []} setMovies={this.setMovies.bind(this)} />}
 
                 {this.state.activeTag === "transactions" && <div>Transactions</div>}
 
@@ -86,11 +91,3 @@ export default class Admin extends Component {
             : <div></div>
     }
 }
-
-/**
-
-
-
-
-
- */
