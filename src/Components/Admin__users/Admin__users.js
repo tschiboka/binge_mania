@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "./Admin__users.scss";
+
 
 
 export default class Admin__users extends Component {
@@ -31,9 +33,25 @@ export default class Admin__users extends Component {
 
 
 
+    renderUsers() {
+        return this.state.users.map(user => (<tr>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user._id}</td>
+            <td>{JSON.stringify(user.isAdmin)}</td>
+        </tr>));
+    }
+
+
+
     render() {
         return (
-            <div>USERS</div>
+            <div className="Admin__user">
+                <table>
+                    <tr><th>Name</th><th>Email</th><th>id</th><th>Admin</th></tr>
+                    {this.renderUsers()}
+                </table>
+            </div>
         );
     }
 }
