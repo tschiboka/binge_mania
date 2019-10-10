@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./Admin__users.scss";
+import "./AdminUsers.scss";
 
 
 
