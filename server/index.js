@@ -6,6 +6,7 @@ const genresRoute = require("./routes/genres");
 const usersRoute = require("./routes/users");
 const moviesRoute = require("./routes/movies");
 const signinRoute = require("./routes/signin");
+const searchRoute = require("./routes/search");
 const mongoose = require("mongoose");
 
 
@@ -22,6 +23,7 @@ app.use("/api/genres", genresRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/movies", moviesRoute);
 app.use("/api/signin", signinRoute);
+app.use("/api/search", searchRoute);
 
 
 
