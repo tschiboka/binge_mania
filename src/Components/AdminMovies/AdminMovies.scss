@@ -1,0 +1,23 @@
+@import "../variables.scss";
+
+.AdminMovies{
+    height: 100%;
+    width: 100%;
+    .AdminMovies__subheader {
+        width: 100%;
+        height: 5%;
+        display: flex;
+        justify-content: space-evenly;
+        .AdminMovies__subheader__tag {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 33%;
+            cursor: pointer;
+        }
+        .active {
+            border: $borderLight;
+        }
+    }
+}
