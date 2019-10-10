@@ -41,7 +41,8 @@ route.post("/", async (req, res) => {
             year: req.body.year,
             time: req.body.time,
             coverImgUrl: req.body.coverImgUrl,
-            cast: req.body.cast
+            cast: req.body.cast,
+            inStock: Math.floor(Math.random() * 200)
         });
 
         res.send(await movie.save());

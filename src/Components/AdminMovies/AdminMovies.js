@@ -13,7 +13,8 @@ export default class AdminMovies extends Component {
             activeSubHeaderTag: "movies",
             addMovie: {},
             showPoster: false,
-            movieExists: false
+            movieExists: false,
+            successfullyAdded: false
         }
     }
 
@@ -86,7 +87,7 @@ export default class AdminMovies extends Component {
             });
 
             const movie = await response2.json();
-            console.log(movie);
+            if (movie._id) this.setState({ ...this.state, successfullyAdded: true });
 
         } catch (err) { console.log(err); }
     }
@@ -205,6 +206,12 @@ export default class AdminMovies extends Component {
                     This movie already exists in binge_mania database!
                     <button onClick={() => this.setState({ ...this.state, movieExists: false })}>OK</button>
                 </div>}
+
+                {this.state.successfullyAdded && <div className="AdminMovies__message">
+                    {`${this.state.addMovie.title} is added to database!`}
+                    <button onClick={() => this.setState({ ...this.state, successfullyAdded: false })}>OK</button>
+                </div>}
+
             </div>
         );
     }

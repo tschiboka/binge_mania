@@ -10,6 +10,7 @@ export default class App extends Component {
 
     this.state = {
       user: {},
+      movies: {}
     }
   }
 
@@ -27,6 +28,12 @@ export default class App extends Component {
 
 
 
+  renderRandomMovies() {
+    return "MOVIES";
+  }
+
+
+
   render() {
     return (
       <div className="App">
@@ -36,8 +43,10 @@ export default class App extends Component {
             logout={this.logout.bind(this)}
             showAdmin={this.showAdmin.bind(this)}
             user={this.state.user} />
+        </div>
 
-          <img src="http://image.tmdb.org/t/p/w185//adw6Lq9FiC9zjYEpOqfq03ituwp.jpg" alt="fightclub" />
+        <div>
+          {this.renderRandomMovies()}
         </div>
 
         <div className="App__admin">
