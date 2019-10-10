@@ -61,54 +61,59 @@
 
 
 .AdminMovies__add-movie{
-    width: 100%;
+    padding: 0 2%;
+    width: 96%;
     height: 100%;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    #AdminMovies__add-movie__poster {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100vw;
-        height: 100vh;   
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.9);
+    justify-content: space-evenly;
+    .AdminMovies__add-movie__btn-div {
         display: flex;
-        justify-content: flex-end;
-        button {
-            margin: 25px;
-            width: 25px;
-            height: 25px;
-            border-radius: 100%;
-            border: $borderLight;
-            background: black;
-            color: $primaryColor;
-            font-weight: bolder;
-            &:hover {
-                border-width: 3px;
-            }
-        }
-    }
-    div:not(#AdminMovies__add-movie__poster) {
-        height: 10%;
+        justify-content: center;    
+        height: 5%;
+    }    
+    div {
         display: flex;
         justify-content: space-between;
         div:first-child {
-            width: 30%;
+            width: 20%;
         }
         div:last-child{
-            width: 70%;
+            width: 80%;
         }
     }
-    div:last-child {
-        display: flex;
-        justify-content: center;
-        height: 5%;
+    div:nth-child(4) {
+        flex: 0 0 0;
     }
 }
 
 .AdminMovies__poster__url {
     text-decoration: underline;
         cursor: pointer;
+}
+
+#AdminMovies__add-movie__poster {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;   
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: flex-end;
+    button {
+        margin: 25px;
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+        border: $borderLight;
+        background: black;
+        color: $primaryColor;
+        font-weight: bolder;
+        &:hover {
+            border-width: 3px;
+        }
+    }
 }

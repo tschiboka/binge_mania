@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
         const genre = await new Genre(req.body);
         res.send(await genre.save());
     } catch (exp) { console.error("Error while posting new Genre:\n" + exp) }
-})
+});
 
 
 

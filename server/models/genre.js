@@ -9,16 +9,27 @@ const genreSchema = new mongoose.Schema({
         required: true,
         unique: true,
         minlength: 3,
-        maxlength: 15,
+        maxlength: 25,
         lowercase: true,
         trim: true,
+    },
+    moviesWithGenre: {
+        type: Number,
+        default: 1,
+        min: 0
+    },
+    showInMenu: {
+        type: Boolean,
+        default: true
     }
 });
 
 
 
 validateGenre = genre => Joi.validate(genre, {
-    name: Joi.string().required().min(3).max(15)
+    name: Joi.string().required().min(3).max(15),
+    moviesWithGenre: Joi.number().min(0),
+    showInMenu: Joi.boolean()
 });
 
 

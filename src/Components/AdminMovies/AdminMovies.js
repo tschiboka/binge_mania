@@ -65,16 +65,22 @@ export default class AdminMovies extends Component {
                 title: this.state.addMovie.title,
                 description: this.state.addMovie.overview,
                 genres: this.state.addMovie.genres.map(g => g.name),
-                year: this.state.addMovie.release_date,
+                year: this.state.addMovie.release_date.match(/^\d{4}/)[0],
                 time: this.state.addMovie.runtime,
-                coverImgUrl: this.state.addMovie.poster_path
+                coverImgUrl: "http://image.tmdb.org/t/p/w500/" + this.state.addMovie.poster_path,
+                cast: _.map(_.chunk(this.state.addMovie.credits.cast, 5)[0], "name")
             }
+            console.log(JSON.stringify(BODY));
             const response = await fetch("/api/movies", {
                 method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: BODY
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(BODY)
             });
-            console.log(BODY);
+            const movie = await response.json();
+
         } catch (err) { console.log(err); }
     }
 
@@ -161,6 +167,13 @@ export default class AdminMovies extends Component {
                         </div>
 
                         <div>
+                            <div>Run Time</div>
+
+                            <div>{this.state.addMovie.runtime}</div>
+                        </div>
+
+
+                        <div>
                             <div>Relaese Date</div>
 
                             <div>{this.state.addMovie.release_date}</div>
@@ -178,7 +191,8 @@ export default class AdminMovies extends Component {
                             <div>{JSON.stringify(_.map(_.chunk(this.state.addMovie.credits.cast, 5)[0], "name"))}</div>
                         </div>
 
-                        <div><button onClick={() => this.addMovieToDB()}>Add Movie to binge_mania db</button></div>
+                        <div className="AdminMovies__add-movie__btn-div"><button onClick={() => this.addMovieToDB()}>
+                            Add Movie to binge_mania db</button></div>
                     </div>}
             </div>
         );
