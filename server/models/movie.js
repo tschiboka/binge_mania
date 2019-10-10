@@ -12,7 +12,6 @@ const movieSchema = mongoose.Schema({
         minlength: 1,
         maxlength: 100,
         trim: true,
-        lowercase: true
     },
     coverImgUrl: {
         type: String,
@@ -70,6 +69,7 @@ const validateMovie = movie => Joi.validate(movie, {
     year: Joi.number().required().min(1900).max(new Date().getFullYear()),
     time: Joi.number().required().min(1).max(600),
     lang: Joi.string().min(1).max(10),
+    cast: Joi.array(),
     inStock: Joi.string().min(0)
 });
 

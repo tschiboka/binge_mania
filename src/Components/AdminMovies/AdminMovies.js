@@ -12,7 +12,8 @@ export default class AdminMovies extends Component {
         this.state = {
             activeSubHeaderTag: "movies",
             addMovie: {},
-            showPoster: false
+            showPoster: false,
+            movieExists: false
         }
     }
 
@@ -59,8 +60,13 @@ export default class AdminMovies extends Component {
 
 
     async addMovieToDB() {
-        console.log("ADD MOVIE");
         try {
+            // check if movie is already exists
+            const response1 = await fetch("/api/movies/" + this.state.addMovie.title);
+            const exist = await response1.text();
+
+            if (exist) return this.setState({ ...this.state, movieExists: true });
+
             const BODY = {
                 title: this.state.addMovie.title,
                 description: this.state.addMovie.overview,
@@ -70,8 +76,7 @@ export default class AdminMovies extends Component {
                 coverImgUrl: "http://image.tmdb.org/t/p/w500/" + this.state.addMovie.poster_path,
                 cast: _.map(_.chunk(this.state.addMovie.credits.cast, 5)[0], "name")
             }
-            console.log(JSON.stringify(BODY));
-            const response = await fetch("/api/movies", {
+            const response2 = await fetch("/api/movies", {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -79,7 +84,9 @@ export default class AdminMovies extends Component {
                 },
                 body: JSON.stringify(BODY)
             });
-            const movie = await response.json();
+
+            const movie = await response2.json();
+            console.log(movie);
 
         } catch (err) { console.log(err); }
     }
@@ -94,7 +101,6 @@ export default class AdminMovies extends Component {
 
         if (posterDiv) posterDiv.style.backgroundImage = `url(${path})`;
         console.log(posterDiv, path);
-
     }
 
 
@@ -194,6 +200,11 @@ export default class AdminMovies extends Component {
                         <div className="AdminMovies__add-movie__btn-div"><button onClick={() => this.addMovieToDB()}>
                             Add Movie to binge_mania db</button></div>
                     </div>}
+
+                {this.state.movieExists && <div className="AdminMovies__message">
+                    This movie already exists in binge_mania database!
+                    <button onClick={() => this.setState({ ...this.state, movieExists: false })}>OK</button>
+                </div>}
             </div>
         );
     }

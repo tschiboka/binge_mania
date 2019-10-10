@@ -2,18 +2,19 @@ const express = require("express");
 const route = express.Router();
 const { Movie, validate } = require("../models/movie");
 const { Genre, validateGenre } = require("../models/genre");
-const fetch = require("node-fetch");
 
 
 
-route.get("/", (req, res) => {
-    res.send("movies");
+route.get("/:title", async (req, res) => {
+    const movie = await Movie.findOne({ title: req.params.title });
+
+    console.log(movie);
+    res.send(movie);
 });
 
 
 
 route.post("/", async (req, res) => {
-    console.log(req.body);
     try {
         const { error } = validate(req.body);
         if (error) return res.status(400).send(error.details[0].message);
@@ -42,7 +43,6 @@ route.post("/", async (req, res) => {
             coverImgUrl: req.body.coverImgUrl,
             cast: req.body.cast
         });
-
 
         res.send(await movie.save());
     } catch (err) { res.status(500).send(`Error while posting new Movie\n${err}`) }
