@@ -8,8 +8,6 @@ route.get("/:search", async (req, res) => {
     const search = req.params.search;
     const page = req.query.page || 1;
 
-    console.log("HERRE");
-
     try {
         const response = await fetch(`${URL}api_key=${APIKEY}&query=${search}&page=${page}`);
         const searchRes = await response.json();
