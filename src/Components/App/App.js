@@ -14,24 +14,6 @@ export default class App extends Component {
   }
 
 
-  async componentDidMount() {
-    console.log("FETCH MOVIE");
-    try {
-      const URL = "https://api.themoviedb.org/3/search/company?";
-      const APIKEY = "";
-      const search = "Ocean";
-      const page = "1";
-
-      console.log("https://api.themoviedb.org/3/search/movie?api_key=6fef8e7cf3273652c13deecf651d0d25&query=fighter&page=1" === `${URL}${APIKEY}&query=${search}&page=${page}`);
-
-      const response = await fetch(`${URL}api_key=${APIKEY}&query=${search}&page=${page}`);
-      const json = await response.json();
-
-      console.log(json);
-    } catch (err) { console.log(err) }
-  }
-
-
 
   login(user) { if (user) this.setState({ ...this.state, user: JSON.parse(user) }); }
 
