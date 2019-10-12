@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import './App.scss';
-
-import Header from "../Header/Header";
 import Admin from "../Admin/Admin";
+import Header from "../Header/Header";
+import './App.scss';
+import _ from "lodash";
+
 
 export default class App extends Component {
   constructor(props) {
@@ -10,9 +11,20 @@ export default class App extends Component {
 
     this.state = {
       user: {},
-      movies: {}
+      movies: []
     }
   }
+
+
+  async componentDidMount() {
+    const response = await fetch("/api/movies");
+    let movies = await response.json();
+    console.log("RENDER");
+
+    this.setState({ ...this.state, movies: _.shuffle(movies) });
+  }
+
+
 
 
 
@@ -29,7 +41,14 @@ export default class App extends Component {
 
 
   renderRandomMovies() {
-    return "MOVIES";
+    return this.state.movies.map((movie, i) => {
+      return <div
+        className="movie"
+        key={`movies${i}`}
+        style={{ backgroundImage: `url(${movie.coverImgUrl})` }}>
+        <div className="movie-title">{movie.title}</div>
+      </div >
+    });
   }
 
 
@@ -45,7 +64,7 @@ export default class App extends Component {
             user={this.state.user} />
         </div>
 
-        <div>
+        <div className="movies">
           {this.renderRandomMovies()}
         </div>
 

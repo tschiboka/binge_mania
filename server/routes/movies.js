@@ -6,10 +6,22 @@ const { Genre, validateGenre } = require("../models/genre");
 
 
 route.get("/:title", async (req, res) => {
-    const movie = await Movie.findOne({ title: req.params.title });
+    try {
+        const movie = await Movie.findOne({ title: req.params.title });
 
-    console.log(movie);
-    res.send(movie);
+        console.log(movie);
+        res.send(movie);
+    } catch (err) { res.status(500).send(err); }
+});
+
+
+
+route.get("/", async (req, res) => {
+    try {
+        const movies = await Movie.find();
+        res.send(movies);
+    } catch (error) { res.status(500).send(err); }
+
 });
 
 
@@ -30,7 +42,7 @@ route.post("/", async (req, res) => {
                         await newGenre.save();
                         return newGenre.name;
                     }
-                    const upDateGenre = await dbGenre[0].update({ $inc: { moviesWithGenre: 1 } });
+                    await dbGenre[0].update({ $inc: { moviesWithGenre: 1 } });
                     return genre;
                 }));
 
