@@ -22,10 +22,7 @@ export default class Header extends Component {
                 const response = await fetch("/api/genres");
                 const genres = await response.json();
                 const newState = this.state;
-                newState.genres = genres
-                    .sort((prev, curr) => prev.moviesWithGenre < curr.moviesWithGenre) // sort genres by moviesWithGenre descending
-                    .slice(0, 10)                                                      // get first 10
-                    .sort((prev, curr) => prev.name > curr.name);                      // back to alphabethical order ascending 
+                newState.genres = genres;
                 console.log(genres);
                 this.setState(newState);
             } catch (exp) { console.error("ERROR WHILE FETCHING GENRES\n" + exp) }
@@ -65,6 +62,13 @@ export default class Header extends Component {
     handleUserOnBlur() {
         if (this.state.userIconMouseOver) return; // if mouse is over user icon blur is not happening
         this.setState({ ...this.state, userMenuIsOpen: false });
+    }
+
+
+
+    leaveGenreMenuOpen() {
+        this.setState({ ...this.state, genreMenuIsOpen: true });
+        console.log(this.state.genreMenuIsOpen);
     }
 
 
@@ -122,7 +126,8 @@ export default class Header extends Component {
 
                         <GenresMenu
                             visible={this.state.genreMenuIsOpen}
-                            genres={this.state.genres} />
+                            genres={this.state.genres}
+                        />
                     </div>
 
                     <div className="Header__icons__shopping-cart">Cart</div>

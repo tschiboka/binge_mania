@@ -21,7 +21,6 @@ route.get("/", async (req, res) => {
         const movies = await Movie.find();
         res.send(movies);
     } catch (error) { res.status(500).send(err); }
-
 });
 
 

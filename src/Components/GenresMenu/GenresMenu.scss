@@ -8,7 +8,8 @@
 }
   
 
-#Header__genres__options {
+#Header__genres__options:not(.Header__genres__options--expanded) {
+    left: 0;
     position: absolute;
     border: $borderLight;
     border-top: none;
@@ -43,4 +44,20 @@
       border-top: $borderLight;
       transform: scaleY(1.1);
     }
+}
+
+.Header__genres__options--expanded {
+  position: absolute;
+  border: $borderLight;
+  border-top: none;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: $mediumFontSize;
+  }
 }
