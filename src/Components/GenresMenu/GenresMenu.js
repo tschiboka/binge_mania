@@ -7,6 +7,7 @@ export default class GenresMenu extends Component {
     renderGenreOptions(genres) {
         return genres.map((genre, i) => <div key={i} className="Header__genres__option">
             {genre.name.replace(/^./g, ch => ch.toUpperCase())}
+
             <span className="Header__genres__option__movies-with-genre"> {genre.moviesWithGenre}</span>
         </div>
         );

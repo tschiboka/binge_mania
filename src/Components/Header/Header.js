@@ -22,7 +22,11 @@ export default class Header extends Component {
                 const response = await fetch("/api/genres");
                 const genres = await response.json();
                 const newState = this.state;
-                newState.genres = genres;
+                newState.genres = genres
+                    .sort((prev, curr) => prev.moviesWithGenre < curr.moviesWithGenre) // sort genres by moviesWithGenre descending
+                    .slice(0, 10)                                                      // get first 10
+                    .sort((prev, curr) => prev.name > curr.name);                      // back to alphabethical order ascending 
+                console.log(genres);
                 this.setState(newState);
             } catch (exp) { console.error("ERROR WHILE FETCHING GENRES\n" + exp) }
         }
