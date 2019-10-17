@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Admin from "../Admin/Admin";
 import Header from "../Header/Header";
+import Movie from "../Movie/Movie";
+import LazyLoad from "react-lazy-load";
 import './App.scss';
 import _ from "lodash";
 
@@ -41,14 +43,14 @@ export default class App extends Component {
 
 
   renderRandomMovies() {
-    return this.state.movies.map((movie, i) => {
-      return <div
-        className="movie"
+    return this.state.movies.map((movie, i) =>
+      <LazyLoad
         key={`movies${i}`}
-        style={{ backgroundImage: `url(${movie.coverImgUrl})` }}>
-        <div className="movie-title">{movie.title}</div>
-      </div >
-    });
+        debounce={false}
+      >
+        <Movie movie={movie} />
+      </LazyLoad>
+    );
   }
 
 
@@ -56,7 +58,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className={"App__main" + (this.state.showAdmin && " blurred")}>
+        <div className={"App__main" + (this.state.showAdmin ? " blurred" : "")}>
           <Header
             login={this.login.bind(this)}
             logout={this.logout.bind(this)}

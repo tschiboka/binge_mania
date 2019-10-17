@@ -12,6 +12,7 @@
     "node-fetch": "^2.6.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-lazy-load": "^3.0.13",
     "react-scripts": "3.1.2"
   },
   "scripts": {
