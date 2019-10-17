@@ -9,11 +9,9 @@ const { Genre, validate } = require("../models/genre");
 router.get("/", async (req, res) => {
     try {
         let genres = await Genre.find().sort({ name: 1 })
-        genres = genres
-            .map(genre => genre.name)
-            .join(",");
+        genres = JSON.stringify(genres);
 
-        res.send(genres);
+        res.send(JSON.parse(genres));
     } catch (exp) { console.error("Error while getting Genres" + exp) }
 });
 

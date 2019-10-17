@@ -13,17 +13,33 @@
     border: $borderLight;
     border-top: none;
     text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: $mediumFontSize;
+      .Header__genres__option__movies-with-genre {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 2vw;
+        font-size: 1.5vh;
+        color: #ab94b3;
+        font-style: italic;
+      }
     }
     div:nth-child(even) {
-      background: rgba(255, 255, 255, 0.025);
+      background: rgba(255, 255, 255, 0.05);
     }
     div:nth-child(odd) {
-      background: rgba(0, 0, 0, 0.025);
+      background: rgba(0, 0, 0, 0.05);
     }
     div:hover {
       border-bottom: $borderLight;
-      transform: scaleY(1.2);
+      border-top: $borderLight;
+      transform: scaleY(1.1);
     }
 }
