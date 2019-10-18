@@ -12,6 +12,13 @@ export default class GenresMenu extends Component {
 
 
 
+    componentDidUpdate() {
+        console.log("UPDATED");
+        this.props.setCoords();
+    }
+
+
+
     renderGenreOptions(genres) {
         // More than 10 genres but not extended
         // Display 9 most freq and a show more option

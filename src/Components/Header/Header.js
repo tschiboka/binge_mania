@@ -86,7 +86,10 @@ export default class Header extends Component {
             const headerRect = headerDiv.getBoundingClientRect();
             const genresOpts = document.getElementById("Header__genres__options");
 
-            genresOpts.style.left = genreRect.left + "px";
+            console.log(genresOpts, genresOpts.classList.contains("Header__genres__options--expanded"));
+
+            if (genresOpts.classList.contains("Header__genres__options--expanded")) { genresOpts.style.right = "50%"; genresOpts.style.left = ""; }
+            else { genresOpts.style.left = genreRect.left + "px"; genresOpts.style.right = "" }
             genresOpts.style.top = headerRect.bottom + "px";
         }
     }
@@ -127,6 +130,7 @@ export default class Header extends Component {
                         <GenresMenu
                             visible={this.state.genreMenuIsOpen}
                             genres={this.state.genres}
+                            setCoords={this.setGenresMenuCoords.bind(this)}
                         />
                     </div>
 
