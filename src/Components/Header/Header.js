@@ -88,7 +88,7 @@ export default class Header extends Component {
 
             console.log(genresOpts, genresOpts.classList.contains("Header__genres__options--expanded"));
 
-            if (genresOpts.classList.contains("Header__genres__options--expanded")) { genresOpts.style.right = "50%"; genresOpts.style.left = ""; }
+            if (genresOpts.classList.contains("Header__genres__options--expanded")) { genresOpts.style.right = "0"; genresOpts.style.left = ""; }
             else { genresOpts.style.left = genreRect.left + "px"; genresOpts.style.right = "" }
             genresOpts.style.top = headerRect.bottom + "px";
         }

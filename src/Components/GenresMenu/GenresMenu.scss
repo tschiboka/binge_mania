@@ -48,21 +48,18 @@
 
 .Header__genres__options--expanded {
   position: absolute;
-  border: $borderLight;
-  border-top: none;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.8);
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  display: flex;
+  font-size: $mediumFontSize;
   div {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    background: red;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-size: $mediumFontSize;
+    div {
+      display: flex;
+      flex-direction: column;
+      div {
+        width: 100%;
+      }
+    }
   }
 }
