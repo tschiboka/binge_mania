@@ -14,7 +14,7 @@
     border: $borderLight;
     border-top: none;
     text-align: center;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.92);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     div {
@@ -39,10 +39,17 @@
     div:nth-child(odd) {
       background: rgba(0, 0, 0, 0.05);
     }
+    div:last-child {
+      justify-content: center;
+      font-style: italic;
+      color: #ab94b3;
+      font-size: 2vh;
+    }
     div:hover {
       border-bottom: $borderLight;
       border-top: $borderLight;
       transform: scaleY(1.1);
+      color: $primaryColor;
     }
 }
 
@@ -50,15 +57,61 @@
   position: absolute;
   display: flex;
   font-size: $mediumFontSize;
+  border: $borderLight;
+  border-top: none;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.92);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  .genre-separator {   
+    height: 90%;
+    margin: 5% 1%;
+    width: 1px;
+    border-right: $borderLight;
+  }
   div {
-    background: red;
     display: flex;
     justify-content: space-between;
+    div:last-child  div:last-child{
+      justify-content: center;
+      font-style: italic;
+      color: #ab94b3;
+      font-size: 2vh;
+    }
     div {
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-bottom: auto;
+      div:nth-child(even) {
+        background: rgba(255, 255, 255, 0.05);
+      }
+      div:nth-child(odd) {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      div:hover {
+        border-bottom: $borderLight;
+        border-top: $borderLight;
+        transform: scaleY(1.1);
+        color: $primaryColor;
+      }
       div {
         width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        .Header__genres__option__movies-with-genre {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding-left: 2vw;
+          font-size: 1.5vh;
+          color: #ab94b3;
+          font-style: italic;
+        }
       }
     }
   }

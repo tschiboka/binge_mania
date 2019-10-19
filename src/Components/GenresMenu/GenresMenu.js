@@ -62,6 +62,8 @@ export default class GenresMenu extends Component {
                     </div>)}
                 </div>
 
+                <div className="genre-separator"></div>
+
                 <div>
                     {genres[1].map((genre, i) => <div key={i} className="Header__genres__option">
                         {i !== genres[1].length - 1
@@ -74,7 +76,7 @@ export default class GenresMenu extends Component {
                                 }}
                             >show less...</span>}
 
-                        {i !== 19 && <span className="Header__genres__option__movies-with-genre"> {genre.moviesWithGenre}</span>}
+                        {i !== genres[1].length - 1 && <span className="Header__genres__option__movies-with-genre"> {genre.moviesWithGenre}</span>}
                     </div>
                     )}
                 </div>
