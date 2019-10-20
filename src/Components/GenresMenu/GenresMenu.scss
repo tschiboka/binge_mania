@@ -15,8 +15,10 @@
     border-top: none;
     text-align: center;
     background: rgba(0, 0, 0, 0.92);
+    color: #eee;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.8);
     div {
       display: flex;
       justify-content: space-between;
@@ -61,8 +63,10 @@
   border-top: none;
   text-align: center;
   background: rgba(0, 0, 0, 0.92);
+  color: #eee;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.8);
   .genre-separator {   
     height: 90%;
     margin: 5% 1%;
@@ -77,6 +81,7 @@
       font-style: italic;
       color: #ab94b3;
       font-size: 2vh;
+      &:hover {color: $primaryColor;}
     }
     div {
       display: flex;

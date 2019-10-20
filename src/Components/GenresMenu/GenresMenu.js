@@ -12,10 +12,7 @@ export default class GenresMenu extends Component {
 
 
 
-    componentDidUpdate() {
-        console.log("UPDATED");
-        this.props.setCoords();
-    }
+    componentDidUpdate() { this.props.setCoords(); }
 
 
 

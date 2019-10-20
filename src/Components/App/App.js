@@ -21,7 +21,6 @@ export default class App extends Component {
   async componentDidMount() {
     const response = await fetch("/api/movies");
     let movies = await response.json();
-    console.log("RENDER");
 
     this.setState({ ...this.state, movies: _.shuffle(movies) });
   }

@@ -23,7 +23,6 @@ export default class Header extends Component {
                 const genres = await response.json();
                 const newState = this.state;
                 newState.genres = genres;
-                console.log(genres);
                 this.setState(newState);
             } catch (exp) { console.error("ERROR WHILE FETCHING GENRES\n" + exp) }
         }
@@ -66,10 +65,7 @@ export default class Header extends Component {
 
 
 
-    leaveGenreMenuOpen() {
-        this.setState({ ...this.state, genreMenuIsOpen: true });
-        console.log(this.state.genreMenuIsOpen);
-    }
+    leaveGenreMenuOpen() { this.setState({ ...this.state, genreMenuIsOpen: true }); }
 
 
 
@@ -86,11 +82,10 @@ export default class Header extends Component {
             const headerRect = headerDiv.getBoundingClientRect();
             const genresOpts = document.getElementById("Header__genres__options");
 
-            console.log(genresOpts, genresOpts.classList.contains("Header__genres__options--expanded"));
-
             if (genresOpts.classList.contains("Header__genres__options--expanded")) { genresOpts.style.right = "1%"; genresOpts.style.left = ""; }
             else { genresOpts.style.left = genreRect.left + "px"; genresOpts.style.right = "" }
             genresOpts.style.top = headerRect.bottom + "px";
+            console.log("COORDS ", genresOpts.style.right, genresOpts.style.left);
         }
     }
 
@@ -120,6 +115,7 @@ export default class Header extends Component {
                 <div className="Header__icons">
                     <div
                         id="Header__icons__genres"
+                        className="Header__icon"
                         onClick={() => this.handleGenresMenuClick()}
                         onBlur={() => this.handleGenresOnBlur()}
                         tabIndex={0}
@@ -134,10 +130,10 @@ export default class Header extends Component {
                         />
                     </div>
 
-                    <div className="Header__icons__shopping-cart">Cart</div>
+                    <div id="Header__icons__shopping-cart" className="Header__icon">Cart</div>
 
                     <div
-                        className="Header__icons__user"
+                        className="Header__icons__user Header__icon"
                         onClick={() => this.handleUserMenuClick()}
                         onMouseOver={() => this.toggleUserIconMouseOver(true)}
                         onMouseOut={() => this.toggleUserIconMouseOver(false)}
