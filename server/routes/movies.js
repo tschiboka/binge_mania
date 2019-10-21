@@ -19,10 +19,8 @@ route.get("/:title", async (req, res) => {
 route.get("/", async (req, res) => {
     try {
         const movies = await Movie.find();
-        setTimeout(() => {
 
-            res.send(movies);
-        }, 5000);
+        res.send(movies);
     } catch (error) { res.status(500).send(err); }
 });
 

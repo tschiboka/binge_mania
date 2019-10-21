@@ -23,13 +23,13 @@ export default class Movie extends Component {
                 src={this.props.movie.coverImgUrl}
                 alt="movie-cover-img"
                 effect="blur"
-                onLoad={e => this.setState({ ...this.state, isLoading: false })}
+                onLoad={e => setTimeout(() => { this.setState({ ...this.state, isLoading: false }) }, 10)}
                 onError={e => e.target.src = defaultImg}
             />
 
             <div className="Movie__title">{this.props.movie.title}</div>
 
-            <LoadingSpinner loading={this.state.isLoading} />
+            <LoadingSpinner isLoading={this.state.isLoading} />
         </div>
     }
 }
