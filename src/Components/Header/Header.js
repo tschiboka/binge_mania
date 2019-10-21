@@ -85,7 +85,6 @@ export default class Header extends Component {
             if (genresOpts.classList.contains("Header__genres__options--expanded")) { genresOpts.style.right = "1%"; genresOpts.style.left = ""; }
             else { genresOpts.style.left = genreRect.left + "px"; genresOpts.style.right = "" }
             genresOpts.style.top = headerRect.bottom + "px";
-            console.log("COORDS ", genresOpts.style.right, genresOpts.style.left);
         }
     }
 

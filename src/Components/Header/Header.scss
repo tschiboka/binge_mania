@@ -2,7 +2,7 @@
 
 .Header {
     position: fixed;
-    width: 96vw;
+    width: calc(100vw - (100vw - 100%) - 4vw);
     background: transparent; /* Old browsers */
     background: -moz-linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.3) 50%, black 100%);
     background: -webkit-linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.3) 50%, black 100%);
@@ -59,9 +59,5 @@
     div {
       padding: 0.5vw;
       cursor: pointer;
-    }
-    .Header__icon:hover {
-      transform: scale(1.1);
-      color: $primaryColor;
     }
   }

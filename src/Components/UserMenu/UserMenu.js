@@ -36,7 +36,7 @@ export default class UserMenu extends Component {
 
 
 
-    handleSignInClick() { this.setState({ ...this.state, signInFormVisible: !this.state.signInFormVisible }); }
+    handleSignInClick() { this.setState({ ...this.state, signInFormVisible: !this.state.signInFormVisible, newUserFormVisible: false }); }
 
 
 
@@ -142,7 +142,7 @@ export default class UserMenu extends Component {
 
 
 
-    handleNewUserClick() { this.setState({ ...this.state, newUserFormVisible: !this.state.newUserFormVisible }); }
+    handleNewUserClick() { this.setState({ ...this.state, newUserFormVisible: !this.state.newUserFormVisible, signInFormVisible: false }); }
 
 
 
@@ -225,13 +225,13 @@ export default class UserMenu extends Component {
                 ref={elem => (this.userMenu = elem)} // give focus in order to be able to call onBlur
             >
                 <ul className="User-menu__list">
-                    {this.props.user && <li className="username">{this.props.user.name}</li>}
+                    {this.props.user.name && <li className="username">{this.props.user.name}</li>}
 
                     <li
                         className="User-menu__list__item"
                         id="User-menu__new-user"
                         onClick={() => this.handleNewUserClick()}
-                    >New User</li>
+                    >New User {this.state.newUserFormVisible && <span>&#9652;</span>}</li>
 
                     {this.state.newUserFormVisible &&
                         <li>
@@ -265,9 +265,9 @@ export default class UserMenu extends Component {
                             className="User-menu__list__item"
                             id="User-menu__sign-in"
                             onClick={() => this.handleSignInClick()}
-                        >Sign In
-                    </li>}
-                    {this.state.signInFormVisible &&
+                        >Sign In {this.state.signInFormVisible && <span>&#9652;</span>}
+                        </li>}
+                    {this.state.signInFormVisible && <li>
                         <form onSubmit={e => this.handleSignInSubmit(e)}>
                             <div>User Name</div>
 
@@ -284,9 +284,10 @@ export default class UserMenu extends Component {
                             {this.state.wrongUserOrPasswordMsg && <div className="warning">Wrong Username or Password</div>}
 
                             <div><button>Sign In</button></div>
-                        </form>}
+                        </form>
+                    </li>}
 
-                    {this.props.user.isAdmin && <li onClick={() => this.showAdmin()}>Admin</li>}
+                    {this.props.user.isAdmin && <li className="User-menu__list__item" onClick={() => this.showAdmin()}>Admin</li>}
 
                     {this.state.signOutVisible &&
                         <li

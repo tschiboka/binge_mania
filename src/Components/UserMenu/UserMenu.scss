@@ -3,7 +3,6 @@
 #User-menu {
     position: absolute;
     right: 0;
-    padding: 2vw;
     border: $borderLight;
     border-top: none;
     border-bottom-left-radius: 5px;
@@ -12,13 +11,55 @@
     background: rgba(0, 0, 0, 0.8);
     box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.8);
     ul { list-style: none; }
-    ul li {
-      font-size: $mediumFontSize;
-      padding: 0.5vh 1vw;
-      cursor: pointer;
+    .User-menu__list__item:hover {
+      border-bottom: $borderLight;
+      border-top: $borderLight;
+      background: rgba(255, 255, 255, 0.1);
+      color: $primaryColor;
     }
-    .username {
-      color: #c0c0c0;
+    ul .username {
+      font-style: italic;
+      font-size: 2.2vh;
+      color: $lightPurple;
+      cursor: default;
+    }
+    ul li {
+      padding: 1vh 1vw;
+      font-size: $mediumFontSize;
+      cursor: pointer;
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.8);
+        border: $borderLight;
+        border-radius: 5px;
+        cursor: default;
+        input {
+          height: calc(0.5vh + $mediumFontSize);
+          border: $borderLight;
+          border-radius: 5px;
+          font-size: $mediumFontSize;
+          background: rgba(255, 255, 255, 0.05); 
+          font-family: $mainFontFamily;
+          color: $lightPurple;
+          font-style: italic;
+        }
+        button {
+          border: $borderLight;
+          border-radius: 5px;
+          background: rgba(0, 0, 0, 0.8);
+          font-size: $mediumFontSize;
+          color: $primaryColor;
+          padding: 0.5vh 2vw;
+          font-family: $mainFontFamily;
+          cursor: pointer;
+        }
+        div {
+          margin: 0.5vh 1vh;
+        }
+      }
     }
     .warning{
       color: $userWarningColor;
