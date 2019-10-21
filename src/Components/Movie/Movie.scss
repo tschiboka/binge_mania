@@ -10,6 +10,7 @@
       width: 100%;
       height: auto;
       border-radius: 5px;
+      animation: img-blur 1s linear;
   }
   .Movie__title {
       position: absolute;
@@ -25,4 +26,9 @@
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       text-align: center;
+  }
+
+  @keyframes img-blur {
+      from { filter: blur(5px) grayscale(100%); }
+      to { filter: blur(0px) grayscale(0%); }
   }

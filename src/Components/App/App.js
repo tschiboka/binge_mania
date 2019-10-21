@@ -3,6 +3,7 @@ import Admin from "../Admin/Admin";
 import Header from "../Header/Header";
 import Movie from "../Movie/Movie";
 import LazyLoad from "react-lazy-load";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import './App.scss';
 import _ from "lodash";
 
@@ -13,7 +14,8 @@ export default class App extends Component {
 
     this.state = {
       user: {},
-      movies: []
+      movies: [],
+      loading: true
     }
   }
 
@@ -22,10 +24,8 @@ export default class App extends Component {
     const response = await fetch("/api/movies");
     let movies = await response.json();
 
-    this.setState({ ...this.state, movies: _.shuffle(movies) });
+    this.setState({ ...this.state, movies: _.shuffle(movies), loading: false });
   }
-
-
 
 
 
@@ -75,6 +75,8 @@ export default class App extends Component {
               user={this.state.user}
               showAdmin={this.showAdmin.bind(this)} />}
         </div>
+
+        <LoadingSpinner isLoading={this.state.loading} />
       </div>
     );
   }
