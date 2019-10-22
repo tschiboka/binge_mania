@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import Movie from "../Movie/Movie";
 import LazyLoad from "react-lazy-load";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import MovieCollection from "../MovieCollection/MovieCollection";
 import './App.scss';
 import _ from "lodash";
 
@@ -62,11 +63,16 @@ export default class App extends Component {
             login={this.login.bind(this)}
             logout={this.logout.bind(this)}
             showAdmin={this.showAdmin.bind(this)}
-            user={this.state.user} />
-        </div>
+            user={this.state.user}
+          />
+          <div className="App__content">
+            <MovieCollection
+              collectionName="Popular"
+              movies={_.chunk(this.state.movies, 7)[0]}
+            />
 
-        <div className="movies">
-          {this.renderRandomMovies()}
+            {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
+          </div>
         </div>
 
         <div className="App__admin">
