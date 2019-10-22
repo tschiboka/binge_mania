@@ -51,9 +51,17 @@ export default class MovieCollection extends Component {
     render() {
         return (
             <div className="MovieCollection">
-                <div className="MovieCollection__title"></div>
+                <div className="MovieCollection__title--outer">
+                    <div className="MovieCollection__title--inner">
+                        {this.props.collectionName}
+                    </div>
+                </div>
 
-                <div className="MovieCollection__pagination"></div>
+                <div className="MovieCollection__pagination--outer">
+                    <div className="MovieCollection__pagination--inner">
+
+                    </div>
+                </div>
 
                 <div className="MovieCollection__main">
                     {this.renderMovies(this.props.movies || [])}

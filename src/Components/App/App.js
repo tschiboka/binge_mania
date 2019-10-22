@@ -67,7 +67,7 @@ export default class App extends Component {
           />
           <div className="App__content">
             <MovieCollection
-              collectionName="Popular"
+              collectionName="Popular in th UK 1990's"
               movies={_.chunk(this.state.movies, 7)[0]}
             />
 
