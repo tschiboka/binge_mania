@@ -1,6 +1,7 @@
 @import "../variables.scss";
 
 .LoadingSpinner {
+    display: block;
     position: absolute;
     width: 64px;
     height: 64px;

@@ -6,12 +6,14 @@ import UserMenu from "../UserMenu/UserMenu";
 export default class Header extends Component {
     constructor(props) {
         super(props);
+
         this.state = {};
     }
 
 
 
     componentDidMount() {
+        console.log("HERE");
         window.addEventListener('resize', () => {
             this.setGenresMenuCoords.bind(this);
             this.setUserMenuCoords.bind(this);
@@ -82,9 +84,19 @@ export default class Header extends Component {
             const headerRect = headerDiv.getBoundingClientRect();
             const genresOpts = document.getElementById("Header__genres__options");
 
-            if (genresOpts.classList.contains("Header__genres__options--expanded")) { genresOpts.style.right = "1%"; genresOpts.style.left = ""; }
-            else { genresOpts.style.left = genreRect.left + "px"; genresOpts.style.right = "" }
-            genresOpts.style.top = headerRect.bottom + "px";
+            // LOADING
+            if (!genresOpts) {
+                const loadingDiv = document.getElementById("Header__genres--loading");
+                loadingDiv.style.top = headerRect.bottom + "px";
+                loadingDiv.style.left = genreRect.left + "px";
+                loadingDiv.style.right = ""
+            } else {
+                // LOADED AND EXTPANDED
+                if (genresOpts.classList.contains("Header__genres__options--expanded")) { genresOpts.style.right = "0"; genresOpts.style.left = ""; }
+                // LOADED NOT EXPANDED
+                else { genresOpts.style.left = genreRect.left + "px"; genresOpts.style.right = ""; }
+                genresOpts.style.top = headerRect.bottom + "px";
+            }
         }
     }
 

@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
 }
-  
+
 
 #Header__genres__options:not(.Header__genres__options--expanded) {
     left: 0;
@@ -19,7 +19,7 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.8);
-    div {
+    div{
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -38,10 +38,10 @@
     div:nth-child(even) {
       background: rgba(255, 255, 255, 0.05);
     }
-    div:nth-child(odd) {
+    div:nth-child(odd){
       background: rgba(0, 0, 0, 0.05);
     }
-    div:last-child {
+    div:last-child:not(.Header__genres--loading) {
       justify-content: center;
       font-style: italic;
       color: $lightPurple;
@@ -120,4 +120,19 @@
       }
     }
   }
+}
+
+#Header__genres--loading {
+  position: absolute;
+  border: $borderLight;
+  border-top: none;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.92);
+  color: #eee;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.8);
+  padding: 1vh 1vw;
+  & > div { transform: scale(0.5); }
+  div { position: absolute; }
 }

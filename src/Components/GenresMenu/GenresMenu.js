@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./GenresMenu.scss";
 import _ from "lodash";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 
 
@@ -94,13 +95,21 @@ export default class GenresMenu extends Component {
 
     render() {
         return (
-            <div
-                id="Header__genres__options"
-                className={this.state.expanded ? "Header__genres__options--expanded" : ""}
-                style={{ visibility: this.props.visible ? "visible" : "hidden" }}>
+            this.props.genres ?
+                <div
+                    id="Header__genres__options"
+                    className={this.state.expanded ? "Header__genres__options--expanded" : ""}
+                    style={{ visibility: this.props.visible ? "visible" : "hidden" }}>
 
-                {this.renderGenreOptions(this.props.genres || [{ "name": "No Genres" }])}
-            </div>
+                    {this.renderGenreOptions(this.props.genres || [])}
+                </div>
+                : <div
+                    id="Header__genres--loading"
+                    style={{ visibility: this.props.visible ? "visible" : "hidden" }}>
+                    Genres loading...
+
+                    <LoadingSpinner isLoading={true} />
+                </div>
         );
     }
 }
