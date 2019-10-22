@@ -64,6 +64,8 @@ export default class UserMenu extends Component {
 
         if (newState.newUser__userNameWarning || newState.newUser__passwordWarning || newState.newUser__emailWarning) return this.setState(newState);
 
+        this.setState({ ...this.state, newUserIsLoading: true });
+
         const addNewUser = async () => {
             try {
                 console.log("HERE");
@@ -82,6 +84,7 @@ export default class UserMenu extends Component {
                     newState.newUserFormVisible = false;
                     newState.signInVisible = false;
                     newState.signOutVisible = true;
+                    newState.newUserIsLoading = false;
                     this.setState(newState);
                 }
 
@@ -263,6 +266,8 @@ export default class UserMenu extends Component {
                                 {this.state.userExist && <div className="warning">User exists on this email</div>}
 
                                 <div><button>Create User</button></div>
+
+                                {this.state.newUserIsLoading && <LoadingSpinner isLoading={true} />}
                             </form>
                         </li>}
 
@@ -304,7 +309,7 @@ export default class UserMenu extends Component {
                             onClick={() => this.handleSignOutClick()}
                         >Sign Out</li>}
                 </ul>
-            </div>
+            </div >
         );
     }
 }

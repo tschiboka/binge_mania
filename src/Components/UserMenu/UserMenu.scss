@@ -57,7 +57,7 @@
           font-family: $mainFontFamily;
           cursor: pointer;
         }
-        div {
+        & > div:not(.LoadingSpinner) {
           margin: 0.5vh 1vh;
         }
       }
