@@ -9,6 +9,9 @@
     border-bottom-right-radius: 5px;
     border-top: none;
     background: rgba(255, 255, 255, 0.03);
+    background: -moz-linear-gradient(0deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.01) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.01) 100%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.01) 100%);
     .MovieCollection__title--outer {
         position: absolute;
         top: -1px;
@@ -31,6 +34,9 @@
             align-items: center;
             clip-path: polygon(0 10px, 10px 0, calc(100% - 20px) 0, 100% 100%, 0 100%);
             background: rgba(0, 0, 0, 0.8);
+            background: -moz-linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.6) 100%);
+            background: -webkit-linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.6) 100%);
+            background: linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.6) 100%);
             color: white;
             transform: translate(-1px, -1px)
         }
@@ -40,19 +46,40 @@
         top: -1px;
         right: -1px;
         width: 30%;
-        height: 2.5vh;
+        height: 2.3vh;
         padding: 1px;
         background: $purple;
         clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%);
-        z-index: 100;
+        z-index: 10;
         .MovieCollection__pagination--inner {
-            width: calc(100%);
+            width: calc(100% - 10px);
             height: calc(100% - 1px);
+            padding: 0 5px;
             display: flex;
             justify-content: flex-end;
-            flex-wrap: wrap;
+            align-items: center;
+            flex-wrap: nowrap;
             background: rgba(0, 0, 0, 0.8);
+            background: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, black 100%);
+            background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, black 100%);
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, black 100%);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%);
+            .pagination--rect {
+                width: 12px;
+                height: 3px;
+                margin-left: 4px;
+                border: $borderLight;
+                border-width: 2px;
+                background: #111;
+            }
+            .pagination--bar {
+                width: 90%;
+                height: 3px;
+                margin-right: 3px;
+                border: $borderLight;
+                border-width: 2px;
+                background: #111;
+            }
         }
     }
     .MovieCollection__main {

@@ -48,6 +48,19 @@ export default class MovieCollection extends Component {
 
 
 
+    renderPagination(movies) {
+        const chunks = movies.length / this.state.moviesInARow;
+        console.log(chunks);
+        if (chunks <= 15) return (
+            _.chunk(movies, this.state.moviesInARow) || []).map((pag, i) => <div
+                key={this.state.collectionName + "pagination" + i}
+                className="pagination--rect"
+            ></div>);
+        return <div className="pagination--bar"><div className="pagination--bar-inner"></div></div>
+    }
+
+
+
     render() {
         return (
             <div className="MovieCollection">
@@ -59,7 +72,7 @@ export default class MovieCollection extends Component {
 
                 <div className="MovieCollection__pagination--outer">
                     <div className="MovieCollection__pagination--inner">
-
+                        {this.renderPagination(this.props.movies || [])}
                     </div>
                 </div>
 
