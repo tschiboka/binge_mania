@@ -28,6 +28,7 @@
       font-size: $mediumFontSize;
       cursor: pointer;
       form {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;

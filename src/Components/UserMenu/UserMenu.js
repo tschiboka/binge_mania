@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import "./UserMenu.scss";
 
 
@@ -22,7 +23,9 @@ export default class UserMenu extends Component {
             newUser__passwordWarning: "",
             newUser__emailWarning: "",
             wrongUserOrPasswordMsg: false,
-            userExist: false
+            userExist: false,
+            signInIsLoading: false,
+            newUserIsLoading: false
         }
     }
 
@@ -109,6 +112,8 @@ export default class UserMenu extends Component {
 
         if (newState.signIn__userNameWarning || newState.signIn__passwordWarning) return this.setState(newState);
 
+        this.setState({ ...this.state, signInIsLoading: true });
+
         const signInUser = async () => {
             try {
                 const response = await fetch("/api/signin/" + userName,
@@ -120,6 +125,7 @@ export default class UserMenu extends Component {
                     newState.signInFormVisible = false;
                     newState.signInVisible = false;
                     newState.signOutVisible = true;
+                    newState.signInIsLoading = false;
                     this.setState(newState);
                 }
                 else {
@@ -284,6 +290,8 @@ export default class UserMenu extends Component {
                             {this.state.wrongUserOrPasswordMsg && <div className="warning">Wrong Username or Password</div>}
 
                             <div><button>Sign In</button></div>
+
+                            {this.state.signInIsLoading && <LoadingSpinner isLoading={true} />}
                         </form>
                     </li>}
 
