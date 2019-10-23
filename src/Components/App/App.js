@@ -68,7 +68,7 @@ export default class App extends Component {
           <div className="App__content">
             <MovieCollection
               collectionName="Popular in th UK 1990's"
-              movies={_.chunk(this.state.movies, 70)[0]}
+              movies={_.chunk(this.state.movies, 20)[0]}
             />
 
             {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
