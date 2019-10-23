@@ -8,25 +8,35 @@ export default class MovieCollection extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { currentPage: 0 };
+        this.state = {
+            currentPage: 0,
+            currentFirstMovie: 0
+        };
     }
 
 
     componentDidMount() {
         this.setAmountOfMoviesInARow();
-        window.addEventListener('resize', () => { this.setAmountOfMoviesInARow(); });
+        window.addEventListener('resize', () => { this.setAmountOfMoviesInARow(); this.findCurrentPage(); });
     }
 
 
 
-    componentDidUpdate() {
-        this.findCurrentPage();
+    componentWillUpdate() {
+
     }
 
 
 
     findCurrentPage() {
-
+        //console.log((this.props.movies || []).length);
+        let row = -1;
+        for (let i = 0; i < (this.props.movies || []).length; i++) {
+            if (i % this.state.moviesInARow === 0) row++;
+            //console.log(i, row, this.state.currentFirstMovie);
+            if (i === this.state.currentFirstMovie) break;
+        }
+        this.setState({ ...this.state, currentPage: row, currentFirstMovie: this.state.moviesInARow * row });
     }
 
 
@@ -42,10 +52,18 @@ export default class MovieCollection extends Component {
 
 
     handleArrowBtnClick(doIncrement) {
-        if (!doIncrement && this.state.currentPage > 0) return this.setState({ ...this.state, currentPage: --this.state.currentPage });
+        if (!doIncrement && this.state.currentPage > 0) return this.setState({
+            ...this.state,
+            currentPage: --this.state.currentPage,
+            currentFirstMovie: this.state.currentFirstMovie - this.state.moviesInARow
+        });
 
         const maxPage = this.props.movies.length / this.state.moviesInARow;
-        if (doIncrement && this.state.currentPage < maxPage - 1) this.setState({ ...this.state, currentPage: ++this.state.currentPage });
+        if (doIncrement && this.state.currentPage < maxPage - 1) this.setState({
+            ...this.state,
+            currentPage: ++this.state.currentPage,
+            currentFirstMovie: this.state.currentFirstMovie + this.state.moviesInARow
+        });
     }
 
 
