@@ -45,7 +45,13 @@ time, mark, audio, video {
   background-image: url("../../images/background-tile.png");
   color: $primaryColor;
   .App__content {
-    padding: 13vh 1.5% 0 1.5%;
+    padding: 6vh 1.5% 0 1.5%;
+    display: flex;
+    flex-direction: column;
+    .MovieCollection {
+      margin-top: 9vh;
+      min-height: 40vh;
+    }
     .movies {
       display: flex;
       flex-wrap: wrap;
