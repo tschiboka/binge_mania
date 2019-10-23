@@ -1,5 +1,7 @@
 @import "../variables.scss";
 
+$darkGreen: rgb(23, 42, 31);
+
 .MovieCollection {
     position: relative;
     width: 98%;
@@ -113,9 +115,9 @@
             }
             .active {
                 background: rgb(165, 240, 198);
-                background: -moz-linear-gradient(90deg, rgb(127, 187, 153) 0%, rgb(177, 235, 202) 50%, rgb(127, 187, 153) 100%);
-                background: -webkit-linear-gradient(90deg, rgb(127, 187, 153) 0%, rgb(177, 235, 202) 50%, rgb(127, 187, 153) 100%);
-                background: linear-gradient(90deg, rgb(127, 187, 153) 0%, rgb(177, 235, 202) 50%, rgb(127, 187, 153) 100%);    
+                background: -moz-linear-gradient($darkGreen 0%, rgb(177, 235, 202) 50%, $darkGreen 100%);
+                background: -webkit-linear-gradient($darkGreen 0%, rgb(177, 235, 202) 50%, $darkGreen 100%);
+                background: linear-gradient($darkGreen 0%, rgb(177, 235, 202) 50%, $darkGreen 100%);    
             }
         }
     }

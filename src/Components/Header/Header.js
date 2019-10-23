@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./Header.scss";
 import GenresMenu from "../GenresMenu/GenresMenu";
 import UserMenu from "../UserMenu/UserMenu";
+import Avatar from "../../images/user-avatar.png";
+import Cart from "../../images/shopping-cart.png";
 
 export default class Header extends Component {
     constructor(props) {
@@ -141,7 +143,9 @@ export default class Header extends Component {
                         />
                     </div>
 
-                    <div id="Header__icons__shopping-cart" className="Header__icon">Cart</div>
+                    <div id="Header__icons__shopping-cart" className="Header__icon">
+                        <img src={Cart} alt="shopping-cart" />
+                    </div>
 
                     <div
                         className="Header__icons__user Header__icon"
@@ -150,7 +154,9 @@ export default class Header extends Component {
                         onMouseOut={() => this.toggleUserIconMouseOver(false)}
                         tabIndex={0}
                     >
-                        User
+                        <div className="Header__icons__user__avatar">
+                            <img src={Avatar} alt="avatar" />
+                        </div>
                     </div>
                 </div>
 
