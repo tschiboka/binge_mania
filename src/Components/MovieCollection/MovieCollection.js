@@ -71,11 +71,8 @@ export default class MovieCollection extends Component {
         let rowOfMovies = _.chunk(movies, this.state.moviesInARow)[this.state.currentPage] || [];
 
         // if last page has less movies than a row take the last n ones
-        if (rowOfMovies.length && rowOfMovies.length < this.state.moviesInARow) {
-            console.log(rowOfMovies);
-            rowOfMovies = _.takeRight(movies, this.state.moviesInARow);
-            console.log("FILL", rowOfMovies);
-        }
+        if (rowOfMovies.length && rowOfMovies.length < this.state.moviesInARow) rowOfMovies = _.takeRight(movies, this.state.moviesInARow);
+
         return rowOfMovies.map((movie, i) => <LazyLoad
             key={this.props.collectionName + i}
             debounce={false}
@@ -95,7 +92,12 @@ export default class MovieCollection extends Component {
                 key={this.state.collectionName + "pagination" + i}
                 className={"pagination--rect " + (i === this.state.currentPage ? "current" : "")}
             ></div>);
-        return <div className="pagination--bar"><div className="pagination--bar-inner"></div></div>
+        return <div className="pagination--bar">
+            <div
+                className="pagination--bar-inner"
+                style={{ width: (((this.state.currentPage + 1) * this.state.moviesInARow) * (100 / movies.length)) + "%" }}
+            ></div>
+        </div>
     }
 
 

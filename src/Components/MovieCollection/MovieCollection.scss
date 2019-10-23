@@ -81,6 +81,11 @@
                 border: $borderLight;
                 border-width: 2px;
                 background: #111;
+                .pagination--bar-inner {
+                    max-width: 100%;
+                    height: 100%;
+                    background: #a5f0c6;
+                }
             }
         }
     }
