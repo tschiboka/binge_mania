@@ -29,13 +29,12 @@ export default class MovieCollection extends Component {
 
 
     findCurrentPage() {
-        //console.log((this.props.movies || []).length);
         let row = -1;
         for (let i = 0; i < (this.props.movies || []).length; i++) {
             if (i % this.state.moviesInARow === 0) row++;
-            //console.log(i, row, this.state.currentFirstMovie);
             if (i === this.state.currentFirstMovie) break;
         }
+
         this.setState({ ...this.state, currentPage: row, currentFirstMovie: this.state.moviesInARow * row });
     }
 
@@ -69,8 +68,14 @@ export default class MovieCollection extends Component {
 
 
     renderMovies(movies) {
-        const rowOfMovies = _.chunk(movies, this.state.moviesInARow)[this.state.currentPage] || [];
+        let rowOfMovies = _.chunk(movies, this.state.moviesInARow)[this.state.currentPage] || [];
 
+        // if last page has less movies than a row take the last n ones
+        if (rowOfMovies.length && rowOfMovies.length < this.state.moviesInARow) {
+            console.log(rowOfMovies);
+            rowOfMovies = _.takeRight(movies, this.state.moviesInARow);
+            console.log("FILL", rowOfMovies);
+        }
         return rowOfMovies.map((movie, i) => <LazyLoad
             key={this.props.collectionName + i}
             debounce={false}
