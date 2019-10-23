@@ -117,19 +117,22 @@ export default class MovieCollection extends Component {
                     </div>
                 </div>
 
-                <div id="MovieCollection__arrow__left--outer">
+                <div id="MovieCollection__arrow__left--outer" onClick={() => this.handleArrowBtnClick(false)}>
                     <div className="MovieCollection__arrow__left--inner">
-                        {/*
-                        <button onClick={() => this.handleArrowBtnClick(false)} > -</button>
-                   */}
+                        <div
+                            className={"MovieCollection__arrow__sign--left" + (this.state.currentPage !== 0 ? " active" : "")}
+                        >
+
+                        </div>
                     </div>
                 </div>
 
-                <div id="MovieCollection__arrow__right--outer">
+                <div id="MovieCollection__arrow__right--outer" onClick={() => this.handleArrowBtnClick(true)}>
                     <div className="MovieCollection__arrow__right--inner">
-                        {/*
-                        <button onClick={() => this.handleArrowBtnClick(true)}>+</button>
-                    */}
+                        <div
+                            className={"MovieCollection__arrow__sign--right" +
+                                ((this.props.movies || []).length > this.state.moviesInARow * (this.state.currentPage + 1) ? " active" : "")}
+                        ></div>
                     </div>
                 </div>
 
