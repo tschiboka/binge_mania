@@ -119,13 +119,17 @@ export default class MovieCollection extends Component {
 
                 <div id="MovieCollection__arrow__left--outer">
                     <div className="MovieCollection__arrow__left--inner">
+                        {/*
                         <button onClick={() => this.handleArrowBtnClick(false)} > -</button>
+                   */}
                     </div>
                 </div>
 
                 <div id="MovieCollection__arrow__right--outer">
                     <div className="MovieCollection__arrow__right--inner">
+                        {/*
                         <button onClick={() => this.handleArrowBtnClick(true)}>+</button>
+                    */}
                     </div>
                 </div>
 
