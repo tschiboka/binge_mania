@@ -75,6 +75,7 @@ $metalBg: url("../../images/gun-metal.png");
                             text-overflow: ellipsis;
                             white-space: nowrap;
                             text-shadow: -1px -1px 1px black, 1px 1px 1px black;
+                            text-align: center;
                         }
                     }
                 }
@@ -129,7 +130,7 @@ $metalBg: url("../../images/gun-metal.png");
             }
             .MovieDetails__poster {
                 width: calc(100% - 40px);
-                height: calc(95% - 20px);
+                height: calc(90% - 20px);
                 margin: 0 20px 10px 20px;
                 div {
                     width: 100%;
@@ -137,6 +138,86 @@ $metalBg: url("../../images/gun-metal.png");
                     background-position: center;
                     background-size: cover;
                     background-repeat: no-repeat;
+                }
+            }
+            .MovieDetails__frame--left--outer {
+                position: absolute;
+                width: 20px;
+                height: 95%;
+                top: 5%;
+                left: 0;
+                clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), 0 100%);
+                background: $deepPurple;
+                .MovieDetails__frame--left--middle {
+                    width: calc(100% - 4px);
+                    height: calc(100% - 4px);
+                    margin: 1px;
+                    background-image: $metalBg;
+                    background-color: black;
+                    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), 0 100%);
+                    .MovieDetails__frame--left--inner {
+                        width: 100%;
+                        height: 100%;
+                        background: $gradientVerticalReverse;
+                    }
+                }
+            }
+            .MovieDetails__frame--right--outer {
+                position: absolute;
+                width: 20px;
+                height: 95%;
+                top: 5%;
+                right: 0;
+                clip-path: polygon(5% 5%, 100% 5%, 100% 100%, 0 calc(100% - 20px));
+                background: $deepPurple;
+                .MovieDetails__frame--right--middle {
+                    width: calc(100% - 4px);
+                    height: calc(100% - 3px);
+                    margin: 1px 3px;
+                    background-image: $metalBg;
+                    background-color: black;
+                    clip-path: polygon(5% 5%, 100% 5%, 100% 100%, 0 calc(100% - 18px));
+                    .MovieDetails__frame--right--inner {
+                        width: 100%;
+                        height: 100%;
+                        background: $gradientVerticalReverse;
+                    }
+                }
+            }
+            .MovieDetails__frame--bottom--outer {
+                position: absolute;
+                width: 100%;
+                height: 10%;
+                bottom: 0;
+                left: 0;
+                background: $purple;
+                clip-path: polygon(
+                    20px 0,
+                    calc(100% - 20px) 0,
+                    calc(100% - 20px) calc(100% - 20px),
+                    100% 100%,
+                    0 100%,
+                    20px calc(100% - 20px)
+                );
+                .MovieDetails__frame--bottom--middle {
+                    width: calc(100% - 4px);
+                    height: calc(100% - 3px);
+                    margin: 1px 3px;
+                    background-image: $metalBg;
+                    background-color: black;
+                    clip-path: polygon(
+                        19px 0,
+                        calc(100% - 20px) 0,
+                        calc(100% - 20px) calc(100% - 20px),
+                        100% 100%,
+                        0 100%,
+                        19px calc(100% - 19px)
+                    );
+                    .MovieDetails__frame--bottom--inner {
+                        width: 100%;
+                        height: 100%;
+                        background: $gradientHorizontal;
+                    }
                 }
             }
         }

@@ -37,6 +37,24 @@ export default class MovieDetails extends Component {
                                 title={this.props.movie.title + " cover image"}>
                             </div>
                         </div>
+
+                        <div className="MovieDetails__frame--left--outer">
+                            <div className="MovieDetails__frame--left--middle">
+                                <div className="MovieDetails__frame--left--inner"></div>
+                            </div>
+                        </div>
+
+                        <div className="MovieDetails__frame--right--outer">
+                            <div className="MovieDetails__frame--right--middle">
+                                <div className="MovieDetails__frame--right--inner"></div>
+                            </div>
+                        </div>
+
+                        <div className="MovieDetails__frame--bottom--outer">
+                            <div className="MovieDetails__frame--bottom--middle">
+                                <div className="MovieDetails__frame--bottom--inner"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
