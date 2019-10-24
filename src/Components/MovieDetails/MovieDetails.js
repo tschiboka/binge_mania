@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import "./MovieDetails.scss";
 
 export default class MovieDetails extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            detailsOn: true
+        };
+    }
+
+
+
     render() {
         return (
             <div className="MovieDetails">
@@ -33,8 +43,13 @@ export default class MovieDetails extends Component {
 
                         <div className="MovieDetails__poster">
                             <div
+                                className="MovieDetails__poster-img"
                                 style={{ backgroundImage: `url(${this.props.movie.coverImgUrl})` }}
                                 title={this.props.movie.title + " cover image"}>
+                                {this.state.detailsOn &&
+                                    <div className="MovieDetails__details">
+
+                                    </div>}
                             </div>
                         </div>
 
@@ -55,6 +70,7 @@ export default class MovieDetails extends Component {
                                 <div className="MovieDetails__frame--bottom--inner"></div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

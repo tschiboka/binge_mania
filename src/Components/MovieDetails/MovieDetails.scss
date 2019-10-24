@@ -12,9 +12,10 @@ $mainClip: polygon(
     0 calc(100% - 20px),
     0 20px
 ); 
-$gradientHorizontal:linear-gradient(black 0%, rgba(255, 255, 255, 0.05) 50%, black 100%);
-$gradientVerticalReverse:linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0%, black 50%, rgba(255, 255, 255, 0.07) 100%);
-$deepPurple: #211a23;
+$gradientHorizontal:linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+$gradientVertical: linear-gradient(90deg, black 0%,  rgba(255, 255, 255, 0.09) 50%, black 100%);
+$gradientVerticalReverse:linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0%, black 50%, rgba(255, 255, 255, 0.09) 100%);
+$deepPurple: #1e151e;
 $metalBg: url("../../images/gun-metal.png");
 
 .MovieDetails {
@@ -44,32 +45,29 @@ $metalBg: url("../../images/gun-metal.png");
             background: black;
             clip-path: $mainClip;
             .MovieDetails__title--outer {
-                width: 65%;
+                max-width: 100%;
                 height: calc(5% - 1px);
+                padding: 0 calc(35% + 3%) 0 3%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 border-bottom: 2px solid $deepPurple;
                 background-image: $metalBg;
                 .MovieDetails__title--inner {
-                    width: 100%;
-                    height: 100%;
+                    max-width: 90%;
                     background: $gradientHorizontal;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
                     font-size: $mediumFontSize;
                     .MovieDetails__title--base {
-                        max-width: 33vw;
-                        height: 100%;
                         background: black;
-                        border: $deepPurple 2px solid;
+                        border: $deepPurple 5px solid;
                         border-top: none;
                         border-bottom: none;
                         border-radius: 7px;
                         .MovieDetails__title {
-                            width: calc(100% - 2vw);
                             height: 100%;
                             padding: 0 1vw;
                             background: $gradientVerticalReverse;
-                            color: #84c792;
+                            color: #89cdeb;
                             line-height: 4.5vh;
                             overflow: hidden;
                             text-overflow: ellipsis;
@@ -88,6 +86,7 @@ $metalBg: url("../../images/gun-metal.png");
                 height: 5%;
                 background: $deepPurple;
                 clip-path: polygon(-1px 0, 100% 0, 100% 100%, 20px 100%);
+                z-index: 5;
                 .MovieDetails__btn-box--middle {
                     width: calc(100% - 2px);
                     height: calc(100% - 2px);
@@ -105,7 +104,7 @@ $metalBg: url("../../images/gun-metal.png");
                             background: black;
                             width: 4.7vh;
                             height: 100%;
-                            border: $deepPurple 2px solid;
+                            border: $deepPurple 5px solid;
                             border-top: none;
                             border-bottom: none;
                             border-radius: 7px;
@@ -130,14 +129,21 @@ $metalBg: url("../../images/gun-metal.png");
             }
             .MovieDetails__poster {
                 width: calc(100% - 40px);
-                height: calc(90% - 20px);
+                height: calc(90% - 37px);
                 margin: 0 20px 10px 20px;
-                div {
+                .MovieDetails__poster-img {
+                    position: relative;
                     width: 100%;
                     height: 100%;
                     background-position: center;
                     background-size: cover;
                     background-repeat: no-repeat;
+                    .MovieDetails__details {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        //background: red;
+                    }
                 }
             }
             .MovieDetails__frame--left--outer {
@@ -158,7 +164,7 @@ $metalBg: url("../../images/gun-metal.png");
                     .MovieDetails__frame--left--inner {
                         width: 100%;
                         height: 100%;
-                        background: $gradientVerticalReverse;
+                        background: $gradientVertical;
                     }
                 }
             }
@@ -180,7 +186,7 @@ $metalBg: url("../../images/gun-metal.png");
                     .MovieDetails__frame--right--inner {
                         width: 100%;
                         height: 100%;
-                        background: $gradientVerticalReverse;
+                        background: $gradientVertical;
                     }
                 }
             }
@@ -190,7 +196,7 @@ $metalBg: url("../../images/gun-metal.png");
                 height: 10%;
                 bottom: 0;
                 left: 0;
-                background: $purple;
+                background: $deepPurple;
                 clip-path: polygon(
                     20px 0,
                     calc(100% - 20px) 0,
@@ -202,16 +208,16 @@ $metalBg: url("../../images/gun-metal.png");
                 .MovieDetails__frame--bottom--middle {
                     width: calc(100% - 4px);
                     height: calc(100% - 3px);
-                    margin: 1px 3px;
+                    margin: 2px 3px;
                     background-image: $metalBg;
                     background-color: black;
                     clip-path: polygon(
-                        19px 0,
-                        calc(100% - 20px) 0,
-                        calc(100% - 20px) calc(100% - 20px),
+                        17px 0,
+                        calc(100% - 18px) 0,
+                        calc(100% - 18px) calc(100% - 20px),
                         100% 100%,
                         0 100%,
-                        19px calc(100% - 19px)
+                        17px calc(100% - 17px)
                     );
                     .MovieDetails__frame--bottom--inner {
                         width: 100%;

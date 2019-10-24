@@ -69,6 +69,6 @@ time, mark, audio, video {
 }
 
 .blurred {
-  filter: blur(2px);
-  -webkit-filter: blur(2px);  
+  filter: blur(2px) grayscale(100%);
+  -webkit-filter: blur(2px) grayscale(100%);  
 }
