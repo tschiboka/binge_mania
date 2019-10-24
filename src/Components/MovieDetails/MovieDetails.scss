@@ -12,6 +12,10 @@ $mainClip: polygon(
     0 calc(100% - 20px),
     0 20px
 ); 
+$gradientHorizontal:linear-gradient(black 0%, rgba(255, 255, 255, 0.05) 50%, black 100%);
+$gradientVerticalReverse:linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0%, black 50%, rgba(255, 255, 255, 0.07) 100%);
+$deepPurple: #211a23;
+$metalBg: url("../../images/gun-metal.png");
 
 .MovieDetails {
     position: absolute;
@@ -25,19 +29,86 @@ $mainClip: polygon(
     .MovieDetails__main--outer {
         width: 90vw;
         height: 90vh;
-        min-width: 200px;
-        min-height: 300px;
+        min-width: 300px;
+        min-height: 500px;
         background: black;
         max-width: 500px;
         max-height: 700px;
-        background: $purple;
+        background: $deepPurple;
         clip-path: $mainClip;
         .MovieDetails__main--inner {
+            position: relative;
             width: calc(100% - 4px);
             height: calc(100% - 4px);
             margin: 2px;
             background: black;
             clip-path: $mainClip;
+            .MovieDetails__title--outer {
+                width: 65%;
+                height: calc(5% - 1px);
+                border-bottom: 2px solid $deepPurple;
+                background-image: $metalBg;
+                .MovieDetails__title--inner {
+                    width: 100%;
+                    height: 100%;
+                    background: $gradientHorizontal;
+                    color: #baa9bf;
+                    padding: 0 7%;
+                    display: flex;
+                    align-items: center;
+                    text-align: center;
+                    font-size: $mediumFontSize;
+                    text-shadow: -2px -2px black, 2px 2px black;
+                }
+            }
+            .MovieDetails__btn-box--outer {
+                position: absolute;
+                top: calc(5% - 2px);
+                right: 0;
+                width: 35%;
+                height: 5%;
+                background: $deepPurple;
+                clip-path: polygon(-1px 0, 100% 0, 100% 100%, 20px 100%);
+                .MovieDetails__btn-box--middle {
+                    width: calc(100% - 2px);
+                    height: calc(100% - 2px);
+                    margin: 0 0 2px 2px;
+                    background: black $metalBg;
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 19px 100%);
+                    .MovieDetails__btn-box--inner {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background: $gradientHorizontal;
+                        .MovieDetails__btn-box__btn-base {
+                            background: black;
+                            width: 4.7vh;
+                            height: 100%;
+                            border: $deepPurple 2px solid;
+                            border-top: none;
+                            border-bottom: none;
+                            border-radius: 7px;
+                            button {
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                background: $gradientVerticalReverse;
+                                color: deeppink;
+                                border: none;
+                                font-size: 3vh;
+                                cursor: pointer;
+                            }
+                            button:hover {
+                                font-size: 4vh;
+                            } 
+                        }
+                    }
+                }
+            }
         }
     }
 }
