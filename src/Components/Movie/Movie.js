@@ -17,17 +17,21 @@ export default class Movie extends Component {
 
 
     render() {
-        return <div className="Movie">
-            <img
-                className="Movie__cover-img"
-                src={this.props.movie.coverImgUrl}
-                alt="movie-cover-img"
-                effect="blur"
-                onLoad={e => setTimeout(() => { this.setState({ ...this.state, isLoading: false }) }, 10)}
-                onError={e => e.target.src = defaultImg}
-            />
+        return <div
+            className="Movie"
+            onClick={() => this.props.showMovieDetails(true, this.props.movie)}
+        >
+            <div className="Movie__container">
+                <img
+                    className="Movie__cover-img"
+                    src={this.props.movie.coverImgUrl}
+                    alt="movie-cover-img"
+                    onLoad={e => this.setState({ ...this.state, isLoading: false })}
+                    onError={e => e.target.src = defaultImg}
+                />
 
-            <div className="Movie__title">{this.props.movie.title}</div>
+                <div className="Movie__title">{this.props.movie.title}</div>
+            </div>
 
             <LoadingSpinner isLoading={this.state.isLoading} />
         </div>

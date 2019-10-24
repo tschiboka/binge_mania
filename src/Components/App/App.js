@@ -5,6 +5,7 @@ import Movie from "../Movie/Movie";
 import LazyLoad from "react-lazy-load";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import MovieCollection from "../MovieCollection/MovieCollection";
+import MovieDetails from "../MovieDetails/MovieDetails";
 import './App.scss';
 import _ from "lodash";
 
@@ -65,6 +66,10 @@ export default class App extends Component {
 
 
 
+  showMovieDetails(isVisible, movie) { this.setState({ ...this.state, showMovieDetails: isVisible, movieDetails: movie }); }
+
+
+
   renderRandomMovies() {
     return this.state.movies.map((movie, i) =>
       <LazyLoad
@@ -81,7 +86,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className={"App__main" + (this.state.showAdmin ? " blurred" : "")}>
+        <div className={"App__main" + (this.state.showAdmin || this.state.showMovieDetails ? " blurred" : "")}>
           <Header
             login={this.login.bind(this)}
             logout={this.logout.bind(this)}
@@ -90,8 +95,8 @@ export default class App extends Component {
           />
           {this.state.categories &&
             <div className="App__content">
-              <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} />
-
+              <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+              {/*
               <MovieCollection collectionName="High Stock Movies" movies={this.state.categories.highStockMovies} />
 
               <MovieCollection collectionName="Todays Pick" movies={this.state.categories.todaysPicksMovies} />
@@ -113,10 +118,16 @@ export default class App extends Component {
               <MovieCollection collectionName="Crime" movies={this.state.categories.crimeMovies} />
 
               <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} />
+
+ */}
             </div>
           }
           {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
         </div>
+
+        {this.state.showMovieDetails &&
+          <MovieDetails showMovieDetails={this.showMovieDetails.bind(this)} movie={this.state.movieDetails} />
+        }
 
         <div className="App__admin">
           {this.state.showAdmin &&

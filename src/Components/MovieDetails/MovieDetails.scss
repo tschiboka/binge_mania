@@ -1,0 +1,43 @@
+@import "../variables.scss";
+
+$mainClip: polygon(
+    20px 0,
+    60% 0,
+    65% 5%,
+    calc(100% - 20px) 5%,
+    100% calc(5% + 20px),
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    20px 100%,
+    0 calc(100% - 20px),
+    0 20px
+); 
+
+.MovieDetails {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .MovieDetails__main--outer {
+        width: 90vw;
+        height: 90vh;
+        min-width: 200px;
+        min-height: 300px;
+        background: black;
+        max-width: 500px;
+        max-height: 700px;
+        background: $purple;
+        clip-path: $mainClip;
+        .MovieDetails__main--inner {
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+            margin: 2px;
+            background: black;
+            clip-path: $mainClip;
+        }
+    }
+}

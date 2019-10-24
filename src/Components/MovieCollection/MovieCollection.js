@@ -77,7 +77,7 @@ export default class MovieCollection extends Component {
             key={this.props.collectionName + i}
             debounce={false}
         >
-            <Movie movie={movie} />
+            <Movie movie={movie} showMovieDetails={this.props.showMovieDetails} />
         </LazyLoad>
         );
     }
