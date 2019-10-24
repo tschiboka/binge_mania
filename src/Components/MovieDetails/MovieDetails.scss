@@ -27,8 +27,8 @@ $metalBg: url("../../images/gun-metal.png");
     justify-content: center;
     align-items: center;
     .MovieDetails__main--outer {
-        width: 90vw;
-        height: 90vh;
+        width: 95vw;
+        height: 95vh;
         min-width: 300px;
         min-height: 500px;
         background: black;
@@ -52,13 +52,31 @@ $metalBg: url("../../images/gun-metal.png");
                     width: 100%;
                     height: 100%;
                     background: $gradientHorizontal;
-                    color: #baa9bf;
-                    padding: 0 7%;
                     display: flex;
+                    justify-content: center;
                     align-items: center;
-                    text-align: center;
                     font-size: $mediumFontSize;
-                    text-shadow: -2px -2px black, 2px 2px black;
+                    .MovieDetails__title--base {
+                        max-width: 33vw;
+                        height: 100%;
+                        background: black;
+                        border: $deepPurple 2px solid;
+                        border-top: none;
+                        border-bottom: none;
+                        border-radius: 7px;
+                        .MovieDetails__title {
+                            width: calc(100% - 2vw);
+                            height: 100%;
+                            padding: 0 1vw;
+                            background: $gradientVerticalReverse;
+                            color: #84c792;
+                            line-height: 4.5vh;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            text-shadow: -1px -1px 1px black, 1px 1px 1px black;
+                        }
+                    }
                 }
             }
             .MovieDetails__btn-box--outer {

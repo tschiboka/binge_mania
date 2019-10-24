@@ -13,7 +13,11 @@ export default class MovieDetails extends Component {
                     <div className="MovieDetails__main--inner">
                         <div className="MovieDetails__title--outer" >
                             <div className="MovieDetails__title--inner">
-                                {this.props.movie.title}
+                                <div className="MovieDetails__title--base">
+                                    <div className="MovieDetails__title">
+                                        {this.props.movie.title}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
