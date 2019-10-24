@@ -54,39 +54,41 @@
   
   .Header__icons {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
-    #Header__icons__shopping-cart {
-      background: rgba(255, 255, 255, 0.1);
+    padding: 1.5vh 1vw;
+    cursor: pointer;
+    #Header__icons__shopping-cart, .Header__icons__user__avatar {
+      margin-left: 1vw;
+      width: 5.5vh;
+      height: 5.5vh;
+      background: rgba(255, 255, 255, 0.075);
       border-radius: 50%;
-      width: 4.5vh;
-      height: 4.5vh;
+      border: $borderLight;
+      border-bottom-color: transparent;
+      border-right-color: transparent;
+      border-width: 2px;
       &:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(0, 0, 0, 0.075);
+        border-top: none;
+        border-bottom-color: $purple;
+        border-right-color: $purple;
+        border-top-color: transparent;
+        border-left-color: transparent;
       }
       img {
-        width: 4.3vh;
-        height: 4.3vh;
+        margin: 0.5vh;
+        width: 4.5vh;
+        height: 4.5vh;
         border-radius: 50%;
       }
     }
-    .Header__icons__user__avatar {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      width: 4.5vh;
-      height: 4.5vh;
+    #Header__icons__genres {
       &:hover {
-        background: rgba(255, 255, 255, 0.2);
+        border-bottom: $borderLight;
       }
-      img {
-        margin: 0.1vh;
-        width: 4.3vh;
-        height: 4.3vh;
-        border-radius: 50%;
+      div {
+        padding: 0.5vh;
       }
-    }
-    div {
-      padding: 0.5vw;
-      cursor: pointer;
     }
   }
