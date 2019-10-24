@@ -127,6 +127,18 @@ $metalBg: url("../../images/gun-metal.png");
                     }
                 }
             }
+            .MovieDetails__poster {
+                width: calc(100% - 40px);
+                height: calc(95% - 20px);
+                margin: 0 20px 10px 20px;
+                div {
+                    width: 100%;
+                    height: 100%;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                }
+            }
         }
     }
 }

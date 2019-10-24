@@ -31,6 +31,12 @@ export default class MovieDetails extends Component {
                             </div>
                         </div>
 
+                        <div className="MovieDetails__poster">
+                            <div
+                                style={{ backgroundImage: `url(${this.props.movie.coverImgUrl})` }}
+                                title={this.props.movie.title + " cover image"}>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
