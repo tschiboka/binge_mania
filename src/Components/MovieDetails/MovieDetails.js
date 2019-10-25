@@ -49,30 +49,31 @@ export default class MovieDetails extends Component {
                                 {this.state.detailsOn &&
                                     <div className="MovieDetails__details">
                                         <div id="MovieDetails__label--genre" className="MovieDetails__details__label">
-                                            <div>GENRES</div>
-
-                                            <div>{this.props.movie.genres.join(",")}</div>
+                                            GENRES: {this.props.movie.genres.join(",")}
 
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
 
                                         <div id="MovieDetails__label--cast" className="MovieDetails__details__label">
-                                            CAST
+                                            CAST: {this.props.movie.cast.join(",")}
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
 
                                         <div id="MovieDetails__label--year" className="MovieDetails__details__label">
-                                            RELEASE YEAR
+                                            RELEASE YEAR: {this.props.movie.year}
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
 
                                         <div id="MovieDetails__label--time" className="MovieDetails__details__label">
-                                            RUNTIME
+                                            RUNTIME: {this.props.movie.time} MIN
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
 
                                         <div id="MovieDetails__label--sum" className="MovieDetails__details__label">
                                             SHORT SUMMARY
+
+                                            {this.state.summeryExpanded ? <span> &#9660;</span> : <span> &#9660;</span>}
+
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
                                     </div>}
