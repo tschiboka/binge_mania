@@ -3,6 +3,11 @@
   src: url("../../fonts/HelveticaNeue-Thin.otf");
 }
 
+@font-face {
+  font-family: "Abel";
+  src: url("../../fonts/Abel-Regular.ttf");
+}
+
 @import "../variables.scss";
 
 * {

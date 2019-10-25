@@ -48,7 +48,33 @@ export default class MovieDetails extends Component {
                                 title={this.props.movie.title + " cover image"}>
                                 {this.state.detailsOn &&
                                     <div className="MovieDetails__details">
+                                        <div id="MovieDetails__label--genre" className="MovieDetails__details__label">
+                                            <div>GENRES</div>
 
+                                            <div>{this.props.movie.genres.join(",")}</div>
+
+                                            <div className="MovieDetails__details__label--end"></div>
+                                        </div>
+
+                                        <div id="MovieDetails__label--cast" className="MovieDetails__details__label">
+                                            CAST
+                                            <div className="MovieDetails__details__label--end"></div>
+                                        </div>
+
+                                        <div id="MovieDetails__label--year" className="MovieDetails__details__label">
+                                            RELEASE YEAR
+                                            <div className="MovieDetails__details__label--end"></div>
+                                        </div>
+
+                                        <div id="MovieDetails__label--time" className="MovieDetails__details__label">
+                                            RUNTIME
+                                            <div className="MovieDetails__details__label--end"></div>
+                                        </div>
+
+                                        <div id="MovieDetails__label--sum" className="MovieDetails__details__label">
+                                            SHORT SUMMARY
+                                            <div className="MovieDetails__details__label--end"></div>
+                                        </div>
                                     </div>}
                             </div>
                         </div>

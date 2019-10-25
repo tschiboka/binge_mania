@@ -27,6 +27,8 @@ $metalBg: url("../../images/gun-metal.png");
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 100;
+    font-family: "Abel";
     .MovieDetails__main--outer {
         width: 95vw;
         height: 95vh;
@@ -37,6 +39,7 @@ $metalBg: url("../../images/gun-metal.png");
         max-height: 700px;
         background: $deepPurple;
         clip-path: $mainClip;
+        border-radius: 10px;
         .MovieDetails__main--inner {
             position: relative;
             width: calc(100% - 4px);
@@ -44,6 +47,7 @@ $metalBg: url("../../images/gun-metal.png");
             margin: 2px;
             background: black;
             clip-path: $mainClip;
+            border-radius: 10px;
             .MovieDetails__title--outer {
                 max-width: 100%;
                 height: calc(5% - 1px);
@@ -52,10 +56,9 @@ $metalBg: url("../../images/gun-metal.png");
                 justify-content: center;
                 align-items: center;
                 border-bottom: 2px solid $deepPurple;
-                background-image: $metalBg;
+                background: $metalBg, $gradientHorizontal;
                 .MovieDetails__title--inner {
                     max-width: 90%;
-                    background: $gradientHorizontal;
                     font-size: $mediumFontSize;
                     .MovieDetails__title--base {
                         background: black;
@@ -85,6 +88,7 @@ $metalBg: url("../../images/gun-metal.png");
                 width: 35%;
                 height: 5%;
                 background: $deepPurple;
+                border-bottom-left-radius: 10px;
                 clip-path: polygon(-1px 0, 100% 0, 100% 100%, 20px 100%);
                 z-index: 5;
                 .MovieDetails__btn-box--middle {
@@ -92,6 +96,7 @@ $metalBg: url("../../images/gun-metal.png");
                     height: calc(100% - 2px);
                     margin: 0 0 2px 2px;
                     background: black $metalBg;
+                    border-bottom-left-radius: 10px;
                     clip-path: polygon(0 0, 100% 0, 100% 100%, 19px 100%);
                     .MovieDetails__btn-box--inner {
                         width: 100%;
@@ -99,6 +104,7 @@ $metalBg: url("../../images/gun-metal.png");
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        border-bottom-left-radius: 10px;
                         background: $gradientHorizontal;
                         .MovieDetails__btn-box__btn-base {
                             background: black;
@@ -131,6 +137,7 @@ $metalBg: url("../../images/gun-metal.png");
                 width: calc(100% - 40px);
                 height: calc(90% - 37px);
                 margin: 0 20px 10px 20px;
+                color: white;
                 .MovieDetails__poster-img {
                     position: relative;
                     width: 100%;
@@ -142,7 +149,38 @@ $metalBg: url("../../images/gun-metal.png");
                         position: absolute;
                         width: 100%;
                         height: 100%;
-                        //background: red;
+                        display: flex;
+                        justify-content: flex-end;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        .MovieDetails__details__label {
+                            position: relative;
+                            height: 12%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 0 calc(5% + 20px) 0 5%;
+                            background: rgba(0, 0, 0, 0.9);
+                            border-bottom: 1px solid $deepPurple;
+                            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 100%, 0 100%);
+                            .MovieDetails__details__label--end {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 15px;
+                                height: 100%;
+                                transform: skewX(16deg);
+                                opacity: 0.9;
+                            }
+                        }
+                        #MovieDetails__label--genre {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            div:not(.MovieDetails__details__label--end) {
+                                padding: 0 2%;
+                            }
+                        }
                     }
                 }
             }
@@ -154,17 +192,20 @@ $metalBg: url("../../images/gun-metal.png");
                 left: 0;
                 clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), 0 100%);
                 background: $deepPurple;
+                border-bottom-left-radius: 10px;
                 .MovieDetails__frame--left--middle {
                     width: calc(100% - 4px);
                     height: calc(100% - 4px);
                     margin: 1px;
                     background-image: $metalBg;
                     background-color: black;
+                    border-bottom-left-radius: 10px;
                     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), 0 100%);
                     .MovieDetails__frame--left--inner {
                         width: 100%;
                         height: 100%;
                         background: $gradientVertical;
+                        border-bottom-left-radius: 10px;
                     }
                 }
             }
@@ -176,17 +217,20 @@ $metalBg: url("../../images/gun-metal.png");
                 right: 0;
                 clip-path: polygon(5% 5%, 100% 5%, 100% 100%, 0 calc(100% - 20px));
                 background: $deepPurple;
+                border-bottom-right-radius: 10px;
                 .MovieDetails__frame--right--middle {
                     width: calc(100% - 4px);
                     height: calc(100% - 3px);
                     margin: 1px 3px;
                     background-image: $metalBg;
                     background-color: black;
+                    border-bottom-right-radius: 10px;
                     clip-path: polygon(5% 5%, 100% 5%, 100% 100%, 0 calc(100% - 18px));
                     .MovieDetails__frame--right--inner {
                         width: 100%;
                         height: 100%;
                         background: $gradientVertical;
+                        border-bottom-right-radius: 10px;
                     }
                 }
             }
@@ -197,6 +241,8 @@ $metalBg: url("../../images/gun-metal.png");
                 bottom: 0;
                 left: 0;
                 background: $deepPurple;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
                 clip-path: polygon(
                     20px 0,
                     calc(100% - 20px) 0,
@@ -211,6 +257,8 @@ $metalBg: url("../../images/gun-metal.png");
                     margin: 2px 3px;
                     background-image: $metalBg;
                     background-color: black;
+                    border-bottom-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
                     clip-path: polygon(
                         17px 0,
                         calc(100% - 18px) 0,
@@ -223,9 +271,16 @@ $metalBg: url("../../images/gun-metal.png");
                         width: 100%;
                         height: 100%;
                         background: $gradientHorizontal;
+                        border-radius: 10px;
                     }
                 }
             }
         }
     }
 }
+
+#MovieDetails__label--genre .MovieDetails__details__label--end { background: deeppink; }
+#MovieDetails__label--cast .MovieDetails__details__label--end { background: palegoldenrod; }
+#MovieDetails__label--year .MovieDetails__details__label--end { background: greenyellow; }
+#MovieDetails__label--time .MovieDetails__details__label--end { background: orange; }
+#MovieDetails__label--sum .MovieDetails__details__label--end { background: lightseagreen; }
