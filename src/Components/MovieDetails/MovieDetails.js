@@ -49,13 +49,13 @@ export default class MovieDetails extends Component {
                                 {this.state.detailsOn &&
                                     <div className="MovieDetails__details">
                                         <div id="MovieDetails__label--genre" className="MovieDetails__details__label">
-                                            GENRES: {this.props.movie.genres.join(",")}
+                                            GENRES: {this.props.movie.genres.join(", ")}
 
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
 
                                         <div id="MovieDetails__label--cast" className="MovieDetails__details__label">
-                                            CAST: {this.props.movie.cast.join(",")}
+                                            CAST: {this.props.movie.cast.join(", ")}
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
 
@@ -69,13 +69,21 @@ export default class MovieDetails extends Component {
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
 
-                                        <div id="MovieDetails__label--sum" className="MovieDetails__details__label">
-                                            SHORT SUMMARY
+                                        <div
+                                            id="MovieDetails__label--sum"
+                                            className="MovieDetails__details__label"
+                                            onClick={() => this.setState({ ...this.state, summeryExpanded: !this.state.summeryExpanded })}
+                                        >
+                                            SHORT SUMMARY&nbsp;
 
-                                            {this.state.summeryExpanded ? <span> &#9660;</span> : <span> &#9660;</span>}
+                                            {this.state.summeryExpanded ? <span> &#9650;</span> : <span> &#9660;</span>}
+
 
                                             <div className="MovieDetails__details__label--end"></div>
                                         </div>
+                                        {this.state.summeryExpanded && <div className="MovieDetails__details__summary">
+                                            {this.props.movie.description}
+                                        </div>}
                                     </div>}
                             </div>
                         </div>
@@ -94,7 +102,26 @@ export default class MovieDetails extends Component {
 
                         <div className="MovieDetails__frame--bottom--outer">
                             <div className="MovieDetails__frame--bottom--middle">
-                                <div className="MovieDetails__frame--bottom--inner"></div>
+                                <div className="MovieDetails__frame--bottom--inner">
+                                    <div className="MovieDetails__button-box">
+                                        <div
+                                            className="MovieDetails__button-box__btn"
+                                            onClick={() => this.setState({ ...this.state, detailsOn: !this.state.detailsOn })}>
+                                            Details:&nbsp;
+                                            {this.state.detailsOn
+                                                ? <span className="MovieDetails__details--on">ON</span>
+                                                : <span className="MovieDetails__details--off">OFF</span>
+                                            }
+                                        </div>
+
+                                        <div className="MovieDetails__button-box__btn">ADD</div>
+
+                                        <div className="MovieDetails__button-box__btn">
+                                            Stock:&nbsp;
+                                            <span className="MovieDetails__stock">{this.props.movie.inStock}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
