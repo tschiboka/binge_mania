@@ -114,7 +114,9 @@ export default class MovieDetails extends Component {
                                             }
                                         </div>
 
-                                        <div className="MovieDetails__button-box__btn">ADD</div>
+                                        <div
+                                            className="MovieDetails__button-box__btn"
+                                            onClick={() => this.props.add(this.props.movie)}>ADD</div>
 
                                         <div className="MovieDetails__button-box__btn">
                                             Stock:&nbsp;
@@ -124,7 +126,6 @@ export default class MovieDetails extends Component {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

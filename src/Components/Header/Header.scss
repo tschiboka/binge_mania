@@ -38,15 +38,10 @@
   }
   
   .Header__logo__text {
-    font-size: $mainFontSize;
+    font-family: "Mylodon";
+    font-size: 3vh;
     color: #ffb366;
     padding: 0.5vh 0;
-    text-shadow:
-    0 0px 7px rgb(156, 3, 3),
-    1px 1px 2px white,
-    0 -3px 2px rgba(255, 255, 255, 0.5),
-    0 3px 3px rgba(0, 0, 0, 0.9),
-    0 2px 2px rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     transform: translateX(-0.7vw);
   }

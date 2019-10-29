@@ -17,7 +17,8 @@ export default class App extends Component {
     this.state = {
       user: {},
       movies: [],
-      loading: true
+      loading: true,
+      cart: []
     }
   }
 
@@ -70,6 +71,14 @@ export default class App extends Component {
 
 
 
+  addToCart(movie) {
+    const newCart = [...this.state.cart];
+    newCart.push(movie);
+    this.setState({ ...this.state, cart: newCart });
+  }
+
+
+
   renderRandomMovies() {
     return this.state.movies.map((movie, i) =>
       <LazyLoad
@@ -96,37 +105,35 @@ export default class App extends Component {
           {this.state.categories &&
             <div className="App__content">
               <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
-              {/*
-              <MovieCollection collectionName="High Stock Movies" movies={this.state.categories.highStockMovies} />
 
-              <MovieCollection collectionName="Todays Pick" movies={this.state.categories.todaysPicksMovies} />
+              <MovieCollection collectionName="High Stock Movies" movies={this.state.categories.highStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Suspense" movies={this.state.categories.suspenseMovies} />
+              <MovieCollection collectionName="Todays Pick" movies={this.state.categories.todaysPicksMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="From Last Year" movies={this.state.categories.lastYearMovies} />
+              <MovieCollection collectionName="Suspense" movies={this.state.categories.suspenseMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Comedy" movies={this.state.categories.comedyMovies} />
+              <MovieCollection collectionName="From Last Year" movies={this.state.categories.lastYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="From 2000s" movies={this.state.categories.fromThe2000Movies} />
+              <MovieCollection collectionName="Comedy" movies={this.state.categories.comedyMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Dramas" movies={this.state.categories.dramaMovies} />
+              <MovieCollection collectionName="From 2000s" movies={this.state.categories.fromThe2000Movies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Action" movies={this.state.categories.actionMovies} />
+              <MovieCollection collectionName="Dramas" movies={this.state.categories.dramaMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="From the 90s" movies={this.state.categories.fromThe90sMovies} />
+              <MovieCollection collectionName="Action" movies={this.state.categories.actionMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Crime" movies={this.state.categories.crimeMovies} />
+              <MovieCollection collectionName="From the 90s" movies={this.state.categories.fromThe90sMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} />
+              <MovieCollection collectionName="Crime" movies={this.state.categories.crimeMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
- */}
+              <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
             </div>
           }
           {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
         </div>
 
         {this.state.showMovieDetails &&
-          <MovieDetails showMovieDetails={this.showMovieDetails.bind(this)} movie={this.state.movieDetails} />
+          <MovieDetails showMovieDetails={this.showMovieDetails.bind(this)} movie={this.state.movieDetails} add={this.addToCart.bind(this)} />
         }
 
         <div className="App__admin">
