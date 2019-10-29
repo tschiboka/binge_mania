@@ -14,12 +14,11 @@ export default class MovieDetails extends Component {
 
     render() {
         return (
-            <div className="MovieDetails">
+            <div className="MovieDetails" onClick={(e) => {
+                if (e.target.classList[0] === "MovieDetails") this.props.showMovieDetails(false, this.props.movie);
+            }}>
                 <div
-                    className="MovieDetails__main--outer"
-                    tabIndex={0}
-                    onBlur={() => this.props.showMovieDetails(false, this.props.movie)}
-                >
+                    className="MovieDetails__main--outer">
                     <div className="MovieDetails__main--inner">
                         <div className="MovieDetails__title--outer" >
                             <div className="MovieDetails__title--inner">
