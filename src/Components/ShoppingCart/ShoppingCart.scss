@@ -1,4 +1,36 @@
+@import "../variables.scss";
+
 #ShoppingCart {
     position: absolute;
     right: 0;
+    padding: 1vh;
+    border: $borderLight;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.8);
+    .ShoppingCart__movies {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        .ShoppingCart__movie {
+            min-width: 15vw;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            .ShoppingCart__title, .ShoppingCart__price {
+                padding: 0.5vh;
+            }
+            .ShoppingCart__title {
+                width: 70%;
+                text-align: left;
+            }
+            .ShoppingCart__price { text-align: right; }
+            &:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
+            &:nth-child(odd) { background: rgba(0, 0, 0, 0.05); }
+        }
+    }
 }
