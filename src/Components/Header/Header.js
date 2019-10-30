@@ -4,6 +4,7 @@ import GenresMenu from "../GenresMenu/GenresMenu";
 import UserMenu from "../UserMenu/UserMenu";
 import Avatar from "../../images/user-avatar.png";
 import Cart from "../../images/shopping-cart.png";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 export default class Header extends Component {
     constructor(props) {
@@ -15,10 +16,10 @@ export default class Header extends Component {
 
 
     componentDidMount() {
-        console.log("HERE");
         window.addEventListener('resize', () => {
             this.setGenresMenuCoords.bind(this);
             this.setUserMenuCoords.bind(this);
+            this.setShoppingCartMenuCoords.bind(this);
         });
 
         const getGenres = async () => {
@@ -39,6 +40,7 @@ export default class Header extends Component {
         window.removeEventListener('resize', () => {
             this.setGenresMenuCoords.bind(this);
             this.setUserMenuCoords.bind(this);
+            this.setShoppingCartMenuCoords.bind(this);
         });
     }
 
@@ -47,6 +49,12 @@ export default class Header extends Component {
     handleGenresMenuClick() {
         this.setState({ ...this.state, genreMenuIsOpen: !this.state.genreMenuIsOpen },
             () => { if (this.state.genreMenuIsOpen) this.setGenresMenuCoords(); });
+    }
+
+
+    handleShoppingCartClick() {
+        this.setState({ ...this.state, shoppingCartIsOpen: !this.state.shoppingCartIsOpen },
+            () => { if (this.state.shoppingCartIsOpen) this.setShoppingCartMenuCoords(); });
     }
 
 
@@ -116,6 +124,19 @@ export default class Header extends Component {
 
 
 
+    setShoppingCartMenuCoords() {
+        console.log("HERE");
+        if (this.state.shoppingCartIsOpen) {
+            const headerDiv = document.getElementsByClassName("Header")[0];
+            const headerRect = headerDiv.getBoundingClientRect();
+            const cartMenu = document.getElementById("ShoppingCart");
+
+            cartMenu.style.top = headerRect.bottom + "px";
+        }
+    }
+
+
+
     render() {
         return (
             <header className="Header">
@@ -143,7 +164,11 @@ export default class Header extends Component {
                         />
                     </div>
 
-                    <div id="Header__icons__shopping-cart" className="Header__icon">
+                    <div
+                        id="Header__icons__shopping-cart"
+                        className="Header__icon"
+                        onClick={() => this.handleShoppingCartClick()}
+                    >
                         <img src={Cart} alt="shopping-cart" />
                     </div>
 
@@ -160,6 +185,8 @@ export default class Header extends Component {
                     </div>
                 </div>
 
+                <ShoppingCart visible={this.state.shoppingCartIsOpen} />
+
                 <UserMenu
                     visible={this.state.userMenuIsOpen}
                     tabIndex={0}
@@ -167,7 +194,8 @@ export default class Header extends Component {
                     logout={this.props.logout}
                     user={this.props.user}
                     showAdmin={this.props.showAdmin}
-                    blur={() => this.handleUserOnBlur()} />
+                    blur={() => this.handleUserOnBlur()}
+                />
             </header>
         );
     }

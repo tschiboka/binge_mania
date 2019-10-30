@@ -309,7 +309,7 @@ export default class UserMenu extends Component {
                             onClick={() => this.handleSignOutClick()}
                         >Sign Out</li>}
                 </ul>
-            </div >
+            </div>
         );
     }
 }
