@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import "./ShoppingCart.scss";
 
 export default class ShoppingCart extends Component {
+    componentDidUpdate() { this.shoppingCart.focus(); }
+
+
+
     render() {
         return (
             <div
                 id="ShoppingCart"
                 style={{ visibility: this.props.visible ? "visible" : "hidden" }}
+                onBlur={() => this.props.blur()}
+                tabIndex={0}
+                ref={elem => (this.shoppingCart = elem)} // give focus in order to be able to call onBlur
             >
                 <ul className="ShoppingCart__movies">
                     {(this.props.movies && this.props.movies.length)

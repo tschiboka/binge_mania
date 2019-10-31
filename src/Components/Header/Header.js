@@ -76,12 +76,22 @@ export default class Header extends Component {
     }
 
 
+    handleShoppingCartOnBlur() {
+        if (this.state.shoppingCartIconMouseOver) return; // if mouse is over shoppingCart icon blur is not happening
+        this.setState({ ...this.state, shoppingCartIsOpen: false });
+    }
+
+
 
     leaveGenreMenuOpen() { this.setState({ ...this.state, genreMenuIsOpen: true }); }
 
 
 
     toggleUserIconMouseOver(isOver) { this.setState({ ...this.state, userIconMouseOver: isOver }); }
+
+
+
+    toggleShoppingCartIconMouseOver(isOver) { this.setState({ ...this.state, shoppingCartIconMouseOver: isOver }); }
 
 
 
@@ -168,6 +178,8 @@ export default class Header extends Component {
                         id="Header__icons__shopping-cart"
                         className="Header__icon"
                         onClick={() => this.handleShoppingCartClick()}
+                        onMouseOver={() => this.toggleShoppingCartIconMouseOver(true)}
+                        onMouseOut={() => this.toggleShoppingCartIconMouseOver(false)}
                     >
                         <img src={Cart} alt="shopping-cart" />
                     </div>
@@ -189,6 +201,7 @@ export default class Header extends Component {
                     visible={this.state.shoppingCartIsOpen}
                     movies={this.props.movies}
                     remove={this.props.remove}
+                    blur={() => this.handleShoppingCartOnBlur()}
                 />
 
                 <UserMenu
