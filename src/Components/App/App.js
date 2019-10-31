@@ -74,7 +74,7 @@ export default class App extends Component {
   addToCart(movie) {
     console.log();
     const newCart = [...this.state.cart];
-    if (!(this.state.cart.some(cartMovie => cartMovie._id === movie._id))) newCart.push(movie);
+    newCart.push(movie);
     this.setState({ ...this.state, cart: newCart, showMovieDetails: false });
   }
 
@@ -135,7 +135,12 @@ export default class App extends Component {
         </div>
 
         {this.state.showMovieDetails &&
-          <MovieDetails showMovieDetails={this.showMovieDetails.bind(this)} movie={this.state.movieDetails} add={this.addToCart.bind(this)} />
+          <MovieDetails
+            showMovieDetails={this.showMovieDetails.bind(this)}
+            movie={this.state.movieDetails}
+            add={this.addToCart.bind(this)}
+            cart={this.state.cart}
+          />
         }
 
         <div className="App__admin">

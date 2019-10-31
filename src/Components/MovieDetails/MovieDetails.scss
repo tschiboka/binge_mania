@@ -329,6 +329,13 @@ $metalBg: url("../../images/gun-metal.png");
                                 &:nth-child(2) {
                                     color: #89cdeb;
                                     width: 18%;
+                                    font-family: "Abel";
+                                    font-size: $mediumFontSize;
+                                    &:hover:not(:disabled) { font-size: 2.8vh; }
+                                    &:disabled { 
+                                        color:rgb(167, 19, 98);
+                                        cursor: default;
+                                    }
                                 }
                             }
                         }
