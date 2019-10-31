@@ -80,6 +80,10 @@ export default class App extends Component {
 
 
 
+  removeFromCart(_id) { this.setState({ ...this.state, cart: this.state.cart.filter(m => m._id !== _id) }); }
+
+
+
   renderRandomMovies() {
     return this.state.movies.map((movie, i) =>
       <LazyLoad
@@ -103,6 +107,7 @@ export default class App extends Component {
             showAdmin={this.showAdmin.bind(this)}
             user={this.state.user}
             movies={this.state.cart}
+            remove={this.removeFromCart.bind(this)}
           />
           {this.state.categories &&
             <div className="App__content">

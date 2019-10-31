@@ -22,7 +22,7 @@ export default class ShoppingCart extends Component {
                                 <div className="ShoppingCart__price">
                                     £{((300 - m.inStock) / 100).toFixed(2)}
 
-                                    <button>&times;</button>
+                                    <button onClick={() => this.props.remove(m._id)}>&times;</button>
                                 </div>
                             </li>)
                         : "Shopping Cart Is Empty..."}

@@ -188,6 +188,7 @@ export default class Header extends Component {
                 <ShoppingCart
                     visible={this.state.shoppingCartIsOpen}
                     movies={this.props.movies}
+                    remove={this.props.remove}
                 />
 
                 <UserMenu
