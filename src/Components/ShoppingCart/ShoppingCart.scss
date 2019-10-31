@@ -21,16 +21,84 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             .ShoppingCart__title, .ShoppingCart__price {
                 padding: 0.5vh;
             }
             .ShoppingCart__title {
-                width: 70%;
                 text-align: left;
             }
-            .ShoppingCart__price { text-align: right; }
+            .ShoppingCart__price { 
+                display: flex;
+                align-items: center;            
+                text-align: right;
+                font-style: italic;
+                color: $lightPurple;
+                font-size: 2.1vh;
+                button {
+                    margin-left: 1vh;
+                    padding: 0 0 0.3vh 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: deeppink;
+                    font-size: 2.3vh;
+                    background: transparent;
+                    background: rgba(255, 255, 255, 0.05);
+                    border: $borderLight;
+                    border-radius: 50%;
+                    width: $mediumFontSize;
+                    height: $mediumFontSize;
+                    border-right: none;
+                    border-bottom: none;
+                    cursor: pointer;
+                }
+                button:hover {
+                    font-size: 2.4vh;
+                    border:  $borderLight;
+                    border-left: none;
+                    border-top: none;
+                    
+                }
+            }
             &:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
             &:nth-child(odd) { background: rgba(0, 0, 0, 0.05); }
+        }
+    }
+    .ShoppingCart__final {
+        border-top: $borderLight;
+        .ShoppingCart__total {
+            padding: 1vh 4vh 1vh 0.5vh;
+            display: flex;
+            justify-content: space-between;
+            span {
+                font-style: italic;
+                color: $lightPurple;
+                font-size: 2.1vh;
+            }
+        }
+        .ShoppingCart__rent-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            button {
+                padding: 0.5vh 2vh;
+                border-radius: 5px;
+                border: $borderLight;
+                border-right: none;
+                border-bottom: none;
+                background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+                color: #80d1e7;
+                font-family: "Helvetica Neue";
+                font-size: $mediumFontSize;
+                cursor: pointer;
+            }
+            button:hover {
+                background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+                border: $borderLight;
+                border-left: none;
+                border-top: none;
+            }
         }
     }
 }

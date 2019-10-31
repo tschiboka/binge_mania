@@ -8,22 +8,39 @@ export default class ShoppingCart extends Component {
                 id="ShoppingCart"
                 style={{ visibility: this.props.visible ? "visible" : "hidden" }}
             >
-                <div className="ShoppingCart__movies">
+                <ul className="ShoppingCart__movies">
                     {(this.props.movies && this.props.movies.length)
                         ? this.props.movies.map((m, i) =>
-                            <div
+                            <li
                                 key={"ShoppingCartMovies" + i}
                                 className="ShoppingCart__movie"
                             >
                                 <div className="ShoppingCart__title">
                                     {m.title}
                                 </div>
+
                                 <div className="ShoppingCart__price">
-                                    $1.29
+                                    £{((300 - m.inStock) / 100).toFixed(2)}
+
+                                    <button>&times;</button>
                                 </div>
-                            </div>)
+                            </li>)
                         : "Shopping Cart Is Empty..."}
-                </div>
+                </ul>
+                {this.props.movies.length > 0 &&
+                    <div className="ShoppingCart__final">
+                        <div className="ShoppingCart__total">Total:
+                            <span>£
+                            {this.props.movies
+                                    .map(m => (300 - m.inStock) / 100)
+                                    .reduce((accu, curr) => accu + curr)
+                                    .toFixed(2)}
+                            </span>
+                        </div>
+                        <div className="ShoppingCart__rent-btn">
+                            <button>Rent</button>
+                        </div>
+                    </div>}
             </div>
         );
     }
