@@ -42,20 +42,28 @@
           border: $borderLight;
           border-radius: 5px;
           font-size: $mediumFontSize;
-          background: rgba(255, 255, 255, 0.05); 
+          background: rgba(255, 255, 255, 0.05);
           font-family: $mainFontFamily;
           color: $lightPurple;
-          font-style: italic;
+          font-style: italic; 
         }
         button {
-          border: $borderLight;
-          border-radius: 5px;
-          background: rgba(0, 0, 0, 0.8);
-          font-size: $mediumFontSize;
-          color: $primaryColor;
           padding: 0.5vh 2vw;
+          border: $borderLight;
+          border-right: none;
+          border-bottom: none;
+          border-radius: 5px;
+          background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+          color: #80d1e7;
           font-family: $mainFontFamily;
+          font-size: $mediumFontSize;
           cursor: pointer;
+          &:hover {
+            background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+            border: $borderLight;
+            border-left: none;
+            border-top: none;
+          }
         }
         & > div:not(.LoadingSpinner) {
           margin: 0.5vh 1vh;

@@ -6,8 +6,33 @@ import LazyLoad from "react-lazy-load";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import MovieCollection from "../MovieCollection/MovieCollection";
 import MovieDetails from "../MovieDetails/MovieDetails";
+import { Scrollbars } from 'react-custom-scrollbars';
 import './App.scss';
 import _ from "lodash";
+
+
+
+const CustomScrollbars = props => (
+  <Scrollbars
+    renderThumbHorizontal={renderThumb}
+    renderThumbVertical={renderThumb}
+    {...props}
+  />
+);
+
+
+
+const renderThumb = ({ style, ...props }) => {
+  const thumbStyle = {
+    borderRadius: 6,
+    width: 6,
+    backgroundColor: "deeppink",
+    right: 3
+  };
+  return <div style={{ ...style, ...thumbStyle }} {...props} />;
+};
+
+
 
 
 export default class App extends Component {
@@ -101,42 +126,48 @@ export default class App extends Component {
     return (
       <div className="App">
         <div className={"App__main" + (this.state.showAdmin || this.state.showMovieDetails ? " blurred" : "")}>
-          <Header
-            login={this.login.bind(this)}
-            logout={this.logout.bind(this)}
-            showAdmin={this.showAdmin.bind(this)}
-            user={this.state.user}
-            movies={this.state.cart}
-            remove={this.removeFromCart.bind(this)}
-          />
-          {this.state.categories &&
-            <div className="App__content">
-              <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+          <CustomScrollbars
+            autoHide autoHideTimeout={500}
+            autoHideDuration={200}
+            zIndex={2000}
+          >
+            <Header
+              login={this.login.bind(this)}
+              logout={this.logout.bind(this)}
+              showAdmin={this.showAdmin.bind(this)}
+              user={this.state.user}
+              movies={this.state.cart}
+              remove={this.removeFromCart.bind(this)}
+            />
+            {this.state.categories &&
+              <div className="App__content">
+                <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="High Stock Movies" movies={this.state.categories.highStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="High Stock Movies" movies={this.state.categories.highStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Todays Pick" movies={this.state.categories.todaysPicksMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="Todays Pick" movies={this.state.categories.todaysPicksMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Suspense" movies={this.state.categories.suspenseMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="Suspense" movies={this.state.categories.suspenseMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="From Last Year" movies={this.state.categories.lastYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="From Last Year" movies={this.state.categories.lastYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Comedy" movies={this.state.categories.comedyMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="Comedy" movies={this.state.categories.comedyMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="From 2000s" movies={this.state.categories.fromThe2000Movies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="From 2000s" movies={this.state.categories.fromThe2000Movies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Dramas" movies={this.state.categories.dramaMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="Dramas" movies={this.state.categories.dramaMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Action" movies={this.state.categories.actionMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="Action" movies={this.state.categories.actionMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="From the 90s" movies={this.state.categories.fromThe90sMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="From the 90s" movies={this.state.categories.fromThe90sMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Crime" movies={this.state.categories.crimeMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+                <MovieCollection collectionName="Crime" movies={this.state.categories.crimeMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-              <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
-            </div>
-          }
-          {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
+                <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+              </div>
+            }
+            {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
+          </CustomScrollbars>
         </div>
 
         {this.state.showMovieDetails &&
