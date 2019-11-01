@@ -130,7 +130,6 @@ export default class App extends Component {
           <CustomScrollbars
             autoHide autoHideTimeout={500}
             autoHideDuration={200}
-            zIndex={2000}
           >
             <Header
               login={this.login.bind(this)}

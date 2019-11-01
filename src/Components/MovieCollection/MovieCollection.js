@@ -22,12 +22,6 @@ export default class MovieCollection extends Component {
 
 
 
-    componentWillUpdate() {
-
-    }
-
-
-
     findCurrentPage() {
         let row = -1;
         for (let i = 0; i < (this.props.movies || []).length; i++) {
@@ -53,14 +47,14 @@ export default class MovieCollection extends Component {
     handleArrowBtnClick(doIncrement) {
         if (!doIncrement && this.state.currentPage > 0) return this.setState({
             ...this.state,
-            currentPage: --this.state.currentPage,
+            currentPage: this.state.currentPage - 1,
             currentFirstMovie: this.state.currentFirstMovie - this.state.moviesInARow
         });
 
         const maxPage = this.props.movies.length / this.state.moviesInARow;
         if (doIncrement && this.state.currentPage < maxPage - 1) this.setState({
             ...this.state,
-            currentPage: ++this.state.currentPage,
+            currentPage: this.state.currentPage + 1,
             currentFirstMovie: this.state.currentFirstMovie + this.state.moviesInARow
         });
     }

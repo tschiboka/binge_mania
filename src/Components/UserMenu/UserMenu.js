@@ -8,9 +8,11 @@ export default class UserMenu extends Component {
     constructor(props) {
         super(props);
 
+        // eslint-disable-next-line no-extend-native
         String.prototype.trim = String.prototype.trim || function () {
             return this.replace(/^\s+/, '').replace(/\s+$/, '');
         }
+
 
         this.userMenu = null;
         this.state = {
