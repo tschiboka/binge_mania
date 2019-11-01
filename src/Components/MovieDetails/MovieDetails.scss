@@ -155,6 +155,7 @@ $metalBg: url("../../images/gun-metal.png");
                         align-items: flex-start;
                         .MovieDetails__details__label {
                             position: relative;
+                            margin-bottom: -1px;
                             max-width: calc(100% - 15px);
                             height: 12%;
                             display: flex;
@@ -179,12 +180,13 @@ $metalBg: url("../../images/gun-metal.png");
                                 right: 0;
                                 width: 15px;
                                 height: 100%;
-                                transform: skewX(16deg);
+                                transform: skewX(17deg);
                                 opacity: 0.9;
                             }
                         }
+                        #MovieDetails__label--sum { cursor:pointer; }
                         .MovieDetails__details__summary {
-                            height: 36%;
+                            height: 40%;
                             width: 90%;
                             padding: 5%;
                             display: flex;
@@ -370,6 +372,6 @@ $metalBg: url("../../images/gun-metal.png");
         height: 0%;
     }
     to {
-        height: 36%;
+        height: 40%;
     }
 }
