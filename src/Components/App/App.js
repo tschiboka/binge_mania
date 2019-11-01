@@ -27,7 +27,8 @@ const renderThumb = ({ style, ...props }) => {
     borderRadius: 6,
     width: 6,
     backgroundColor: "deeppink",
-    right: 3
+    right: 3,
+    zIndex: 2000
   };
   return <div style={{ ...style, ...thumbStyle }} {...props} />;
 };
