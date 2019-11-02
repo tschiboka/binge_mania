@@ -45,7 +45,7 @@ export default class App extends Component {
       movies: [],
       loading: true,
       cart: [],
-      showAllMoviesWithSingleGenre: false
+      showAllMoviesWithCertainGenre: false
     }
   }
 
@@ -129,7 +129,13 @@ export default class App extends Component {
 
 
 
-  showMoviesByGenre(genre) { this.setState({ ...this.state, showAllMoviesWithSingleGenre: genre }); }
+  renderMoviesByGenre(genre) {
+    const movies = this.state.movies.filter(movie => movie.genres.map(g => g.toLowerCase()).includes(genre));
+  }
+
+
+
+  showMoviesByGenre(genre) { this.setState({ ...this.state, showAllMoviesWithCertainGenre: genre }); }
 
 
 
@@ -150,7 +156,7 @@ export default class App extends Component {
               remove={this.removeFromCart.bind(this)}
               showGenre={this.showMoviesByGenre.bind(this)}
             />
-            {this.state.categories && !this.state.showAllMoviesWithSingleGenre &&
+            {this.state.categories && !this.state.showAllMoviesWithCertainGenre &&
               <div
                 className="App__content"
                 tabIndex={0}
@@ -182,12 +188,13 @@ export default class App extends Component {
               </div>
             }
             {
-              this.state.showAllMoviesWithSingleGenre &&
+              this.state.showAllMoviesWithCertainGenre &&
               <div
                 className="App__movies-by-genre"
                 tabIndex={0}
                 ref={elem => (this.main = elem)}
-              >{JSON.stringify(this.state.showAllMoviesWithSingleGenre)}</div>
+              >{this.renderMoviesByGenre(this.state.showAllMoviesWithCertainGenre.name)}
+              </div>
             }
             {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
           </CustomScrollbars>
