@@ -131,6 +131,15 @@ export default class App extends Component {
 
   renderMoviesByGenre(genre) {
     const movies = this.state.movies.filter(movie => movie.genres.map(g => g.toLowerCase()).includes(genre));
+
+    return movies.map((movie, i) =>
+      <LazyLoad
+        key={`moviesWithGenre${genre}${i}`}
+        debounce={false}
+      >
+        <Movie movie={movie} selfContained={true} />
+      </LazyLoad>
+    );
   }
 
 

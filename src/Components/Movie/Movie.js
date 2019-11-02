@@ -17,8 +17,9 @@ export default class Movie extends Component {
 
 
     render() {
+        console.log(this.props)
         return <div
-            className="Movie"
+            className={"Movie" + (this.props.selfContained ? " Movie--self-contained" : "")}
             onClick={() => this.props.showMovieDetails(true, this.props.movie)}
         >
             <div className="Movie__container">

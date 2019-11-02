@@ -82,7 +82,11 @@ time, mark, audio, video {
 }
 
 .App__movies-by-genre {
+  max-width: 100%;
   padding: 11vh 0.5% 0 0.5%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .blurred {

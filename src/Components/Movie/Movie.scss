@@ -30,6 +30,11 @@
     }  
   }
 
+.Movie--self-contained {
+    width: 200px;
+
+}
+
   @keyframes img-blur {
       from { filter: blur(5px) grayscale(100%); }
       to { filter: blur(0px) grayscale(0%); }
