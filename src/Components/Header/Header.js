@@ -171,6 +171,7 @@ export default class Header extends Component {
                             visible={this.state.genreMenuIsOpen}
                             genres={this.state.genres}
                             setCoords={this.setGenresMenuCoords.bind(this)}
+                            showGenre={this.props.showGenre}
                         />
                     </div>
 

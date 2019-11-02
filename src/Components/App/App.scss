@@ -81,6 +81,10 @@ time, mark, audio, video {
   }
 }
 
+.App__movies-by-genre {
+  padding: 11vh 0.5% 0 0.5%;
+}
+
 .blurred {
   filter: blur(2px) grayscale(100%);
   -webkit-filter: blur(2px) grayscale(100%);  

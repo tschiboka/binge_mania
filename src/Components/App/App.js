@@ -129,6 +129,10 @@ export default class App extends Component {
 
 
 
+  showMoviesByGenre(genre) { this.setState({ ...this.state, showAllMoviesWithSingleGenre: genre }); }
+
+
+
   render() {
     return (
       <div className="App">
@@ -144,13 +148,13 @@ export default class App extends Component {
               user={this.state.user}
               movies={this.state.cart}
               remove={this.removeFromCart.bind(this)}
+              showGenre={this.showMoviesByGenre.bind(this)}
             />
             {this.state.categories && !this.state.showAllMoviesWithSingleGenre &&
               <div
                 className="App__content"
                 tabIndex={0}
-                ref={elem => (this.main = elem)} // give focus in order to be able to call onBlur
-
+                ref={elem => (this.main = elem)}
               >
                 <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
@@ -176,6 +180,14 @@ export default class App extends Component {
 
                 <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
               </div>
+            }
+            {
+              this.state.showAllMoviesWithSingleGenre &&
+              <div
+                className="App__movies-by-genre"
+                tabIndex={0}
+                ref={elem => (this.main = elem)}
+              >{JSON.stringify(this.state.showAllMoviesWithSingleGenre)}</div>
             }
             {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
           </CustomScrollbars>

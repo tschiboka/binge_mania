@@ -26,7 +26,11 @@ export default class GenresMenu extends Component {
                 .slice(0, 10)                                                      // get first 10
                 .sort((prev, curr) => prev.name > curr.name);                      // back to alphabethical order ascending
 
-            return genres.map((genre, i) => <div key={i} className="Header__genres__option">
+            return genres.map((genre, i) => <div
+                key={i}
+                className="Header__genres__option"
+                onClick={() => { if (i !== genres.length - 1) this.props.showGenre(genre); }}
+            >
                 {i !== genres.length - 1
                     ? genre.name.replace(/^./g, ch => ch.toUpperCase())
                     : <span
@@ -53,7 +57,11 @@ export default class GenresMenu extends Component {
 
             return <div>
                 <div>
-                    {genres[0].map((genre, i) => <div key={i} className="Header__genres__option--expanded">
+                    {genres[0].map((genre, i) => <div
+                        key={i}
+                        className="Header__genres__option--expanded"
+                        onClick={() => { this.props.showGenre(genre); }}
+                    >
                         {genre.name.replace(/^./g, ch => ch.toUpperCase())}
 
                         <span className="Header__genres__option__movies-with-genre"> {genre.moviesWithGenre}</span>
@@ -63,7 +71,11 @@ export default class GenresMenu extends Component {
                 <div className="genre-separator"></div>
 
                 <div>
-                    {genres[1].map((genre, i) => <div key={i} className="Header__genres__option">
+                    {genres[1].map((genre, i) => <div
+                        key={i}
+                        className="Header__genres__option"
+                        onClick={() => { if (i !== genre.length - 1) this.props.showGenre(genre); }}
+                    >
                         {i !== genres[1].length - 1
                             ? genre.name.replace(/^./g, ch => ch.toUpperCase())
                             : <span
