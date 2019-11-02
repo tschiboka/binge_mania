@@ -44,9 +44,11 @@ export default class App extends Component {
       user: {},
       movies: [],
       loading: true,
-      cart: []
+      cart: [],
+      showAllMoviesWithSingleGenre: false
     }
   }
+
 
 
   async componentDidMount() {
@@ -57,8 +59,12 @@ export default class App extends Component {
   }
 
 
+
   componentDidUpdate() {
+    if (this.state.categories) this.main.focus();
+
     if (!this.state.movies.length || this.state.categories) return;
+
 
     const YEAR = new Date().getFullYear();
     const categories = {
@@ -139,8 +145,13 @@ export default class App extends Component {
               movies={this.state.cart}
               remove={this.removeFromCart.bind(this)}
             />
-            {this.state.categories &&
-              <div className="App__content">
+            {this.state.categories && !this.state.showAllMoviesWithSingleGenre &&
+              <div
+                className="App__content"
+                tabIndex={0}
+                ref={elem => (this.main = elem)} // give focus in order to be able to call onBlur
+
+              >
                 <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
                 <MovieCollection collectionName="High Stock Movies" movies={this.state.categories.highStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
