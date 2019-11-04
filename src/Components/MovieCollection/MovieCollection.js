@@ -36,10 +36,12 @@ export default class MovieCollection extends Component {
 
     setAmountOfMoviesInARow() {
         const div = document.getElementsByClassName("MovieCollection")[0];
-        const width = div.getBoundingClientRect().width;
-        const amount = Math.floor(width / 200);
+        if (div) {
+            const width = div.getBoundingClientRect().width;
+            const amount = Math.floor(width / 200);
 
-        this.setState({ ...this.state, moviesInARow: amount });
+            this.setState({ ...this.state, moviesInARow: amount });
+        }
     }
 
 

@@ -137,7 +137,7 @@ export default class App extends Component {
         key={`moviesWithGenre${genre}${i}`}
         debounce={false}
       >
-        <Movie movie={movie} selfContained={true} />
+        <Movie movie={movie} selfContained={true} showMovieDetails={this.showMovieDetails.bind(this)} />
       </LazyLoad>
     );
   }
@@ -202,7 +202,14 @@ export default class App extends Component {
                 className="App__movies-by-genre"
                 tabIndex={0}
                 ref={elem => (this.main = elem)}
-              >{this.renderMoviesByGenre(this.state.showAllMoviesWithCertainGenre.name)}
+              >
+                <div className="App__movies-by-genre__title">{this.state.showAllMoviesWithCertainGenre.name.toUpperCase()}</div>
+
+                <div className="App__movies-by-genre__movies">
+                  {this.renderMoviesByGenre(this.state.showAllMoviesWithCertainGenre.name)}
+                </div>
+
+                <div className="App__movies-by-genre__back-btn"><button>&larr; Back to Browse</button></div>
               </div>
             }
             {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
