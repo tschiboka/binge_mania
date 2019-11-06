@@ -33,6 +33,7 @@ export default class AdminMovies extends Component {
 
         try {
             const title = document.getElementById("Admin__search-title").value;
+            if (!title) return this.setState({ ...this.state, isLoading: false });
             const pgNum = document.getElementById("Admin__search-pagenum").value || 1;
             const response = await fetch(`/api/searchtitle/${title}?page=${pgNum}`);
             const titles = await response.json();
@@ -56,11 +57,17 @@ export default class AdminMovies extends Component {
 
 
     renderTitles() {
-        return (this.state.titles || []).map((title, i) => <tr
-            key={"admin-getmovietitles" + i}
-            onClick={() => this.handleSearchMovieTitleClick(title.tmdb_id)}>
-            <td>{title.title}</td><td>{title.tmdb_id}</td>
-        </tr>);
+        return <table>
+            <tbody>
+                <tr><th>Title</th><th>ID</th></tr>
+
+                {(this.state.titles || []).map((title, i) => <tr
+                    key={"admin-getmovietitles" + i}
+                    onClick={() => this.handleSearchMovieTitleClick(title.tmdb_id)}>
+                    <td>{title.title}</td><td>{title.tmdb_id}</td>
+                </tr>)}
+            </tbody>
+        </table>
     }
 
 
@@ -141,12 +148,7 @@ export default class AdminMovies extends Component {
 
                     </form>
 
-                    <table>
-                        <tbody>
-                            <tr><th>Title</th><th>ID</th></tr>
-                            {this.renderTitles()}
-                        </tbody>
-                    </table>
+                    {this.renderTitles()}
                 </div>}
 
                 {
