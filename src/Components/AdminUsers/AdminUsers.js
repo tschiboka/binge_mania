@@ -1,6 +1,30 @@
 import React, { Component } from "react";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import "./AdminUsers.scss";
+
+
+
+const CustomScrollbars = props => (
+    <Scrollbars
+        renderThumbHorizontal={renderThumb}
+        renderThumbVertical={renderThumb}
+        {...props}
+    />
+);
+
+
+
+const renderThumb = ({ style, ...props }) => {
+    const thumbStyle = {
+        borderRadius: 6,
+        width: 6,
+        backgroundColor: "deeppink",
+        right: 3,
+        zIndex: 2000
+    };
+    return <div style={{ ...style, ...thumbStyle }} {...props} />;
+};
 
 
 
@@ -38,13 +62,15 @@ export default class Admin__users extends Component {
     render() {
         return (
             <div className="Admin__user">
-                <table>
-                    <tbody>
-                        <tr><th>Name</th><th>Email</th><th>id</th><th>Admin</th></tr>
+                <CustomScrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
+                    <table>
+                        <tbody>
+                            <tr><th>Name</th><th>Email</th><th>id</th><th>Admin</th></tr>
 
-                        {this.renderUsers()}
-                    </tbody>
-                </table>
+                            {this.renderUsers()}
+                        </tbody>
+                    </table>
+                </CustomScrollbars>
             </div>
         );
     }

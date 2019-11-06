@@ -8,13 +8,18 @@
         width: 100%; 
         border: $borderLight;
         border-collapse: collapse;
+        table-layout: fixed;
         th { border-bottom: $borderLight; }
         tr {
             &:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
             td, th {
                 padding: 0.75vh 1%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap; 
                 &:not(:first-child) { border-left: $borderLight; }
             }
+            td:last-child { text-align: center; }
         }
     }
 }

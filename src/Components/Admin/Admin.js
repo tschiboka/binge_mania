@@ -80,6 +80,8 @@ export default class Admin extends Component {
             </div>
 
             <div className="Admin__body">
+                <div className="Admin__body-upper-right-corner"></div>
+
                 {this.state.activeTag === "users" && <AdminUsers users={this.state.users || []} setUsers={this.setUsers.bind(this)} />}
 
                 {this.state.activeTag === "movies" && <AdminMovies movies={this.state.movies || []} setMovies={this.setMovies.bind(this)} />}
