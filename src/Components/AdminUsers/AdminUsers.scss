@@ -2,7 +2,7 @@
 
 .Admin__user {
     width: 96%;
-    height: 94%;
+    height: 92%;
     padding: 2%;
     table {
         width: 100%; 
@@ -21,5 +21,6 @@
             }
             td:last-child { text-align: center; }
         }
+        tr:hover { background: rgba(255, 255, 255, 0.1); }
     }
 }

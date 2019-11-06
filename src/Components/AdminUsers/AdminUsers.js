@@ -65,7 +65,7 @@ export default class Admin__users extends Component {
                 <CustomScrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
                     <table>
                         <tbody>
-                            <tr><th>Name</th><th>Email</th><th>id</th><th>Admin</th></tr>
+                            <tr><th>Name</th><th>Email</th><th>ID</th><th>Admin</th></tr>
 
                             {this.renderUsers()}
                         </tbody>

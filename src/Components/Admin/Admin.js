@@ -60,23 +60,31 @@ export default class Admin extends Component {
     renderAdmin() {
         return <div className="Admin">
             <div className="Admin__header">
-                <div className={"Admin__header__tag" + (this.state.activeTag === "users" ? " active" : "")}>
-                    <div onClick={() => this.handleHeaderClick("users")}>Users</div>
+                <div
+                    className={"Admin__header__tag" + (this.state.activeTag === "users" ? " active" : "")}
+                    onClick={() => this.handleHeaderClick("users")}
+                ><div>Users</div>
                 </div>
 
-                <div className={"Admin__header__tag" + (this.state.activeTag === "movies" ? " active" : "")}>
-                    <div onClick={() => this.handleHeaderClick("movies")}>Movies</div>
+                <div
+                    className={"Admin__header__tag" + (this.state.activeTag === "movies" ? " active" : "")}
+                    onClick={() => this.handleHeaderClick("movies")}
+                ><div>Movies</div>
                 </div>
 
-                <div className={"Admin__header__tag" + (this.state.activeTag === "transactions" ? " active" : "")}>
-                    <div onClick={() => this.handleHeaderClick("transactions")}>Transactions</div>
+                <div
+                    className={"Admin__header__tag" + (this.state.activeTag === "transactions" ? " active" : "")}
+                    onClick={() => this.handleHeaderClick("transactions")}
+                ><div>Transactions</div>
                 </div>
 
-                <div className={"Admin__header__tag" + (this.state.activeTag === "genres" ? " active" : "")}>
-                    <div onClick={() => this.handleHeaderClick("genres")}>Genres</div>
+                <div
+                    className={"Admin__header__tag" + (this.state.activeTag === "genres" ? " active" : "")}
+                    onClick={() => this.handleHeaderClick("genres")}
+                ><div>Genres</div>
                 </div>
 
-                <div id="Admin__close-btn" onClick={() => this.handleCloseBtnClick()}>&times;</div>
+                <div id="Admin__close-btn"><button onClick={() => this.handleCloseBtnClick()}>&times;</button></div>
             </div>
 
             <div className="Admin__body">

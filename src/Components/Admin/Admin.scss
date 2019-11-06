@@ -51,6 +51,7 @@
         align-items: center;
         background: rgba(255, 255, 255, 0.1);
         cursor: pointer;
+        &:hover { font-size: 3vh; }
         div { // reason of wrapping is text truncation => flex won't let text-overflow-ellipsis
             overflow: hidden;
             min-width: 0;
@@ -77,12 +78,22 @@
         margin-left: auto; // last item takes rest of space => falls to right
         justify-content: center;
         align-items: center;
-        background: rgba(0, 0, 0, 0.8);
-        color: deeppink;
-        //border-bottom: $borderLight;
-        cursor: pointer;
-        &:hover {
-            font-size: 3.5vh;
+        button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            height: 80%;
+            border: $borderLight;
+            border-top-right-radius: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            color: deeppink;
+            font-size: 3vh;
+            cursor: pointer;
+            &:hover {
+                font-size: 3.5vh;
+                font-weight: bold;
+            }
         }
     }
 }

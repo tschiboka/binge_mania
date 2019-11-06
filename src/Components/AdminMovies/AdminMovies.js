@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import _ from "lodash";
 
 import "./AdminMovies.scss";
@@ -14,7 +15,8 @@ export default class AdminMovies extends Component {
             addMovie: {},
             showPoster: false,
             movieExists: false,
-            successfullyAdded: false
+            successfullyAdded: false,
+            isLoading: false
         }
     }
 
@@ -26,13 +28,16 @@ export default class AdminMovies extends Component {
 
     async handleSearchMovieTitleBtnClick(event) {
         event.preventDefault();
+
+        this.setState({ ...this.state, isLoading: true });
+
         try {
             const title = document.getElementById("Admin__search-title").value;
             const pgNum = document.getElementById("Admin__search-pagenum").value || 1;
             const response = await fetch(`/api/searchtitle/${title}?page=${pgNum}`);
             const titles = await response.json();
 
-            this.setState({ ...this.state, titles: titles || [] });
+            this.setState({ ...this.state, titles: titles || [], isLoading: false });
         } catch (err) { console.log(err) }
     }
 
@@ -109,6 +114,8 @@ export default class AdminMovies extends Component {
     render() {
         return (
             <div className="AdminMovies">
+                <LoadingSpinner isLoading={this.state.isLoading} />
+
                 <div className="AdminMovies__subheader">
                     <div
                         className={"AdminMovies__subheader__tag " + (this.state.activeSubHeaderTag === "get-titles" ? " active" : "")}
@@ -136,11 +143,10 @@ export default class AdminMovies extends Component {
 
                     <table>
                         <tbody>
-                            <tr><th>title</th><th>id</th></tr>
+                            <tr><th>Title</th><th>ID</th></tr>
                             {this.renderTitles()}
                         </tbody>
                     </table>
-
                 </div>}
 
                 {

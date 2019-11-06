@@ -4,6 +4,7 @@
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
     .AdminMovies__subheader {
         width: 100%;
         height: 5%;
@@ -16,9 +17,17 @@
             height: 100%;
             width: 33.3%;
             cursor: pointer;
+            &:hover { font-size: 3vh; }
+            &:not(.active) {
+                background: #242224;
+                border: $borderLight;
+                border-top: none;
+            }
+            &:last-child { border-top-right-radius: 5px;}
         }
         .active {
-            border: $borderLight;
+            font-size: 3vh;
+            text-decoration: underline;
             border-top: none;
         }
     }
@@ -26,38 +35,66 @@
 
 
 .AdminMovies__get-title {
-    width: 100%;
+    padding: 2%;
+    width: 96%;
     form {
         width: 100%;
         height: 10%;
         min-height: 20px;
+        padding: 0 0 2% 0;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
+        border-bottom: $borderLight;
         input {
+            padding-left: 5px;
             min-width: 80px;
+            border: $borderLight;
+            border-radius: 5px;
+            font-size: $mediumFontSize;
+            background: rgba(255, 255, 255, 0.05);
+            font-family: $mainFontFamily;
+            color: $primaryColor;
+        }
+        button {
+            padding: 0.5vh 2vw;
+            border: $borderLight;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+            color: #80d1e7;
+            font-family: $mainFontFamily;
+            font-size: $mediumFontSize;
+            cursor: pointer;
+            &:hover {
+                background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+                border: $borderLight;
+                border-left: none;
+                border-top: none;
+            }
         }
     }
     table {
         width: 100%;
         height: 90%;
         padding: 0 2%;
-        tr { 
-            cursor: pointer; 
-        }
-        tr:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
+        border-collapse: collapse;
         tr td{
+            padding: 1px 1%;
             max-width: 0; // overflow needs it
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             &:last-child {
                 text-align: right;
+                color: $lightPurple;
             }
         }
+        tr:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
+        tr { cursor: pointer; }
+        tr:hover { background: rgba(255, 255, 255, 0.1); }
     }
 }
 
