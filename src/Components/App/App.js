@@ -209,10 +209,11 @@ export default class App extends Component {
                   {this.renderMoviesByGenre(this.state.showAllMoviesWithCertainGenre.name)}
                 </div>
 
-                <div className="App__movies-by-genre__back-btn"><button>&larr; Back to Browse</button></div>
+                <div className="App__movies-by-genre__back-btn">
+                  <button onClick={() => this.setState({ ...this.state, showAllMoviesWithCertainGenre: false })}>&larr; Back to Browse</button>
+                </div>
               </div>
             }
-            {/*<div className="movies">{this.renderRandomMovies()}</div>*/}
           </CustomScrollbars>
         </div>
 

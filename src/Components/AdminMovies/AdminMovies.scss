@@ -3,6 +3,7 @@
 .AdminMovies{
     height: 100%;
     width: 100%;
+    background: rgba(0, 0, 0, 0.8);
     .AdminMovies__subheader {
         width: 100%;
         height: 5%;
@@ -13,11 +14,12 @@
             justify-content: center;
             align-items: center;
             height: 100%;
-            width: 33%;
+            width: 33.3%;
             cursor: pointer;
         }
         .active {
             border: $borderLight;
+            border-top: none;
         }
     }
 }
