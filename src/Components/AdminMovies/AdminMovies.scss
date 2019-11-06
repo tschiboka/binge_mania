@@ -100,59 +100,85 @@
 
 
 .AdminMovies__add-movie{
-    padding: 0 2%;
+    margin: 2%;
+    padding: 2%;
     width: 96%;
-    height: 100%;
+    height: 90%;
     max-height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    border: $borderLight;
     .AdminMovies__add-movie__btn-div {
         display: flex;
         justify-content: center;    
         height: 5%;
+        button {
+            padding: 0.5vh 2vw;
+            border: $borderLight;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+            color: #80d1e7;
+            font-family: $mainFontFamily;
+            font-size: $mediumFontSize;
+            cursor: pointer;
+            &:hover {
+                background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+                border: $borderLight;
+                border-left: none;
+                border-top: none;
+            }
+        }   
     }    
-    div {
+     > div {
         display: flex;
-        justify-content: space-between;
-        div:first-child {
-            width: 20%;
-        }
-        div:last-child{
-            width: 80%;
+        div:first-child { width: 20%; }
+        div:last-child { width: 80%; }
+        .AdminMovies__poster__url { 
+            text-decoration: underline;
+            cursor: pointer;
+            color: $primaryColor; 
         }
     }
-    div:nth-child(4) {
-        flex: 0 0 0;
-    }
-}
-
-.AdminMovies__poster__url {
-    text-decoration: underline;
-        cursor: pointer;
+    div:nth-child(4) { flex: 0 0 0; }
 }
 
 #AdminMovies__add-movie__poster {
     position: absolute;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;   
+    top: 0;
+    left: 50%;
+    width: 70vw;
+    max-width: 340px;
+    height: 70vh;
+    max-height: 800px;   
     background-position: center;
     background-repeat: no-repeat;
+    background-size: contain;
     background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: flex-end;
+    background: rgba(255, 255, 255, 0.09) contain no-repeat center;
+    border: 5px double $purple;
+    border-radius: 10px;
+    transform: translateX(-50%);
     button {
-        margin: 25px;
-        width: 25px;
-        height: 25px;
+        position: absolute;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        top: 5px;
+        right: 5px;
+        width: 30px;
+        height: 30px;
         border-radius: 100%;
         border: $borderLight;
-        background: black;
-        color: $primaryColor;
-        font-weight: bolder;
+        background: rgba(0, 0, 0, 0.8);
+        color: deeppink;
+        font-size: 2.5vh;
+        cursor: pointer;
         &:hover {
-            border-width: 3px;
+            font-weight: bold;
+            font-size: 3vh;
         }
     }
 }
