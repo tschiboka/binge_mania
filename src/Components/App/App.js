@@ -230,7 +230,8 @@ export default class App extends Component {
           {this.state.showAdmin &&
             <Admin
               user={this.state.user}
-              showAdmin={this.showAdmin.bind(this)} />}
+              showAdmin={this.showAdmin.bind(this)}
+              movies={this.state.movies} />}
         </div>
 
         <LoadingSpinner isLoading={this.state.loading} />

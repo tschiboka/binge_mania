@@ -12,7 +12,8 @@ export default class Admin extends Component {
         super(props);
 
         this.state = {
-            activeTag: "users"
+            activeTag: "users",
+            movies: this.props.movies
         };
     }
 
@@ -33,11 +34,7 @@ export default class Admin extends Component {
 
 
 
-    setUsers(users) { this.setState({ ...this.state, users: users }) }
-
-
-
-    setMovies(movies) { this.setState({ ...this.state, movies: movies }) }
+    setUsers(users) { this.setState({ ...this.state, users: users }); }
 
 
 
@@ -92,7 +89,7 @@ export default class Admin extends Component {
 
                 {this.state.activeTag === "users" && <AdminUsers users={this.state.users || []} setUsers={this.setUsers.bind(this)} />}
 
-                {this.state.activeTag === "movies" && <AdminMovies movies={this.state.movies || []} setMovies={this.setMovies.bind(this)} />}
+                {this.state.activeTag === "movies" && <AdminMovies movies={this.state.movies || []} />}
 
                 {this.state.activeTag === "transactions" && <div>Transactions</div>}
 

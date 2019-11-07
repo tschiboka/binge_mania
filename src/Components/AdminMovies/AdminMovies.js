@@ -1,8 +1,32 @@
 import React, { Component } from "react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { Scrollbars } from 'react-custom-scrollbars';
 import _ from "lodash";
 
 import "./AdminMovies.scss";
+
+
+
+const CustomScrollbars = props => (
+    <Scrollbars
+        renderThumbHorizontal={renderThumb}
+        renderThumbVertical={renderThumb}
+        {...props}
+    />
+);
+
+
+
+const renderThumb = ({ style, ...props }) => {
+    const thumbStyle = {
+        borderRadius: 6,
+        width: 6,
+        backgroundColor: "deeppink",
+        right: 3,
+        zIndex: 2000
+    };
+    return <div style={{ ...style, ...thumbStyle }} {...props} />;
+};
 
 
 
@@ -16,7 +40,8 @@ export default class AdminMovies extends Component {
             showPoster: false,
             movieExists: false,
             successfullyAdded: false,
-            isLoading: false
+            isLoading: false,
+            movieListPage: 0
         }
     }
 
@@ -45,12 +70,14 @@ export default class AdminMovies extends Component {
 
 
     async handleSearchMovieTitleClick(tmdb_id) {
+        this.setState({ ...this.state, isLoading: true });
+
         try {
             const response = await fetch(`api/searchmovieid/${tmdb_id}`);
             const movie = await response.json();
 
             console.log(movie);
-            this.setState({ ...this.state, activeSubHeaderTag: "add-movie", addMovie: movie });
+            this.setState({ ...this.state, activeSubHeaderTag: "add-movie", addMovie: movie, isLoading: false });
         } catch (err) { console.log(err); }
     }
 
@@ -68,6 +95,49 @@ export default class AdminMovies extends Component {
                 </tr>)}
             </tbody>
         </table>
+    }
+
+
+
+    renderMovieList() {
+        const movieList = _.chunk(this.props.movies.sort((a, b) => a.title > b.title), 20);
+        const buttonTexts = movieList.length ? movieList.map(chunk => chunk[0].title.substr(0, 2) + "-" + chunk[chunk.length - 1].title.substr(0, 2)) : [];
+
+        console.log(buttonTexts);
+
+        return <div className="AdminMovies__movies">
+            <table><tbody>
+                <tr><td>Title</td><td>Stock</td><td>ID</td><td>Genres</td><td>Year</td><td>RunTime</td><td>Cast</td><td>Description</td><td>Poster</td></tr>
+                {movieList[this.state.movieListPage].map((movie, i) => <tr key={"Admin-movie-list-" + movie.title + i}>
+                    <td>{movie.title}</td>
+
+                    <td>{movie.inStock}</td>
+
+                    <td>{movie._id}</td>
+
+                    <td>{movie.genres.join(", ")}</td>
+
+                    <td>{movie.year}</td>
+
+                    <td>{movie.time}</td>
+
+                    <td>{movie.cast.join(", ")}</td>
+
+                    <td>{movie.description}</td>
+
+                    <td>{movie.coverImgUrl}</td>
+                </tr>)}
+            </tbody></table>
+
+            <CustomScrollbars
+                autoHide autoHideTimeout={500}
+                autoHideDuration={200}
+            >
+                <div className="AdminMovies__movies__pagination">
+                    {buttonTexts.map((btx, i) => <button key={"MovieList-button-" + i}>{btx}</button>)}
+                </div>
+            </CustomScrollbars>
+        </div >
     }
 
 
@@ -154,6 +224,7 @@ export default class AdminMovies extends Component {
                 {
                     (this.state.addMovie.title && this.state.activeSubHeaderTag === "add-movie") &&
                     <div className="AdminMovies__add-movie">
+                        {/* POSTER */}
                         {<div id="AdminMovies__add-movie__poster" style={{ visibility: this.state.showMoviePoster ? "visible" : "hidden" }}>
                             <button onClick={() => this.setState({ ...this.state, showMoviePoster: false })}>&times;</button>
                         </div>}
@@ -178,7 +249,7 @@ export default class AdminMovies extends Component {
                         <div>
                             <div>Genres</div>
 
-                            <div>{JSON.stringify(this.state.addMovie.genres.map(g => g.name.toLowerCase()))}</div>
+                            <div>{this.state.addMovie.genres.map(g => g.name.toLowerCase()).join(", ")}</div>
                         </div>
 
                         <div>
@@ -203,12 +274,14 @@ export default class AdminMovies extends Component {
                         <div>
                             <div>Cast</div>
 
-                            <div>{JSON.stringify(_.map(_.chunk(this.state.addMovie.credits.cast, 5)[0], "name"))}</div>
+                            <div>{_.map(_.chunk(this.state.addMovie.credits.cast, 5)[0], "name").join(", ")}</div>
                         </div>
 
                         <div className="AdminMovies__add-movie__btn-div"><button onClick={() => this.addMovieToDB()}>
                             Add Movie to binge_mania db</button></div>
                     </div>}
+
+                {this.state.activeSubHeaderTag === "movies" && this.renderMovieList()}
 
                 {this.state.movieExists && <div className="AdminMovies__message">
                     This movie already exists in binge_mania database!
@@ -219,7 +292,6 @@ export default class AdminMovies extends Component {
                     {`${this.state.addMovie.title} is added to database!`}
                     <button onClick={() => this.setState({ ...this.state, successfullyAdded: false })}>OK</button>
                 </div>}
-
             </div>
         );
     }
