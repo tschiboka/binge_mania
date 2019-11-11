@@ -10,7 +10,7 @@ import "./AdminMovies.scss";
 const CustomScrollbars = props => (
     <Scrollbars
         renderThumbHorizontal={renderThumb}
-        renderThumbVertical={renderThumb}
+        //      renderThumbVertical={renderThumb}
         {...props}
     />
 );
@@ -102,6 +102,9 @@ export default class AdminMovies extends Component {
     renderMovieList() {
         const movieList = _.chunk(this.props.movies.sort((a, b) => a.title > b.title), 20);
         const buttonTexts = movieList.length ? movieList.map(chunk => chunk[0].title.substr(0, 2) + "-" + chunk[chunk.length - 1].title.substr(0, 2)) : [];
+        movieList[movieList.length - 1] = {
+            title: "", inStock: "", _id: "", genres: [],
+        }
 
         console.log(buttonTexts);
 
@@ -134,7 +137,10 @@ export default class AdminMovies extends Component {
                 autoHideDuration={200}
             >
                 <div className="AdminMovies__movies__pagination">
-                    {buttonTexts.map((btx, i) => <button key={"MovieList-button-" + i}>{btx}</button>)}
+                    {buttonTexts.map((btx, i) => <button
+                        key={"MovieList-button-" + i}
+                        onClick={() => this.setState({ ...this.state, movieListPage: i })}
+                    >{btx}</button>)}
                 </div>
             </CustomScrollbars>
         </div >
