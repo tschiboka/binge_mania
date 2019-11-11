@@ -234,7 +234,7 @@
         border-collapse: collapse;
         table-layout: fixed;
         tr {
-            &:first-child td { border: $borderLight; }
+            &:first-child td { border-bottom: $borderLight; }
             max-width: 100%;
             &:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
             &:hover { background: rgba(255, 255, 255, 0.1); }
@@ -246,10 +246,11 @@
                 &:first-child { width: 20%; }
                 &:nth-child(2), &:nth-child(5), &:nth-child(6) { width: 45px; text-align: right; }
             }
-            &:first-child { text-align: center; }
-            &:first-child td:nth-child(2) { text-align: center; }
+        &:first-child { text-align: center; }
+        //    &:first-child td:nth-child(2) { text-align: center; }
 
         }
+        tr .ColumnResizer { width: 0px !important; border-right: 1px solid $purple;  }
     }
     &>div>div { width: 100%; overflow-y: hidden !important; } // custom scroll was out of div
     .AdminMovies__movies__pagination {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { Scrollbars } from 'react-custom-scrollbars';
 import _ from "lodash";
+import ColumnResizer from "react-column-resizer";
 
 import "./AdminMovies.scss";
 
@@ -106,7 +107,6 @@ export default class AdminMovies extends Component {
                 if (lastChunk[i]) last.push(lastChunk[i])
                 else last.push(placeholderObj);
             }
-            console.log(last);
             return last;
         }
 
@@ -116,24 +116,57 @@ export default class AdminMovies extends Component {
 
         return <div className="AdminMovies__movies">
             <table><tbody>
-                {console.log("MOVIELIST", movieList[this.state.movieListPage])}
-                <tr><td>Title</td><td>Stock</td><td>ID</td><td>Genres</td><td>Year</td><td>RunTime</td><td>Cast</td><td>Description</td><td>Poster</td></tr>
+                <tr>
+                    <td>Title</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>Stock</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>ID</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>Genres</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>Year</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>RunTime</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>Cast</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>Description</td>
+
+                    <ColumnResizer className="ColumnResizer" />
+
+                    <td>Poster</td>
+                </tr>
                 {movieList[this.state.movieListPage].map((movie, i) => <tr key={"Admin-movie-list-" + movie.title + i}>
-                    <td>{movie.title}</td>
+                    <td>{movie.title}</td><td /> {/* empty <td /> is for the ColumnResizer*/}
 
-                    <td>{movie.inStock}</td>
+                    <td>{movie.inStock}</td><td />
 
-                    <td>{movie._id}</td>
+                    <td>{movie._id}</td><td />
 
-                    <td>{movie.genres.join(", ")}</td>
+                    <td>{movie.genres.join(", ")}</td><td />
 
-                    <td>{movie.year}</td>
+                    <td>{movie.year}</td><td />
 
-                    <td>{movie.time}</td>
+                    <td>{movie.time}</td><td />
 
-                    <td>{movie.cast.join(", ")}</td>
+                    <td>{movie.cast.join(", ")}</td><td />
 
-                    <td>{movie.description}</td>
+                    <td>{movie.description}</td><td />
 
                     <td>{movie.coverImgUrl}</td>
                 </tr>)}
