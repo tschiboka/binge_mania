@@ -10,7 +10,6 @@ import "./AdminMovies.scss";
 const CustomScrollbars = props => (
     <Scrollbars
         renderThumbHorizontal={renderThumb}
-        //      renderThumbVertical={renderThumb}
         {...props}
     />
 );
@@ -100,16 +99,24 @@ export default class AdminMovies extends Component {
 
 
     renderMovieList() {
-        const movieList = _.chunk(this.props.movies.sort((a, b) => a.title > b.title), 20);
-        const buttonTexts = movieList.length ? movieList.map(chunk => chunk[0].title.substr(0, 2) + "-" + chunk[chunk.length - 1].title.substr(0, 2)) : [];
-        movieList[movieList.length - 1] = {
-            title: "", inStock: "", _id: "", genres: [],
+        function fillMovieArrayWithPlaceholders(lastChunk) {
+            let last = [];
+            const placeholderObj = { title: "-", inStock: "-", _id: "-", genres: ["-"], year: "-", time: "-", cast: ["-"], descrtiption: "-", coverImgUrl: "-" };
+            for (let i = 0; i < 20; i++) {
+                if (lastChunk[i]) last.push(lastChunk[i])
+                else last.push(placeholderObj);
+            }
+            console.log(last);
+            return last;
         }
 
-        console.log(buttonTexts);
+        const movieList = _.chunk(this.props.movies.sort((a, b) => a.title > b.title), 20);
+        const buttonTexts = movieList.length ? movieList.map(chunk => chunk[0].title.substr(0, 2) + "-" + chunk[chunk.length - 1].title.substr(0, 2)) : [];
+        movieList[movieList.length - 1] = fillMovieArrayWithPlaceholders(movieList[movieList.length - 1]);
 
         return <div className="AdminMovies__movies">
             <table><tbody>
+                {console.log("MOVIELIST", movieList[this.state.movieListPage])}
                 <tr><td>Title</td><td>Stock</td><td>ID</td><td>Genres</td><td>Year</td><td>RunTime</td><td>Cast</td><td>Description</td><td>Poster</td></tr>
                 {movieList[this.state.movieListPage].map((movie, i) => <tr key={"Admin-movie-list-" + movie.title + i}>
                     <td>{movie.title}</td>
@@ -143,7 +150,7 @@ export default class AdminMovies extends Component {
                     >{btx}</button>)}
                 </div>
             </CustomScrollbars>
-        </div >
+        </div>
     }
 
 

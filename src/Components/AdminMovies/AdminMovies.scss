@@ -251,12 +251,10 @@
 
         }
     }
-    &>div>div { width: 100%; overflow-y: hidden !important;} // custom scroll was out of div
+    &>div>div { width: 100%; overflow-y: hidden !important; } // custom scroll was out of div
     .AdminMovies__movies__pagination {
         position: relative;
         height: 100%;
-        //margin-top: 1%;
-        //height: 5vh;
         display: flex;
         justify-content: space-between;
         align-items: center;
