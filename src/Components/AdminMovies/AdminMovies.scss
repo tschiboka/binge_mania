@@ -234,8 +234,8 @@
         border-collapse: collapse;
         table-layout: fixed;
         tr {
-            &:first-child td { border-bottom: $borderLight; }
             max-width: 100%;
+            &:first-child th { border-bottom: $borderLight; }
             &:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
             &:hover { background: rgba(255, 255, 255, 0.1); }
             td {

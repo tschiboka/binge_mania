@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import "./ShoppingCart.scss";
 
 export default class ShoppingCart extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { preventOnBlur: false }
+    }
+
+
+
     componentDidUpdate() { this.shoppingCart.focus(); }
 
 
@@ -11,7 +19,7 @@ export default class ShoppingCart extends Component {
             <div
                 id="ShoppingCart"
                 style={{ visibility: this.props.visible ? "visible" : "hidden" }}
-                onBlur={() => this.props.blur()}
+                onBlur={() => { if (!this.state.preventOnBlur) this.props.blur() }}
                 tabIndex={0}
                 ref={elem => (this.shoppingCart = elem)} // give focus in order to be able to call onBlur
             >
@@ -29,7 +37,11 @@ export default class ShoppingCart extends Component {
                                 <div className="ShoppingCart__price">
                                     £{((300 - m.inStock) / 100).toFixed(2)}
 
-                                    <button onClick={() => this.props.remove(m._id)}>&times;</button>
+                                    <button
+                                        onClick={() => this.props.remove(m._id)}
+                                        onMouseEnter={() => this.setState({ ...this.state, preventOnBlur: true })}
+                                        onMouseLeave={() => this.setState({ ...this.state, preventOnBlur: false })}
+                                    >&times;</button>
                                 </div>
                             </li>)
                         : "Shopping Cart Is Empty..."}
@@ -45,7 +57,10 @@ export default class ShoppingCart extends Component {
                             </span>
                         </div>
                         <div className="ShoppingCart__rent-btn">
-                            <button>Rent</button>
+                            <button
+                                onMouseEnter={() => this.setState({ ...this.state, preventOnBlur: true })}
+                                onMouseLeave={() => this.setState({ ...this.state, preventOnBlur: false })}
+                            >Rent</button>
                         </div>
                     </div>}
             </div>

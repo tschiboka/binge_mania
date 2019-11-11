@@ -117,39 +117,39 @@ export default class AdminMovies extends Component {
         return <div className="AdminMovies__movies">
             <table><tbody>
                 <tr>
-                    <td>Title</td>
+                    <th>Title</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>Stock</td>
+                    <th>Stock</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>ID</td>
+                    <th>ID</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>Genres</td>
+                    <th>Genres</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>Year</td>
+                    <th>Year</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>RunTime</td>
+                    <th>RunTime</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>Cast</td>
+                    <th>Cast</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>Description</td>
+                    <th>Description</th>
 
                     <ColumnResizer className="ColumnResizer" />
 
-                    <td>Poster</td>
+                    <th>Poster</th>
                 </tr>
                 {movieList[this.state.movieListPage].map((movie, i) => <tr key={"Admin-movie-list-" + movie.title + i}>
                     <td>{movie.title}</td><td /> {/* empty <td /> is for the ColumnResizer*/}
