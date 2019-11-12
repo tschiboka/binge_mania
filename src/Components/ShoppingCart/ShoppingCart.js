@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import "./ShoppingCart.scss";
 
+
+
 export default class ShoppingCart extends Component {
     constructor(props) {
         super(props);
