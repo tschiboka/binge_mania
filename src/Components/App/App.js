@@ -121,7 +121,10 @@ export default class App extends Component {
         const response = await fetch("/api/movies/" + movie.title);
         return await response.json();
       }))
-      .then(updatedMovie => { this.setState({ ...this.state, cart: updatedMovie }) });
+      .then(updatedMovie => {
+        this.setState({ ...this.state, cart: updatedMovie });
+        return updatedMovie.filter(m => m.inStock <= 0).length; // return the length of out of stock movies
+      });
   }
 
 

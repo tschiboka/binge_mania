@@ -22,12 +22,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            .ShoppingCart__title, .ShoppingCart__price {
-                padding: 0.5vh;
-            }
-            .ShoppingCart__title {
-                text-align: left;
-            }
+            .ShoppingCart__title, .ShoppingCart__price { padding: 0.5vh; }
+            .ShoppingCart__title--out-of-stock { color: deeppink; }
+            .ShoppingCart__title { text-align: left; }
             .ShoppingCart__price { 
                 display: flex;
                 align-items: center;            
@@ -99,6 +96,14 @@
                 border-left: none;
                 border-top: none;
             }
+            button[disabled] {
+                color: black;
+            }
+        }
+        .ShoppingCart__out-of-stock-msg {
+            padding: 1vh 0.5vh;
+            color: deeppink;
+            font-size: 2vh;
         }
     }
 }
