@@ -20,14 +20,13 @@ export default class ShoppingCart extends Component {
 
 
     handleRentBtnClick() {
-        console.log("CHECK STOCK...");
         this.setState({ ...this.state, isLoading: true });
         this.props.updateMoviesInStock() // in case any of the movies would run out of stock
             .then(numOfMoviesOutOfStock => {
                 this.setState({ ...this.state, isLoading: false });
-                console.log("RESULT FROM PROMISE", numOfMoviesOutOfStock);
                 if (numOfMoviesOutOfStock === 0) {
                     console.log("RENT");
+
                 }
             });
         return false;
@@ -80,13 +79,16 @@ export default class ShoppingCart extends Component {
                         </div>
                         <div className="ShoppingCart__rent-btn">
                             <button
-                                disabled={this.props.movies.filter(m => m.inStock <= 0).length}
+                                disabled={this.props.movies.filter(m => m.inStock <= 0).length || !this.props.user._id}
                                 onMouseEnter={() => this.setState({ ...this.state, preventOnBlur: true })}
                                 onMouseLeave={() => this.setState({ ...this.state, preventOnBlur: false })}
                                 onClick={() => this.handleRentBtnClick()}
                             >Rent</button>
                         </div>
+
                         {this.props.movies.filter(m => m.inStock <= 0).length > 0 && <div className="ShoppingCart__out-of-stock-msg">One or more item is currently out of stock!</div>}
+
+                        {!this.props.user._id && <div className="ShoppingCart__not-signed-in-msg">You need to sign in!</div>}
                     </div>}
             </div>
         );

@@ -100,7 +100,7 @@
                 color: black;
             }
         }
-        .ShoppingCart__out-of-stock-msg {
+        .ShoppingCart__out-of-stock-msg, .ShoppingCart__not-signed-in-msg {
             padding: 1vh 0.5vh;
             color: deeppink;
             font-size: 2vh;
