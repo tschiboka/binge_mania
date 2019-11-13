@@ -115,6 +115,10 @@ export default class App extends Component {
 
 
 
+  emptyCart() { this.setState({ ...this.state, cart: [] }); }
+
+
+
   updateMoviesInStock() {
     return Promise.all(
       this.state.cart.map(async movie => {
@@ -178,6 +182,7 @@ export default class App extends Component {
               remove={this.removeFromCart.bind(this)}
               showGenre={this.showMoviesByGenre.bind(this)}
               updateMoviesInStock={this.updateMoviesInStock.bind(this)}
+              emptyCart={this.emptyCart.bind(this)}
             />
             {this.state.categories && !this.state.showAllMoviesWithCertainGenre &&
               <div

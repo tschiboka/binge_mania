@@ -190,7 +190,7 @@ export default class AdminMovies extends Component {
 
     async addMovieToDB() {
         try {
-            // check if movie is already exists
+            // check if movie already exists
             const response1 = await fetch("/api/movies/" + this.state.addMovie.title);
             const exist = await response1.text();
 

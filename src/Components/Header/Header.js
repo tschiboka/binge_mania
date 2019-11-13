@@ -202,6 +202,7 @@ export default class Header extends Component {
                     movies={this.props.movies}
                     user={this.props.user}
                     remove={this.props.remove}
+                    emptyCart={this.props.emptyCart}
                     blur={() => this.handleShoppingCartOnBlur()}
                     updateMoviesInStock={this.props.updateMoviesInStock}
                 />

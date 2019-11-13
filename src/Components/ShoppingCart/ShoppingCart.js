@@ -22,11 +22,31 @@ export default class ShoppingCart extends Component {
     handleRentBtnClick() {
         this.setState({ ...this.state, isLoading: true });
         this.props.updateMoviesInStock() // in case any of the movies would run out of stock
-            .then(numOfMoviesOutOfStock => {
-                this.setState({ ...this.state, isLoading: false });
+            .then(async numOfMoviesOutOfStock => {
                 if (numOfMoviesOutOfStock === 0) {
                     console.log("RENT");
+                    const BODY = {
+                        user: { _id: this.props.user._id },
+                        movies: this.props.movies.map(movie => ({ title: movie.title, _id: movie._id })),
+                        transTotal: this.props.movies.map(m => (300 - m.inStock) / 100).reduce((accu, curr) => accu + curr).toFixed(2)
+                    }
+                    const HEADER = {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(BODY)
+                    }
+                    const transactionResponse = await fetch("/api/transactions/", HEADER);
+                    const transactionJSON = await transactionResponse.json();
 
+                    // empty cart, and take off loading spinner
+
+                    this.setState({ ...this.state, isLoading: false });
+                    this.props.emptyCart();
+
+                    console.log(transactionJSON);
                 }
             });
         return false;
@@ -88,7 +108,7 @@ export default class ShoppingCart extends Component {
 
                         {this.props.movies.filter(m => m.inStock <= 0).length > 0 && <div className="ShoppingCart__out-of-stock-msg">One or more item is currently out of stock!</div>}
 
-                        {!this.props.user._id && <div className="ShoppingCart__not-signed-in-msg">You need to sign in!</div>}
+                        {!this.props.user._id && <div className="ShoppingCart__not-signed-in-msg">You need to be signed in!</div>}
                     </div>}
             </div>
         );
