@@ -135,7 +135,6 @@ export default class Header extends Component {
 
 
     setShoppingCartMenuCoords() {
-        console.log("HERE");
         if (this.state.shoppingCartIsOpen) {
             const headerDiv = document.getElementsByClassName("Header")[0];
             const headerRect = headerDiv.getBoundingClientRect();
@@ -203,6 +202,7 @@ export default class Header extends Component {
                     movies={this.props.movies}
                     remove={this.props.remove}
                     blur={() => this.handleShoppingCartOnBlur()}
+                    updateMoviesInStock={this.props.updateMoviesInStock}
                 />
 
                 <UserMenu

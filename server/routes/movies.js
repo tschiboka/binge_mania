@@ -33,18 +33,17 @@ route.post("/", async (req, res) => {
 
         //search for genres and create if not found update if did found
         const genres = await Promise.all(
-            req.body.genres
-                .map(async (genre, i) => {
-                    const dbGenre = await Genre.find({ name: genre.toLowerCase() });
+            req.body.genres.map(async (genre, i) => {
+                const dbGenre = await Genre.find({ name: genre.toLowerCase() });
 
-                    if (!dbGenre.length) {
-                        const newGenre = new Genre({ name: genre.toLowerCase() });
-                        await newGenre.save();
-                        return newGenre.name;
-                    }
-                    await dbGenre[0].update({ $inc: { moviesWithGenre: 1 } });
-                    return genre;
-                }));
+                if (!dbGenre.length) {
+                    const newGenre = new Genre({ name: genre.toLowerCase() });
+                    await newGenre.save();
+                    return newGenre.name;
+                }
+                await dbGenre[0].update({ $inc: { moviesWithGenre: 1 } });
+                return genre;
+            }));
 
         const movie = new Movie({
             title: req.body.title,

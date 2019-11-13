@@ -13,8 +13,6 @@ export default class MovieDetails extends Component {
 
 
     render() {
-        console.log(this.props.cart, this.props.movie);
-        console.log("DISABLED", this.props.cart.some(cartMovie => cartMovie._id === this.props.movie._id));
         return (
             <div className="MovieDetails" onClick={(e) => {
                 if (e.target.classList[0] === "MovieDetails") this.props.showMovieDetails(false, this.props.movie);

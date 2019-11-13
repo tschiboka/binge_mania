@@ -104,7 +104,6 @@ export default class App extends Component {
 
 
   addToCart(movie) {
-    console.log();
     const newCart = [...this.state.cart];
     newCart.push(movie);
     this.setState({ ...this.state, cart: newCart, showMovieDetails: false });
@@ -113,6 +112,17 @@ export default class App extends Component {
 
 
   removeFromCart(_id) { this.setState({ ...this.state, cart: this.state.cart.filter(m => m._id !== _id) }); }
+
+
+
+  updateMoviesInStock() {
+    return Promise.all(
+      this.state.cart.map(async movie => {
+        const response = await fetch("/api/movies/" + movie.title);
+        return await response.json();
+      }))
+      .then(updatedMovie => { this.setState({ ...this.state, cart: updatedMovie }) });
+  }
 
 
 
@@ -164,6 +174,7 @@ export default class App extends Component {
               movies={this.state.cart}
               remove={this.removeFromCart.bind(this)}
               showGenre={this.showMoviesByGenre.bind(this)}
+              updateMoviesInStock={this.updateMoviesInStock.bind(this)}
             />
             {this.state.categories && !this.state.showAllMoviesWithCertainGenre &&
               <div

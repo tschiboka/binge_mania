@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import "./ShoppingCart.scss";
 
 
@@ -7,12 +8,19 @@ export default class ShoppingCart extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { preventOnBlur: false }
+        this.state = { preventOnBlur: false, isLoading: true }
     }
 
 
 
     componentDidUpdate() { this.shoppingCart.focus(); }
+
+
+
+    handleRentBtnClick() {
+        this.props.updateMoviesInStock() // in case any of the movies would run out of stock
+            .then(res => console.log("HERE"));
+    }
 
 
 
@@ -25,6 +33,7 @@ export default class ShoppingCart extends Component {
                 tabIndex={0}
                 ref={elem => (this.shoppingCart = elem)} // give focus in order to be able to call onBlur
             >
+                <LoadingSpinner isLoading={this.state.isLoading} />
                 <ul className="ShoppingCart__movies">
                     {(this.props.movies && this.props.movies.length)
                         ? this.props.movies.map((m, i) =>
@@ -62,6 +71,7 @@ export default class ShoppingCart extends Component {
                             <button
                                 onMouseEnter={() => this.setState({ ...this.state, preventOnBlur: true })}
                                 onMouseLeave={() => this.setState({ ...this.state, preventOnBlur: false })}
+                                onClick={() => this.handleRentBtnClick()}
                             >Rent</button>
                         </div>
                     </div>}
