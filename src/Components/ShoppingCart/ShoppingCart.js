@@ -8,7 +8,11 @@ export default class ShoppingCart extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { preventOnBlur: false, isLoading: false }
+        this.state = {
+            preventOnBlur: false,
+            isLoading: false,
+            successfulRent: { show: false, movies: [] }
+        }
     }
 
 
@@ -41,15 +45,17 @@ export default class ShoppingCart extends Component {
                     const transactionResponse = await fetch("/api/transactions/", HEADER);
                     const transactionJSON = await transactionResponse.json();
 
-                    // empty cart, and take off loading spinner
-
-                    this.setState({ ...this.state, isLoading: false });
-                    this.props.emptyCart();
-
-                    console.log(transactionJSON);
+                    this.setState({ ...this.state, isLoading: false, successfulRent: { show: true, movies: this.props.movies } });
                 }
             });
         return false;
+    }
+
+
+
+    handleSuccessfulTransactionBtnClick() {
+        this.props.emptyCart();
+        this.setState({ ...this.state, successfulRent: { show: false, movies: [] } });
     }
 
 
@@ -79,6 +85,7 @@ export default class ShoppingCart extends Component {
                                     £{((300 - m.inStock) / 100).toFixed(2)}
 
                                     <button
+                                        disabled={this.state.successfulRent.show}
                                         onClick={() => this.props.remove(m._id)}
                                         onMouseEnter={() => this.setState({ ...this.state, preventOnBlur: true })}
                                         onMouseLeave={() => this.setState({ ...this.state, preventOnBlur: false })}
@@ -87,7 +94,7 @@ export default class ShoppingCart extends Component {
                             </li>)
                         : "Shopping Cart Is Empty..."}
                 </ul>
-                {this.props.movies.length > 0 &&
+                {(this.props.movies.length > 0 && !this.state.successfulRent.show) &&
                     <div className="ShoppingCart__final">
                         <div className="ShoppingCart__total">Total:
                             <span>£
@@ -110,6 +117,18 @@ export default class ShoppingCart extends Component {
 
                         {!this.props.user._id && <div className="ShoppingCart__not-signed-in-msg">You need to be signed in!</div>}
                     </div>}
+
+                {this.state.successfulRent.show && <div className="ShoppingCart__successful-transaction">
+                    <p>
+                        Successfully rented {this.state.successfulRent.movies.length} movie(s)!
+                            <br />
+                        To see your transactions, go to:
+                            <br />
+                        Header\User\History
+                            </p>
+
+                    <button onClick={() => this.handleSuccessfulTransactionBtnClick()}>Got It!</button>
+                </div>}
             </div>
         );
     }

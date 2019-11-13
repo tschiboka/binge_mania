@@ -106,4 +106,35 @@
             font-size: 2vh;
         }
     }
+    .ShoppingCart__successful-transaction {
+        margin: 0.5vh 0;
+        padding: 1vh 1vh;
+        border: $borderLight;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.9);
+        font-size: 2.3vh;
+        color: $primaryColor;
+        p {
+            padding: 2vh 1vh;
+        }
+        button {
+            margin: 0.5vh 0;
+            padding: 0.5vh 2vh;
+            border-radius: 5px;
+            border: $borderLight;
+            border-right: none;
+            border-bottom: none;
+            background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+            color: #80d1e7;
+            font-family: "Helvetica Neue";
+            font-size: $mediumFontSize;
+            cursor: pointer;
+        }
+        button:hover {
+            background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+            border: $borderLight;
+            border-left: none;
+            border-top: none;
+        }
+    }
 }
