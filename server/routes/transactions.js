@@ -2,6 +2,7 @@ const express = require("express");
 const route = express.Router();
 const { Transaction, validate } = require("../models/transaction");
 const { User } = require("../models/user");
+const { Movie } = require("../models/movie");
 const mongoose = require("mongoose");
 const Fawn = require("fawn");
 
@@ -30,13 +31,15 @@ route.post("/", async (req, res) => {
             transTotal: req.body.transTotal,
             user: { id: user._id, email: user.email }
         });
-        console.log("ID HERE");
-        console.log(transaction._id);
+
+        const movieIds = req.body.movies.map(m => mongoose.Types.ObjectId(m._id)); // cast to mdb id
 
         // FAWN transaction here (an easier implementation of 2 phase commit)
         new Fawn.Task()
             .save("transactions", transaction) // we need to use the actual name of the collection
             .update("users", { _id: user._id }, { $push: { transactions: transaction._id } })
+            .update("movies", { _id: { $in: [...movieIds] } }, { $inc: { inStock: -1 } })
+            .options({ multi: true })
             .run();
 
         res.send(transaction);
