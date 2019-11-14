@@ -28,7 +28,6 @@ export default class ShoppingCart extends Component {
         this.props.updateMoviesInStock() // in case any of the movies would run out of stock
             .then(async numOfMoviesOutOfStock => {
                 if (numOfMoviesOutOfStock === 0) {
-                    console.log("RENT");
                     const BODY = {
                         user: { _id: this.props.user._id },
                         movies: this.props.movies.map(movie => ({ title: movie.title, _id: movie._id })),
@@ -42,8 +41,7 @@ export default class ShoppingCart extends Component {
                         },
                         body: JSON.stringify(BODY)
                     }
-                    const transactionResponse = await fetch("/api/transactions/", HEADER);
-                    const transactionJSON = await transactionResponse.json();
+                    await fetch("/api/transactions/", HEADER);
 
                     this.setState({ ...this.state, isLoading: false, successfulRent: { show: true, movies: this.props.movies } });
                 }

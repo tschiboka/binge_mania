@@ -6,6 +6,7 @@ import LazyLoad from "react-lazy-load";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import MovieCollection from "../MovieCollection/MovieCollection";
 import MovieDetails from "../MovieDetails/MovieDetails";
+import History from "../History/History";
 import { Scrollbars } from 'react-custom-scrollbars';
 import './App.scss';
 import _ from "lodash";
@@ -45,7 +46,8 @@ export default class App extends Component {
       movies: [],
       loading: true,
       cart: [],
-      showAllMoviesWithCertainGenre: false
+      showAllMoviesWithCertainGenre: false,
+      showHistory: false
     }
   }
 
@@ -133,6 +135,12 @@ export default class App extends Component {
 
 
 
+  openHistory(isOpen) {
+    this.setState({ ...this.state, showHistory: isOpen })
+  }
+
+
+
   renderRandomMovies() {
     return this.state.movies.map((movie, i) =>
       <LazyLoad
@@ -168,7 +176,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className={"App__main" + (this.state.showAdmin || this.state.showMovieDetails ? " blurred" : "")}>
+        <div className={"App__main" + (this.state.showAdmin || this.state.showMovieDetails || this.state.showHistory ? " blurred" : "")}>
           <CustomScrollbars
             autoHide autoHideTimeout={500}
             autoHideDuration={200}
@@ -183,6 +191,7 @@ export default class App extends Component {
               showGenre={this.showMoviesByGenre.bind(this)}
               updateMoviesInStock={this.updateMoviesInStock.bind(this)}
               emptyCart={this.emptyCart.bind(this)}
+              openHistory={this.openHistory.bind(this)}
             />
             {this.state.categories && !this.state.showAllMoviesWithCertainGenre &&
               <div
@@ -242,6 +251,12 @@ export default class App extends Component {
             movie={this.state.movieDetails}
             add={this.addToCart.bind(this)}
             cart={this.state.cart}
+          />
+        }
+
+        {this.state.showHistory &&
+          <History
+            closeHistory={this.openHistory.bind(this)}
           />
         }
 

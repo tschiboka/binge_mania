@@ -214,6 +214,7 @@ export default class Header extends Component {
                     logout={this.props.logout}
                     user={this.props.user}
                     showAdmin={this.props.showAdmin}
+                    openHistory={this.props.openHistory}
                     blur={() => this.handleUserOnBlur()}
                 />
             </header>

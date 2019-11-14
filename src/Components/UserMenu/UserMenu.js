@@ -45,6 +45,10 @@ export default class UserMenu extends Component {
 
 
 
+    handleHistoryClick() { this.props.openHistory(true); }
+
+
+
     handleNewUserSubmit(event) {
         const newState = { ...this.state };
         event.preventDefault();
@@ -243,6 +247,11 @@ export default class UserMenu extends Component {
                         id="User-menu__new-user"
                         onClick={() => this.handleNewUserClick()}
                     >New User {this.state.newUserFormVisible && <span>&#9652;</span>}</li>
+
+                    {this.props.user._id && <li
+                        className="User-menu__list__item"
+                        onClick={() => this.handleHistoryClick()}
+                    >History</li>}
 
                     {this.state.newUserFormVisible &&
                         <li>
