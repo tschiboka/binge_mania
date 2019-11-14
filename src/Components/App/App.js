@@ -256,6 +256,7 @@ export default class App extends Component {
 
         {this.state.showHistory &&
           <History
+            user={this.state.user}
             closeHistory={this.openHistory.bind(this)}
           />
         }

@@ -32,15 +32,35 @@ export default class History extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { isLoading: false }
+        this.state = { isLoading: true }
+
+        this.getHistory();
+    }
+
+
+
+    async getHistory() {
+        const transResp = await fetch("api/transactions/" + this.props.user._id);
+        const transJSON = await transResp.json();
+
+        this.setState({ ...this.state, isLoading: false, userHistory: transJSON });
     }
 
 
 
     renderHistory() {
-        this.setState({ ...this.state, isLoading: true });
+        if (!this.state.userHistory) return <div>Fetching your transactions...</div>
+        return this.state.userHistory.map((trns, i) => (
+            <div
+                key={"userTransaction" + i}
+            >
+                <p>{trns.date}</p>
 
+                <p>{trns.movies.map(m => m.title).join(",")}</p>
 
+                <p>£{trns.transTotal}</p>
+            </div>
+        ));
     }
 
 
