@@ -247,8 +247,9 @@
                 &:nth-child(2), &:nth-child(5), &:nth-child(6) { width: 45px; text-align: right; }
             }
         &:first-child { text-align: center; }
-        //    &:first-child td:nth-child(2) { text-align: center; }
-
+        .AdminMovies__movie__stock {
+            cursor: pointer;
+        }
         }
         tr .ColumnResizer { width: 0px !important; border-right: 1px solid $purple;  }
     }

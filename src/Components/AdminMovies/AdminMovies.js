@@ -99,6 +99,12 @@ export default class AdminMovies extends Component {
 
 
 
+    setStock(movieId) {
+        console.log(movieId);
+    }
+
+
+
     renderMovieList() {
         function fillMovieArrayWithPlaceholders(lastChunk) {
             let last = [];
@@ -154,7 +160,10 @@ export default class AdminMovies extends Component {
                 {movieList[this.state.movieListPage].map((movie, i) => <tr key={"Admin-movie-list-" + movie.title + i}>
                     <td>{movie.title}</td><td /> {/* empty <td /> is for the ColumnResizer*/}
 
-                    <td>{movie.inStock}</td><td />
+                    <td
+                        className="AdminMovies__movie__stock"
+                        onClick={() => this.setStock(movie._id)}
+                    >{movie.inStock}</td><td />
 
                     <td>{movie._id}</td><td />
 

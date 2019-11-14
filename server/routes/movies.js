@@ -62,4 +62,14 @@ route.post("/", async (req, res) => {
 
 
 
+route.put("/:id", async (req, res) => {
+    try {
+        const movie = await Movie.update({ _id: req.params.id }, { $set: { inStock: req.body.newStock } });
+
+        res.send(movie);
+    } catch (err) { res.status(500).send("ERROR " + err) }
+});
+
+
+
 module.exports = route;
