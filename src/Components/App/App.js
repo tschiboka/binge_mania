@@ -63,8 +63,6 @@ export default class App extends Component {
 
 
   componentDidUpdate() {
-    if (this.state.categories) this.main.focus();
-
     if (!this.state.movies.length || this.state.categories) return;
 
 

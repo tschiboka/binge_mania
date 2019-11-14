@@ -45,7 +45,7 @@ export default class History extends Component {
         const dotInterval = setInterval(() => {
             timer++;
             if (timer > 3) timer = 0;
-            if (this.state.userHistory) clearInterval(dotInterval);
+            if (this.state.userHistory) { clearInterval(dotInterval); }
             else {
                 switch (timer) {
                     case 0: { dots = " ..."; break; }
@@ -57,6 +57,9 @@ export default class History extends Component {
             }
         }, 333);
     }
+
+
+    componentDidUpdate() { this.focusDiv.focus(); }
 
 
 
@@ -78,7 +81,9 @@ export default class History extends Component {
 
             return `${day}. ${month}. ${year} (${dayOfWeek}) at ${hour}:${min}`;
         }
+
         if (!this.state.userHistory || !this.state.userHistory.length) return <div className="History__fetching-content">Fetching your transactions{this.state.dots}</div>
+
         return this.state.userHistory.map((trns, i) => (
             <div
                 className="History__transaction"
@@ -122,9 +127,13 @@ export default class History extends Component {
                             </div>
                         </div>
 
-                        <div className="History__content">
+                        <div className="History__content-container">
                             <CustomScrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
-                                {this.renderHistory()}
+                                <div className="History__content"
+                                    ref={historyDiv => (this.focusDiv = historyDiv)}
+                                    tabIndex={0}>
+                                    {this.renderHistory()}
+                                </div>
                             </CustomScrollbars>
                         </div>
 
