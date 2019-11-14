@@ -2,7 +2,6 @@ const express = require("express");
 const route = express.Router();
 const { Transaction, validate } = require("../models/transaction");
 const { User } = require("../models/user");
-const { Movie } = require("../models/movie");
 const mongoose = require("mongoose");
 const Fawn = require("fawn");
 
@@ -13,8 +12,18 @@ Fawn.init(mongoose);
 
 
 route.get("/", async (req, res) => {
-    res.send("TRANS");
+
 });
+
+
+
+route.get("/:userId", async (req, res) => {
+    try {
+        const { transactions } = await User.findById(req.params.userId).select("transactions");
+        const userTransactions = await Promise.all(transactions.map(async trns => Transaction.findById(trns)));
+        res.send(userTransactions);
+    } catch (err) { res.status(500).send("Error " + err) }
+})
 
 
 

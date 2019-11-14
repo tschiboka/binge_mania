@@ -1,6 +1,31 @@
 import React, { Component } from 'react';
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { Scrollbars } from 'react-custom-scrollbars';
 import "./History.scss";
+
+
+
+const CustomScrollbars = props => (
+    <Scrollbars
+        renderThumbHorizontal={renderThumb}
+        renderThumbVertical={renderThumb}
+        {...props}
+    />
+);
+
+
+
+const renderThumb = ({ style, ...props }) => {
+    const thumbStyle = {
+        borderRadius: 6,
+        width: 6,
+        backgroundColor: "deeppink",
+        right: 3,
+        zIndex: 2000
+    };
+    return <div style={{ ...style, ...thumbStyle }} {...props} />;
+};
+
 
 
 export default class History extends Component {
@@ -12,9 +37,19 @@ export default class History extends Component {
 
 
 
+    renderHistory() {
+        this.setState({ ...this.state, isLoading: true });
+
+
+    }
+
+
+
     render() {
         return (
-            <div className="History">
+            <div
+                className="History"
+                onClick={e => { if (e.target.classList[0] === "History") this.props.closeHistory(false); }}>
                 <div className="History__main--outer">
                     <div className="History__main--inner">
                         <div className="History__title--outer">
@@ -37,7 +72,11 @@ export default class History extends Component {
                             </div>
                         </div>
 
-                        <div className="History__content"></div>
+                        <div className="History__content">
+                            <CustomScrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
+                                {this.renderHistory()}
+                            </CustomScrollbars>
+                        </div>
 
                         <LoadingSpinner isLoading={this.state.isLoading} />
 
