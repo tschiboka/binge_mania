@@ -12,7 +12,9 @@ Fawn.init(mongoose);
 
 
 route.get("/", async (req, res) => {
-
+    try {
+        res.send(await Transaction.find());
+    } catch (err) { res.status(500).send("Error " + err); }
 });
 
 
@@ -22,7 +24,7 @@ route.get("/:userId", async (req, res) => {
         const { transactions } = await User.findById(req.params.userId).select("transactions");
         const userTransactions = await Promise.all(transactions.map(async trns => Transaction.findById(trns)));
         res.send(userTransactions);
-    } catch (err) { res.status(500).send("Error " + err) }
+    } catch (err) { res.status(500).send("Error " + err); }
 })
 
 
