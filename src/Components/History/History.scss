@@ -128,6 +128,14 @@
     }
 }
 
+.History__fetching-content {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .History__frame--bottom--outer {
     position: absolute;
     width: 100%;

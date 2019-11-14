@@ -32,9 +32,30 @@ export default class History extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { isLoading: true }
+        this.state = { isLoading: true, dots: "." }
 
         this.getHistory();
+    }
+
+
+
+    componentDidMount() {
+        // css content animation is ignoerd in most browsers, so here is a interval solution
+        let timer = 0, dots = "";
+        const dotInterval = setInterval(() => {
+            timer++;
+            if (timer > 3) timer = 0;
+            if (this.state.userHistory) clearInterval(dotInterval);
+            else {
+                switch (timer) {
+                    case 0: { dots = " ..."; break; }
+                    case 1: { dots = ". .."; break; }
+                    case 2: { dots = ".. ."; break; }
+                    case 3: { dots = "...."; break; }
+                }
+                this.setState({ ...this.state, dots: dots });
+            }
+        }, 333);
     }
 
 
@@ -43,13 +64,15 @@ export default class History extends Component {
         const transResp = await fetch("api/transactions/" + this.props.user._id);
         const transJSON = await transResp.json();
 
-        this.setState({ ...this.state, isLoading: false, userHistory: transJSON });
+        setTimeout(() => {
+            this.setState({ ...this.state, isLoading: false, userHistory: transJSON });
+        }, 20000)
     }
 
 
 
     renderHistory() {
-        if (!this.state.userHistory) return <div>Fetching your transactions...</div>
+        if (!this.state.userHistory || !this.state.userHistory.length) return <div className="History__fetching-content">Fetching your transactions{this.state.dots}</div>
         return this.state.userHistory.map((trns, i) => (
             <div
                 key={"userTransaction" + i}
