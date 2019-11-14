@@ -116,5 +116,60 @@
                 }
             }
         }
+        .History__content {
+            position: absolute;
+            top: calc(5% + 2px);
+            left: 0;
+            width: calc(100% - 40px);
+            height: calc(90% - 37px);
+            margin: 0 20px 10px 20px;
+            color: white;
+        }
+    }
+}
+
+.History__frame--bottom--outer {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    bottom: 0;
+    left: 0;
+    background: $deepPurple;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    clip-path: polygon(
+        20px 0,
+        calc(100% - 20px) 0,
+        calc(100% - 20px) calc(100% - 20px),
+        100% 100%,
+        0 100%,
+        20px calc(100% - 20px)
+    );
+    .History__frame--bottom--middle {
+        width: calc(100% - 4px);
+        height: calc(100% - 3px);
+        margin: 2px 3px;
+        background-image: $metalBg;
+        background-color: black;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        clip-path: polygon(
+            17px 0,
+            calc(100% - 18px) 0,
+            calc(100% - 18px) calc(100% - 20px),
+            100% 100%,
+            0 100%,
+            17px calc(100% - 17px)
+        );
+        .History__frame--bottom--inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: $gradientHorizontal;
+            color: white;
+            border-radius: 10px;
+        }
     }
 }
