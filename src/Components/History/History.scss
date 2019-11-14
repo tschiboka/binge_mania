@@ -124,6 +124,20 @@
             height: calc(90% - 37px);
             margin: 0 20px 10px 20px;
             color: white;
+            .History__transaction {
+                border-top: $borderLight;
+                p:first-child {
+                    color: $lightPurple;
+                    font-size: 2vh;
+                    font-style: italic;
+                }
+                p:nth-child(2) {
+                    padding-left: 2vh;
+                }
+                p:last-child {
+                    color: $primaryColor;
+                }
+            }
         }
     }
 }

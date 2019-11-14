@@ -64,22 +64,29 @@ export default class History extends Component {
         const transResp = await fetch("api/transactions/" + this.props.user._id);
         const transJSON = await transResp.json();
 
-        setTimeout(() => {
-            this.setState({ ...this.state, isLoading: false, userHistory: transJSON });
-        }, 20000)
+        this.setState({ ...this.state, isLoading: false, userHistory: transJSON });
     }
 
 
 
     renderHistory() {
+        const formatDate = (date) => {
+            const DATE = new Date(date);
+            const DAYSOFWEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            const [year, month, day] = [DATE.getFullYear(), DATE.getMonth(), DATE.getDate()];
+            const [dayOfWeek, hour, min] = [DAYSOFWEEK[DATE.getDay()], DATE.getHours(), DATE.getMinutes()];
+
+            return `${day}. ${month}. ${year} (${dayOfWeek}) at ${hour}:${min}`;
+        }
         if (!this.state.userHistory || !this.state.userHistory.length) return <div className="History__fetching-content">Fetching your transactions{this.state.dots}</div>
         return this.state.userHistory.map((trns, i) => (
             <div
+                className="History__transaction"
                 key={"userTransaction" + i}
             >
-                <p>{trns.date}</p>
+                <p>{formatDate(trns.date)}</p>
 
-                <p>{trns.movies.map(m => m.title).join(",")}</p>
+                <p>{trns.movies.map(m => m.title).join(", ")}</p>
 
                 <p>£{trns.transTotal}</p>
             </div>
