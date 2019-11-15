@@ -264,6 +264,7 @@
                     background: black;
                     z-index: 200;
                 }
+                .AdminMovies__modify-stock:invalid {color: deeppink;}
             }
         &:first-child { text-align: center; }
         .AdminMovies__movie__stock {

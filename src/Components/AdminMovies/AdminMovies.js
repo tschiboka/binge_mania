@@ -100,10 +100,14 @@ export default class AdminMovies extends Component {
 
 
 
-    setStock(movieId) {
-        console.log(movieId);
+    setStock(movieId, newStockValue, t) {
+        console.log(movieId, newStockValue, t);
 
     }
+
+
+
+    handleStockInputKeyPressed(e) { if (e.key === "Enter" && e.target.value.match(/[0-9]{1,3}/g)) { this.setStock(e.target.id, e.target.value); } }
 
 
 
@@ -172,7 +176,10 @@ export default class AdminMovies extends Component {
                                 className="AdminMovies__modify-stock"
                                 type="text"
                                 tabIndex={1}
-                                placeHolder={movie.inStock}
+                                pattern="[0-9]{1,3}"
+                                id={movie._id}
+                                placeholder={movie.inStock}
+                                onKeyPress={e => this.handleStockInputKeyPressed(e)}
                                 onBlur={() => this.setState({ ...this.state, stockInput: Array(20).fill(false) })}
                             />
                             : movie.inStock}
