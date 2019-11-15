@@ -35,6 +35,7 @@ export default class AdminMovies extends Component {
         super(props);
 
         this.state = {
+            movies: this.props.movies,
             activeSubHeaderTag: "movies",
             addMovie: {},
             showPoster: false,
@@ -45,6 +46,10 @@ export default class AdminMovies extends Component {
             stockInput: Array(20).fill(false)
         }
     }
+
+
+
+    componentWillReceiveProps(nextProps) { this.setState({ ...this.state, movies: nextProps.movies }); }
 
 
 
@@ -77,7 +82,6 @@ export default class AdminMovies extends Component {
             const response = await fetch(`api/searchmovieid/${tmdb_id}`);
             const movie = await response.json();
 
-            console.log(movie);
             this.setState({ ...this.state, activeSubHeaderTag: "add-movie", addMovie: movie, isLoading: false });
         } catch (err) { console.log(err); }
     }
@@ -117,8 +121,6 @@ export default class AdminMovies extends Component {
         console.log(stockJSON.ok ? "MODIFIED" : "ERROR");
         this.props.refreshMovies();
         this.forceUpdate();
-        console.log("HERE");
-        console.log(this.props.movies);
         this.setState({ ...this.state, isLoading: false, stockInput: Array(20).fill(false) });
     }
 
@@ -139,7 +141,7 @@ export default class AdminMovies extends Component {
             return last;
         }
 
-        const movieList = _.chunk(this.props.movies.sort((a, b) => a.title > b.title), 20);
+        const movieList = _.chunk(this.state.movies.sort((a, b) => a.title > b.title), 20);
         const buttonTexts = movieList.length ? movieList.map(chunk => chunk[0].title.substr(0, 2) + "-" + chunk[chunk.length - 1].title.substr(0, 2)) : [];
         movieList[movieList.length - 1] = fillMovieArrayWithPlaceholders(movieList[movieList.length - 1]);
 
@@ -198,7 +200,7 @@ export default class AdminMovies extends Component {
                                 placeholder={movie.inStock}
                                 onKeyPress={e => this.handleStockInputKeyPressed(e)}
                                 onKeyDown={e => { if (e.keyCode === 27) this.setState({ ...this.state, stockInput: Array(20).fill(false) }); }}
-                                onBlur={() => { this.setState({ ...this.state, stockInput: Array(20).fill(false) }); console.log("BLUR") }}
+                                onBlur={() => { this.setState({ ...this.state, stockInput: Array(20).fill(false) }); }}
                             />
                             : movie.inStock}
                     </td><td />
@@ -276,7 +278,6 @@ export default class AdminMovies extends Component {
         const posterDiv = document.getElementById("AdminMovies__add-movie__poster");
 
         if (posterDiv) posterDiv.style.backgroundImage = `url(${path})`;
-        console.log(posterDiv, path);
     }
 
 

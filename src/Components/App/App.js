@@ -133,9 +133,7 @@ export default class App extends Component {
 
 
 
-  openHistory(isOpen) {
-    this.setState({ ...this.state, showHistory: isOpen })
-  }
+  openHistory(isOpen) { this.setState({ ...this.state, showHistory: isOpen }) }
 
 
 

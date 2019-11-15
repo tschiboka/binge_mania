@@ -13,9 +13,15 @@ export default class Admin extends Component {
 
         this.state = {
             activeTag: "users",
-            movies: this.props.movies
+            movies: this.props.movies,
         };
     }
+
+
+
+    componentWillReceiveProps(nextProps) { this.setState({ ...this.state, movies: nextProps.movies }); }
+
+
 
     checkAdmin() {
         // By changing Apps showAdmin prop in React dev tool, Admin copmonent is available.
@@ -89,7 +95,7 @@ export default class Admin extends Component {
 
                 {this.state.activeTag === "users" && <AdminUsers users={this.state.users || []} setUsers={this.setUsers.bind(this)} />}
 
-                {this.state.activeTag === "movies" && <AdminMovies movies={this.state.movies || []} refreshMovies={this.props.refreshMovies} />}
+                {this.state.activeTag === "movies" && <AdminMovies movies={this.props.movies || []} refreshMovies={this.props.refreshMovies} />}
 
                 {this.state.activeTag === "transactions" && <div>Transactions</div>}
 
