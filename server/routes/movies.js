@@ -62,6 +62,7 @@ route.post("/", async (req, res) => {
 
 
 
+// set Stock --> the only attr that is editable
 route.put("/:id", async (req, res) => {
     try {
         const movie = await Movie.update({ _id: req.params.id }, { $set: { inStock: req.body.newStock } });

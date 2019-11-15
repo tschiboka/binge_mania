@@ -100,9 +100,26 @@ export default class AdminMovies extends Component {
 
 
 
-    setStock(movieId, newStockValue, t) {
-        console.log(movieId, newStockValue, t);
+    async setStock(movieId, newStockValue) {
+        this.setState({ ...this.state, isLoading: true });
 
+        const BODY = { newStock: newStockValue };
+        const HEADER = {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(BODY)
+        };
+        const stockResp = await fetch("api/movies/" + movieId, HEADER);
+        const stockJSON = await stockResp.json();
+        console.log(stockJSON.ok ? "MODIFIED" : "ERROR");
+        this.props.refreshMovies();
+        this.forceUpdate();
+        console.log("HERE");
+        console.log(this.props.movies);
+        this.setState({ ...this.state, isLoading: false, stockInput: Array(20).fill(false) });
     }
 
 
@@ -169,7 +186,7 @@ export default class AdminMovies extends Component {
                     <td
                         className="AdminMovies__movie__stock"
                         ref={elem => this.stockCell = elem}
-                        onDoubleClick={() => this.setState({ ...this.state, stockInput: this.state.stockInput.map((e, cellInd) => i === cellInd ? true : false) })}
+                        onClick={() => this.setState({ ...this.state, stockInput: this.state.stockInput.map((e, cellInd) => i === cellInd ? true : false) })}
                     >
                         {this.state.stockInput[i]
                             ? <input
@@ -180,7 +197,8 @@ export default class AdminMovies extends Component {
                                 id={movie._id}
                                 placeholder={movie.inStock}
                                 onKeyPress={e => this.handleStockInputKeyPressed(e)}
-                                onBlur={() => this.setState({ ...this.state, stockInput: Array(20).fill(false) })}
+                                onKeyDown={e => { if (e.keyCode === 27) this.setState({ ...this.state, stockInput: Array(20).fill(false) }); }}
+                                onBlur={() => { this.setState({ ...this.state, stockInput: Array(20).fill(false) }); console.log("BLUR") }}
                             />
                             : movie.inStock}
                     </td><td />

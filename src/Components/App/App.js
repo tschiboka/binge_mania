@@ -171,6 +171,15 @@ export default class App extends Component {
 
 
 
+  async refreshMovies() {
+    const response = await fetch("/api/movies");
+    let movies = await response.json();
+
+    this.setState({ ...this.state, movies: _.shuffle(movies), loading: false });
+  }
+
+
+
   render() {
     return (
       <div className="App">
@@ -263,6 +272,7 @@ export default class App extends Component {
             <Admin
               user={this.state.user}
               showAdmin={this.showAdmin.bind(this)}
+              refreshMovies={this.refreshMovies.bind(this)}
               movies={this.state.movies} />}
         </div>
 

@@ -89,7 +89,7 @@ export default class Admin extends Component {
 
                 {this.state.activeTag === "users" && <AdminUsers users={this.state.users || []} setUsers={this.setUsers.bind(this)} />}
 
-                {this.state.activeTag === "movies" && <AdminMovies movies={this.state.movies || []} />}
+                {this.state.activeTag === "movies" && <AdminMovies movies={this.state.movies || []} refreshMovies={this.props.refreshMovies} />}
 
                 {this.state.activeTag === "transactions" && <div>Transactions</div>}
 
