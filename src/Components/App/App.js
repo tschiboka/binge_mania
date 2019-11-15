@@ -47,7 +47,7 @@ export default class App extends Component {
       loading: true,
       cart: [],
       showAllMoviesWithCertainGenre: false,
-      showHistory: false
+      showHistory: false,
     }
   }
 
@@ -195,7 +195,6 @@ export default class App extends Component {
               <div
                 className="App__content"
                 tabIndex={0}
-                ref={elem => (this.main = elem)}
               >
                 <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 

@@ -41,7 +41,8 @@ export default class AdminMovies extends Component {
             movieExists: false,
             successfullyAdded: false,
             isLoading: false,
-            movieListPage: 0
+            movieListPage: 0,
+            stockInput: Array(20).fill(false)
         }
     }
 
@@ -101,6 +102,7 @@ export default class AdminMovies extends Component {
 
     setStock(movieId) {
         console.log(movieId);
+
     }
 
 
@@ -162,8 +164,19 @@ export default class AdminMovies extends Component {
 
                     <td
                         className="AdminMovies__movie__stock"
-                        onClick={() => this.setStock(movie._id)}
-                    >{movie.inStock}</td><td />
+                        ref={elem => this.stockCell = elem}
+                        onDoubleClick={() => this.setState({ ...this.state, stockInput: this.state.stockInput.map((e, cellInd) => i === cellInd ? true : false) })}
+                    >
+                        {this.state.stockInput[i]
+                            ? <input
+                                className="AdminMovies__modify-stock"
+                                type="text"
+                                tabIndex={1}
+                                placeHolder={movie.inStock}
+                                onBlur={() => this.setState({ ...this.state, stockInput: Array(20).fill(false) })}
+                            />
+                            : movie.inStock}
+                    </td><td />
 
                     <td>{movie._id}</td><td />
 

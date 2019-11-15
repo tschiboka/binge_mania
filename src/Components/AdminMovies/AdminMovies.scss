@@ -235,16 +235,35 @@
         table-layout: fixed;
         tr {
             max-width: 100%;
-            &:first-child th { border-bottom: $borderLight; }
+            &:first-child { border-bottom: $borderLight; }
             &:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
             &:hover { background: rgba(255, 255, 255, 0.1); }
             td {
+                position: relative;
                 padding-left: 3px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 &:first-child { width: 20%; }
                 &:nth-child(2), &:nth-child(5), &:nth-child(6) { width: 45px; text-align: right; }
+                .AdminMovies__modify-stock {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 0;
+                    margin: 0;
+                    width: calc(100% - 4px);
+                    height: calc(100% - 4px);
+                    border: deeppink solid 2px;
+                    border-radius: 5px;
+                    font-family: "Abel";
+                    font-weight: bold;
+                    text-align: center;
+                    color: lightseagreen;
+                    font-size: 2.5vh;
+                    background: black;
+                    z-index: 200;
+                }
             }
         &:first-child { text-align: center; }
         .AdminMovies__movie__stock {
