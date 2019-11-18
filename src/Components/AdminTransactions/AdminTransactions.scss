@@ -19,6 +19,7 @@
                 border: $borderLight;
                 border-radius: 5px;
                 & > button:first-of-type {
+                    padding: 0 3px;
                     border-radius: 0;
                     font-size: 2vh;
                 }

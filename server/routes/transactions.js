@@ -13,7 +13,11 @@ Fawn.init(mongoose);
 
 route.get("/", async (req, res) => {
     try {
-        res.send(await Transaction.find());
+        if (!req.body.limit && !req.body.page) return res.send(await Transaction.find());
+
+        const posInt = n => !isNaN(Number(n)) && Number.isInteger(Number(n)) && Number(n) >= 0;
+        if (!posInt(req.body.limit) || !posInt(req.body.page)) return res.status(400).send("Request body has invalid values!");
+        res.send("HERE");
     } catch (err) { res.status(500).send("Error " + err); }
 });
 
@@ -25,7 +29,7 @@ route.get("/:userId", async (req, res) => {
         const userTransactions = await Promise.all(transactions.map(async trns => Transaction.findById(trns)));
         res.send(userTransactions);
     } catch (err) { res.status(500).send("Error " + err); }
-})
+});
 
 
 
