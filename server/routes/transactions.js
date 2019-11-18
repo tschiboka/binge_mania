@@ -12,13 +12,21 @@ Fawn.init(mongoose);
 
 
 route.get("/", async (req, res) => {
+    try { res.send(await Transaction.find()); } catch (err) { res.status(500).send("Error " + err); }
+});
+
+
+
+route.get("/:limit/:page", async (req, res) => {
     try {
-        if (!req.body.limit && !req.body.page) return res.send(await Transaction.find());
+        console.log(req.params);
+        const [limit, page] = [Number(req.params.limit), Number(req.params.page)];
 
+        console.log(limit, page);
         const posInt = n => !isNaN(Number(n)) && Number.isInteger(Number(n)) && Number(n) >= 1;
-        if (!posInt(req.body.limit) || !posInt(req.body.page)) return res.status(400).send("Request body has invalid values!");
+        if (!posInt(limit) || !posInt(page)) return res.status(400).send("Request body has invalid values!");
 
-        res.send(await Transaction.find().skip((req.body.page - 1) * req.body.limit).limit(req.body.limit).select("date"));
+        res.send(await Transaction.find().skip((page - 1) * limit).limit(limit).select("date"));
     } catch (err) { res.status(500).send("Error " + err); }
 });
 
