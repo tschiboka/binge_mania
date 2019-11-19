@@ -19,14 +19,12 @@ route.get("/", async (req, res) => {
 
 route.get("/:limit/:page", async (req, res) => {
     try {
-        console.log(req.params);
         const [limit, page] = [Number(req.params.limit), Number(req.params.page)];
-
-        console.log(limit, page);
         const posInt = n => !isNaN(Number(n)) && Number.isInteger(Number(n)) && Number(n) >= 1;
+
         if (!posInt(limit) || !posInt(page)) return res.status(400).send("Request body has invalid values!");
 
-        res.send(await Transaction.find().skip((page - 1) * limit).limit(limit).select("date"));
+        res.send(await Transaction.find().skip((page - 1) * limit).limit(limit));
     } catch (err) { res.status(500).send("Error " + err); }
 });
 

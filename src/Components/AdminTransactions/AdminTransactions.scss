@@ -62,4 +62,37 @@
             }
         }
     }
+    .AdminTransactions__body {
+        height: 90%;
+        width: 98%;
+        margin: 1%;
+        border: $borderLight;
+        table {
+            width: 100%;
+            padding: 0 2%;
+            border-collapse: collapse;
+            tr td{
+                max-width: 0; // overflow needs it
+                padding: 1px 1%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .active { color: $lightPurple; }
+            th { border-left: $borderLight; }
+            th:first-child, th:nth-child(2) { border-left: none; }
+            tr th:first-child { width: 20px; }
+            tr td:first-child { 
+                padding-left: 0;
+                font-size: 2vh;
+                color: lightseagreen;
+            }
+            tr:first-child { border-bottom: $borderLight; }
+            tr:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
+            tr:hover { background: rgba(255, 255, 255, 0.1); }
+            tr th:last-child { width: 70px; }
+            tr td:last-child { text-align: right; }
+            tr:last-child { border-bottom: $borderLight; }
+        }
+    }
 }

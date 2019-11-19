@@ -67,7 +67,7 @@ export default class History extends Component {
         const transResp = await fetch("api/transactions/" + this.props.user._id);
         const transJSON = await transResp.json();
 
-        this.setState({ ...this.state, isLoading: false, userHistory: transJSON });
+        this.setState({ ...this.state, isLoading: false, userHistory: transJSON.reverse() });
     }
 
 
