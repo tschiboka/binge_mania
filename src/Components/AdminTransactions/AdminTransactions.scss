@@ -12,9 +12,11 @@
             width: 100%;
             height: 100%;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: flex-start;
             align-items: center;
+            margin-left: 1%;
             div {
+                margin-right: 1%;
                 display: flex;
                 border: $borderLight;
                 border-radius: 5px;
@@ -94,5 +96,8 @@
             tr td:last-child { text-align: right; }
             tr:last-child { border-bottom: $borderLight; }
         }
+    .AdminTransactions__complete-line-info {
+        
+    }
     }
 }
