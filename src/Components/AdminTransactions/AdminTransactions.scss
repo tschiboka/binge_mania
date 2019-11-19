@@ -6,17 +6,19 @@
     background: rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     .AdminTransactions__header {
-        height: 7%;
+        height: 5%;
+        padding: 1% 0;
         border-bottom: $borderLight;
+        display: flex;
+        justify-content: space-between;
         form {
-            width: 100%;
             height: 100%;
             display: flex;
             justify-content: flex-start;
             align-items: center;
             margin-left: 1%;
             div {
-                margin-right: 1%;
+                margin-right: 2%;
                 display: flex;
                 border: $borderLight;
                 border-radius: 5px;
@@ -63,9 +65,52 @@
                 }
             }
         }
+        .AdminTransactions__pagination {
+            margin-right: 1%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border: $borderLight;
+            border-radius: 5px;
+            color: $lightPurple;
+            z-index: 33000;
+            font-style: italic;
+            input {
+                width: 30px;
+                height: 100%;
+                border: $borderLight;
+                font-size: $mediumFontSize;
+                background: rgba(255, 255, 255, 0.05);
+                font-family: "Abel";
+                text-align: center;
+                color: $primaryColor;
+            }
+            span { padding: 0 5px;}
+            button {
+                height: 100%;
+                width: 25px;
+                padding: 0.5vh 0;
+                border: $borderLight;
+                border-right: none;
+                border-bottom: none;
+                background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+                color: #80d1e7;
+                font-family: "Abel";
+                font-size: 2.2vh;
+                cursor: pointer;
+                &:first-child { border-radius: 5px 0 0 5px; }
+                &:last-child { border-radius: 0 5px 5px 0; font-size: 3.2vh; line-height: 3vh; padding-bottom: 2vh;}
+                &:hover {
+                    background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+                    border: $borderLight;
+                    border-left: none;
+                    border-top: none;
+                }
+            }
+        }
     }
     .AdminTransactions__body {
-        height: 90%;
+        height: 88%;
         width: 98%;
         margin: 1%;
         border: $borderLight;
@@ -83,6 +128,7 @@
             .active { color: $lightPurple; }
             th { border-left: $borderLight; }
             th:first-child, th:nth-child(2) { border-left: none; }
+            th:nth-child(2) { width: 150px; }
             tr th:first-child { width: 20px; }
             tr td:first-child { 
                 padding-left: 0;

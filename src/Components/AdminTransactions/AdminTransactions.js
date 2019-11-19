@@ -10,7 +10,8 @@ export default class AdminTransactions extends Component {
         this.state = {
             transactions: [],
             isLoading: true,
-            showInfoOfLine: 1
+            showInfoOfLine: 1,
+            showPagination: false // show pagination only when all of the transactions has been downloaded
         };
     }
 
@@ -21,11 +22,16 @@ export default class AdminTransactions extends Component {
         const trnsResp = await fetch("/api/transactions/10/1");
         const trnsJSON = await trnsResp.json();
         this.setState({ ...this.state, transactions: trnsJSON.reverse(), isLoading: false });
+
+        // load the rest of the transactions
+        const allTrnsResp = await fetch("/api/transactions");
+        const allTrnsJSON = await allTrnsResp.json();
+        this.setState({ ...this.state, transactions: allTrnsJSON.reverse(), showPagination: true });
     }
 
 
 
-    formatDate(rawDate, d = new Date(rawDate)) {
+    formatDate(dt, d = new Date(dt)) {
         const add0 = n => n < 10 ? "0" + n : n;
         const date = `${d.getDate()}.${d.getMonth()}.${(d.getFullYear() + "").replace(/^\d{2}/g, "'")}`;
         const time = `${add0(d.getHours())}:${add0(d.getMinutes())}`;
@@ -68,15 +74,26 @@ export default class AdminTransactions extends Component {
                         </div>
                         <button>Search</button>
                     </form>
+
+                    {this.state.showPagination && <div className="AdminTransactions__pagination">
+                        <button>&#9668;</button>
+
+                        <input type="text" placeholder="1" />
+
+                        <span>of 19</span>
+
+                        <button>&#9658;</button>
+
+                        <button>&#x27f3;</button>
+                    </div>}
                 </div>
 
                 <div className="AdminTransactions__body">
                     <table><tbody>
-                        <tr><th></th><th>Date</th><th>User</th><th>Email</th><th>Amount</th></tr>
+                        <tr><th></th><th>Date</th><th>User ID</th><th>Email</th><th>Amount</th></tr>
                         {this.renderTransactions()}
                     </tbody></table>
 
-                    <div className="AdminTransaction__pagination">Pagination</div>
 
                     <div className="AdminTransactions__complete-line-info">
                         Complete Line Info
