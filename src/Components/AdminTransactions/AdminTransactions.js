@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import "./AdminTransactions.scss";
+import _ from "lodash";
 
 
 
@@ -9,9 +10,13 @@ export default class AdminTransactions extends Component {
         super(props);
         this.state = {
             transactions: [],
+            page: 1,
             isLoading: true,
             showInfoOfLine: 1,
-            showPagination: false // show pagination only when all of the transactions has been downloaded
+            showPagination: false, // show pagination only when all of the transactions has been downloaded
+            sortBy: "default",
+            ascending: false,
+            filterBy: ""
         };
     }
 
@@ -40,9 +45,28 @@ export default class AdminTransactions extends Component {
 
 
 
+    sortTable(sortBy) {
+        if (this.state.sortBy === sortBy) return this.setState({ ...this.state, ascending: !this.state.ascending, transactions: this.state.transactions.reverse() });
+
+        this.setState({ ...this.state, sortBy: sortBy });
+    }
+
+
+
+    addSortArrow(sortBy) {
+        if (this.state.sortBy === sortBy) {
+            if (this.state.ascending) return <span>&#x2191;</span>
+            else return <span>&#x2193;</span>
+        }
+        else return <span>&nbsp;</span>
+    }
+
+
+
     renderTransactions() {
-        console.log(this.state.transactions);
-        return this.state.transactions.map((tr, i) => (
+        if (!this.state.transactions.length) return;
+        console.log(this.state.page, _.chunk(this.state.transactions, 10));
+        return _.chunk(this.state.transactions, 10)[this.state.page - 1].map((tr, i) => (
             <tr key={"admin-transaction" + i}
                 className={this.state.showInfoOfLine - 1 === i ? "active" : ""}>
                 <td>{this.state.showInfoOfLine - 1 === i ? <span>&#9658;</span> : ""}</td>
@@ -90,7 +114,17 @@ export default class AdminTransactions extends Component {
 
                 <div className="AdminTransactions__body">
                     <table><tbody>
-                        <tr><th></th><th>Date</th><th>User ID</th><th>Email</th><th>Amount</th></tr>
+                        <tr>
+                            <th></th> {/* Placeholder for active line arrow*/}
+
+                            <th onClick={() => this.sortTable("default")}><span>Date</span>{this.addSortArrow("default")}</th>
+
+                            <th onClick={() => this.sortTable("user-id")}><span>User ID</span>{this.addSortArrow("user-id")}</th>
+
+                            <th onClick={() => this.sortTable("email")}><span>Email</span>{this.addSortArrow("email")}</th>
+
+                            <th onClick={() => this.sortTable("amount")}><span>Amount</span>{this.addSortArrow("amount")}</th>
+                        </tr>
                         {this.renderTransactions()}
                     </tbody></table>
 

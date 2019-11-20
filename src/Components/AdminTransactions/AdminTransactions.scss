@@ -83,9 +83,10 @@
                 background: rgba(255, 255, 255, 0.05);
                 font-family: "Abel";
                 text-align: center;
+                font-style: italic;
                 color: $primaryColor;
             }
-            span { padding: 0 5px;}
+            span { padding: 0 5px; cursor: default; }
             button {
                 height: 100%;
                 width: 25px;
@@ -96,7 +97,7 @@
                 background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
                 color: #80d1e7;
                 font-family: "Abel";
-                font-size: 2.2vh;
+                font-size: 2vh;
                 cursor: pointer;
                 &:first-child { border-radius: 5px 0 0 5px; }
                 &:last-child { border-radius: 0 5px 5px 0; font-size: 3.2vh; line-height: 3vh; padding-bottom: 2vh;}
@@ -110,14 +111,18 @@
         }
     }
     .AdminTransactions__body {
+        position: relative;
         height: 88%;
         width: 98%;
         margin: 1%;
         border: $borderLight;
+        z-index: 3000;
         table {
             width: 100%;
             padding: 0 2%;
             border-collapse: collapse;
+            cursor: pointer;
+            tr th { position: relative; }
             tr td{
                 max-width: 0; // overflow needs it
                 padding: 1px 1%;
@@ -125,11 +130,18 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
+            tr th span:last-child {
+                width: 20px; 
+                float: right; 
+                font-size: 2vh; 
+                color: $primaryColor;
+            }
             .active { color: $lightPurple; }
             th { border-left: $borderLight; }
             th:first-child, th:nth-child(2) { border-left: none; }
             th:nth-child(2) { width: 150px; }
-            tr th:first-child { width: 20px; }
+            th:last-child { z-index: 3000; }
+            tr th:first-child { width: 20px;  cursor: default; }
             tr td:first-child { 
                 padding-left: 0;
                 font-size: 2vh;
@@ -138,12 +150,12 @@
             tr:first-child { border-bottom: $borderLight; }
             tr:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
             tr:hover { background: rgba(255, 255, 255, 0.1); }
-            tr th:last-child { width: 70px; }
+            tr th:last-child { width: 80px; }
             tr td:last-child { text-align: right; }
             tr:last-child { border-bottom: $borderLight; }
         }
-    .AdminTransactions__complete-line-info {
-        
-    }
+        .AdminTransactions__complete-line-info {
+
+        }
     }
 }

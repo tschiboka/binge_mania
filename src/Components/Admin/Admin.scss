@@ -27,12 +27,11 @@
             right: -1px;
             width: calc(5% + 1px);
             height: 100%;
-          //  background: red;
             border: $borderLight;
             border-left: none;
-            //border-bottom: none;
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
+            z-index: 300;
         }
     }
 };
