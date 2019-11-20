@@ -48,7 +48,29 @@ export default class AdminTransactions extends Component {
     sortTable(sortBy) {
         if (this.state.sortBy === sortBy) return this.setState({ ...this.state, ascending: !this.state.ascending, transactions: this.state.transactions.reverse() });
 
-        this.setState({ ...this.state, sortBy: sortBy });
+        let transArr = [];
+
+        switch (sortBy) {
+            case "user-id": {
+                transArr = this.state.transactions.sort((a, b) => a.user.id.localeCompare(b.user.id));
+                break;
+            }
+            case "email": {
+                transArr = this.state.transactions.sort((a, b) => a.user.email.localeCompare(b.user.email));
+                break;
+            }
+            case "amount": {
+                transArr = this.state.transactions.sort((a, b) => a.transTotal - b.transTotal);
+                break;
+            }
+            default: {
+                transArr = this.state.transactions.sort((a, b) => new Date(a.date) - new Date(b.date))
+            }
+        }
+
+        if (!this.state.ascending) transArr = transArr.reverse();
+
+        this.setState({ ...this.state, sortBy: sortBy, transactions: transArr });
     }
 
 
@@ -65,7 +87,7 @@ export default class AdminTransactions extends Component {
 
     renderTransactions() {
         if (!this.state.transactions.length) return;
-        console.log(this.state.page, _.chunk(this.state.transactions, 10));
+
         return _.chunk(this.state.transactions, 10)[this.state.page - 1].map((tr, i) => (
             <tr key={"admin-transaction" + i}
                 className={this.state.showInfoOfLine - 1 === i ? "active" : ""}>
