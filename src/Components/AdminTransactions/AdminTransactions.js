@@ -16,6 +16,7 @@ export default class AdminTransactions extends Component {
             showPagination: false, // show pagination only when all of the transactions has been downloaded
             sortBy: "default",
             ascending: false,
+            totalPages: 0,
             filterBy: ""
         };
     }
@@ -26,12 +27,14 @@ export default class AdminTransactions extends Component {
         // load first 10 transactions (transactions size may grow really large)
         const trnsResp = await fetch("/api/transactions/10/1");
         const trnsJSON = await trnsResp.json();
-        this.setState({ ...this.state, transactions: trnsJSON.reverse(), isLoading: false });
+        let totPages = Math.ceil(trnsJSON.length / 10);
+        this.setState({ ...this.state, transactions: trnsJSON.reverse(), isLoading: false, totalPages: totPages });
 
         // load the rest of the transactions
         const allTrnsResp = await fetch("/api/transactions");
         const allTrnsJSON = await allTrnsResp.json();
-        this.setState({ ...this.state, transactions: allTrnsJSON.reverse(), showPagination: true });
+        totPages = Math.ceil(allTrnsJSON.length / 10);
+        this.setState({ ...this.state, transactions: allTrnsJSON.reverse(), showPagination: true, totalPages: totPages });
     }
 
 
@@ -106,6 +109,26 @@ export default class AdminTransactions extends Component {
 
 
 
+    setInputValid() {
+        const input = document.getElementById("AdminTrransactions__pagination__input");
+        if (isNaN(input.value)) { input.classList.add("invalid"); return false; }
+
+        const valid = Number(input.value) >= 1 && Number(input.value) <= this.state.totalPages;
+        if (valid || input.value === "") { input.classList.remove("invalid"); return true; }
+        else { input.classList.add("invalid"); return false; }
+    }
+
+
+
+    handlePaginationInputOnKeyPress(e) {
+        if (e.key === "Enter" && this.setInputValid()) {
+            this.setState({ ...this.state, page: Number(e.target.value) });
+            console.log(this.state.page);
+        }
+    }
+
+
+
     render() {
         return (
             <div className="AdminTransactions">
@@ -122,13 +145,24 @@ export default class AdminTransactions extends Component {
                     </form>
 
                     {this.state.showPagination && <div className="AdminTransactions__pagination">
-                        <button>&#9668;</button>
+                        <button
+                            disabled={this.state.page <= 1}
+                            onClick={() => this.setState({ ...this.state, page: this.state.page - 1 })}
+                        >&#9668;</button>
 
-                        <input type="text" placeholder="1" />
+                        <input
+                            id="AdminTrransactions__pagination__input"
+                            placeholder={this.state.page}
+                            onChange={() => this.setInputValid()}
+                            onKeyPress={e => this.handlePaginationInputOnKeyPress(e)}
+                        />
 
-                        <span>of 19</span>
+                        <span>of&nbsp;{this.state.totalPages}</span>
 
-                        <button>&#9658;</button>
+                        <button
+                            disabled={this.state.page >= this.state.totalPages}
+                            onClick={() => this.setState({ ...this.state, page: this.state.page + 1 })}
+                        >&#9658;</button>
 
                         <button>&#x27f3;</button>
                     </div>}
