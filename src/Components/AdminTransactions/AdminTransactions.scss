@@ -114,12 +114,16 @@
     }
     .AdminTransactions__body {
         position: relative;
-        height: 88%;
+        height: 86%;
         width: 98%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
         margin: 1%;
         border: $borderLight;
         z-index: 3000;
-        table {
+        .Admintransactions__main-table {
             width: 100%;
             padding: 0 2%;
             border-collapse: collapse;
@@ -157,7 +161,23 @@
             tr:last-child { border-bottom: $borderLight; }
         }
         .AdminTransactions__complete-line-info {
-
+            width: 90%;
+            border: $borderLight;
+            border-radius: 5px;
+            p {
+                color: $lightPurple;
+                text-align: center;
+                font-size: 2.2vh;
+            }
+            table {
+                border-top: $borderLight;
+                border-collapse: collapse;
+                width: 100%;
+                tr td { padding-left: 0.5vh; }
+            }
+            table:nth-child(2) tr:first-child { border-bottom: $borderLight; }
+            table:nth-child(2) tr td:last-child { border-left: $borderLight; }
+            table:nth-child(2) tr td:last-child, table:nth-child(3) tr td:last-child { width: 50%; }
         }
     }
 }

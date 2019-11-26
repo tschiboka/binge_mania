@@ -88,12 +88,24 @@ export default class AdminTransactions extends Component {
 
 
 
+    getCurrentPageTransactions() {
+        let transactions = this.state.transactions;
+        return _.chunk(transactions, 10)[this.state.page - 1];
+    }
+
+
+
+
     renderTransactions() {
         if (!this.state.transactions.length) return;
 
-        return _.chunk(this.state.transactions, 10)[this.state.page - 1].map((tr, i) => (
+        const transactionsOnPage = this.getCurrentPageTransactions();
+
+        return transactionsOnPage.map((tr, i) => (
             <tr key={"admin-transaction" + i}
-                className={this.state.showInfoOfLine - 1 === i ? "active" : ""}>
+                className={this.state.showInfoOfLine - 1 === i ? "active" : ""}
+                onClick={() => this.setState({ ...this.state, showInfoOfLine: i + 1 })}
+            >
                 <td>{this.state.showInfoOfLine - 1 === i ? <span>&#9658;</span> : ""}</td>
 
                 <td>{this.formatDate(tr.date)}</td>
@@ -109,8 +121,56 @@ export default class AdminTransactions extends Component {
 
 
 
-    setInputValid() {
-        const input = document.getElementById("AdminTrransactions__pagination__input");
+    renderLineInfo() {
+        if (!this.state.transactions.length) return;
+
+        const transactionsOnPage = this.getCurrentPageTransactions();
+        const line = this.state.showInfoOfLine - 1;
+        const moviesLine = 0;
+        const movies = transactionsOnPage[line].movies.slice(moviesLine, 5);
+
+        return (
+            <div className="AdminTransactions__complete-line-info">
+
+                <p>[ Page {this.state.page} of {this.state.totalPages}, line {line + 1}, filtered x out of total {this.state.transactions.length} transactions. ]</p>
+
+                <table><tbody>
+                    <tr>
+                        <td>Date</td><td>{this.formatDate(transactionsOnPage[line].date)}</td>
+
+                        <td>Paid £{transactionsOnPage[line].transTotal}</td>
+                    </tr>
+
+                    <tr>
+                        <td>User</td>
+
+                        <td>Email: {transactionsOnPage[line].user.email}</td>
+
+                        <td>ID: {transactionsOnPage[line].user.id}</td>
+                    </tr>
+                </tbody></table>
+
+                <table><tbody>
+                    {movies.map((m, i) =>
+                        <tr>
+                            <td key={"trans-movies-title" + i + m.id}>{m.title}</td>
+
+                            <td key={"trans-movies-id" + i + m.id}>{m._id}</td>
+                        </tr>)}
+                </tbody></table>
+            </div>
+        );
+    }
+
+
+
+    setInputValid(ignoreInput) {
+        const input = document.getElementById("AdminTransactions__pagination__input");
+
+        // in case input was set but pagination button was clicked ignore validation
+        // if input was set invalid value it stayed red even if it was reset by a valid placeholder
+        if (ignoreInput) { input.classList.remove("invalid"); input.classList.add("valid"); return false; }
+
         if (isNaN(input.value)) { input.classList.add("invalid"); return false; }
 
         const valid = Number(input.value) >= 1 && Number(input.value) <= this.state.totalPages;
@@ -122,9 +182,19 @@ export default class AdminTransactions extends Component {
 
     handlePaginationInputOnKeyPress(e) {
         if (e.key === "Enter" && this.setInputValid()) {
-            this.setState({ ...this.state, page: Number(e.target.value) });
-            console.log(this.state.page);
+            this.setState({ ...this.state, page: Number(e.target.value), showInfoOfLine: 1 });
+            e.target.value = ""; // unless reset, placeholder with the current page num won't be shown
         }
+    }
+
+
+
+    handlePaginationButtonClicked(amount) {
+        this.setState({ ...this.state, page: this.state.page + amount, showInfoOfLine: 1 });
+        const input = document.getElementById("AdminTransactions__pagination__input");
+        input.value = "";
+
+        this.setInputValid(true);
     }
 
 
@@ -147,11 +217,11 @@ export default class AdminTransactions extends Component {
                     {this.state.showPagination && <div className="AdminTransactions__pagination">
                         <button
                             disabled={this.state.page <= 1}
-                            onClick={() => this.setState({ ...this.state, page: this.state.page - 1 })}
+                            onClick={() => this.handlePaginationButtonClicked(-1)}
                         >&#9668;</button>
 
                         <input
-                            id="AdminTrransactions__pagination__input"
+                            id="AdminTransactions__pagination__input"
                             placeholder={this.state.page}
                             onChange={() => this.setInputValid()}
                             onKeyPress={e => this.handlePaginationInputOnKeyPress(e)}
@@ -161,7 +231,7 @@ export default class AdminTransactions extends Component {
 
                         <button
                             disabled={this.state.page >= this.state.totalPages}
-                            onClick={() => this.setState({ ...this.state, page: this.state.page + 1 })}
+                            onClick={() => this.handlePaginationButtonClicked(1)}
                         >&#9658;</button>
 
                         <button>&#x27f3;</button>
@@ -169,7 +239,7 @@ export default class AdminTransactions extends Component {
                 </div>
 
                 <div className="AdminTransactions__body">
-                    <table><tbody>
+                    <table className="Admintransactions__main-table"><tbody>
                         <tr>
                             <th></th> {/* Placeholder for active line arrow*/}
 
@@ -184,10 +254,7 @@ export default class AdminTransactions extends Component {
                         {this.renderTransactions()}
                     </tbody></table>
 
-
-                    <div className="AdminTransactions__complete-line-info">
-                        Complete Line Info
-                    </div>
+                    {this.renderLineInfo()}
 
                     <LoadingSpinner isLoading={this.state.isLoading} />
                 </div>
