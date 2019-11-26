@@ -126,8 +126,9 @@ export default class AdminTransactions extends Component {
 
         const transactionsOnPage = this.getCurrentPageTransactions();
         const line = this.state.showInfoOfLine - 1;
-        const moviesLine = 0;
-        const movies = transactionsOnPage[line].movies.slice(moviesLine, 5);
+        let movies5Ind = this.state.movies5Ind || 0;
+        if (!transactionsOnPage[line].movies[(movies5Ind * 5)]) movies5Ind = 0;
+        const movies = transactionsOnPage[line].movies.slice((movies5Ind * 5), (movies5Ind * 5) + 5);
 
         return (
             <div className="AdminTransactions__complete-line-info">
@@ -152,12 +153,28 @@ export default class AdminTransactions extends Component {
 
                 <table><tbody>
                     {movies.map((m, i) =>
-                        <tr>
-                            <td key={"trans-movies-title" + i + m.id}>{m.title}</td>
+                        <tr key={"movies5Ind" + movies5Ind + i + line + m._id}>
+                            <td>{`${(movies5Ind * 5) + i + 1}. ${m.title}`}</td>
 
-                            <td key={"trans-movies-id" + i + m.id}>{m._id}</td>
+                            <td>{m._id}</td>
                         </tr>)}
                 </tbody></table>
+
+                {transactionsOnPage[line].movies.length > 5 && (
+                    <div className="AdminTransactions__complete-line-info__movies-pagination">
+                        <button
+                            onClick={() => { this.setState({ ...this.state, movies5Ind: movies5Ind - 1 }) }}
+                            disabled={movies5Ind <= 0}
+                        >Prev</button>
+
+                        <p>movies {`${(movies5Ind * 5) + 1} - ${(movies5Ind * 5) + 5}`}</p>
+
+                        <button
+                            onClick={() => this.setState({ ...this.state, movies5Ind: movies5Ind + 1 })}
+                            disabled={!transactionsOnPage[line].movies[((movies5Ind + 1) * 5)]}
+                        >Next</button>
+                    </div>
+                )}
             </div>
         );
     }
@@ -251,6 +268,7 @@ export default class AdminTransactions extends Component {
 
                             <th onClick={() => this.sortTable("amount")}><span>Amount</span>{this.addSortArrow("amount")}</th>
                         </tr>
+
                         {this.renderTransactions()}
                     </tbody></table>
 

@@ -2,7 +2,7 @@
 
 .AdminTransactions {
     height: 100%;
-    width: 100%;
+    width: 100%; 
     background: rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     .AdminTransactions__header {
@@ -178,6 +178,32 @@
             table:nth-child(2) tr:first-child { border-bottom: $borderLight; }
             table:nth-child(2) tr td:last-child { border-left: $borderLight; }
             table:nth-child(2) tr td:last-child, table:nth-child(3) tr td:last-child { width: 50%; }
+        }
+        .AdminTransactions__complete-line-info__movies-pagination {
+            display: flex;
+            justify-content: space-between;
+            button {
+                width: 70px;
+                margin: 2px;
+                padding: 0 1vh;
+                border: $borderLight;
+                border-right: none;
+                border-bottom: none;
+                background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+                font-family: "Abel";
+                color: #80d1e7;
+                font-size: 2vh;
+                cursor: pointer;
+                &:hover {
+                    background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+                    border: $borderLight;
+                    border-left: none;
+                    border-top: none;
+                }
+                &:first-child { border-bottom-left-radius: 5px; }
+                &:last-child { border-bottom-right-radius: 5px; }
+            }
+            button:disabled { color: black; }
         }
     }
 }
