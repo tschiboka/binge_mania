@@ -229,7 +229,7 @@ export default class AdminTransactions extends Component {
             const formRect = form.getBoundingClientRect();
             const [height, width] = [formRect.height, formRect.width];
 
-            filtersDiv.style.width = width - 2 + "px";
+            filtersDiv.style.width = width - 1.5 + "px";
             filtersDiv.style.top = height + "px";
         }
     }
@@ -241,10 +241,98 @@ export default class AdminTransactions extends Component {
         const formRect = form.getBoundingClientRect();
         const [height, width] = [formRect.height, formRect.width];
 
-        return <div
+        return <form
             id="AdminTransactions__filter-settings"
-            style={{ width: width - 2, top: height }}
-        ></div>;
+            style={{ width: width - 1.5, top: height }}
+        >
+            <div>
+                <span>From Date</span>
+
+                <div>
+                    <input type="text" size="2" />
+
+                    -<input type="text" size="2" />
+
+                    -<input type="text" size="4" />
+                </div>
+            </div>
+
+            <div>
+                <span>To Date</span>
+
+                <div>
+                    <input type="text" size="2" />
+
+                    -<input type="text" size="2" />
+
+                    -<input type="text" size="4" />
+                </div>
+            </div>
+
+            <div>
+                <span>From Time</span>
+
+                <div>
+                    <input type="text" size="2" />
+
+                    :<input type="text" size="2" />
+                </div>
+            </div>
+
+            <div>
+                <span>From Time</span>
+
+                <div>
+                    <input type="text" size="2" />
+
+                    :<input type="text" size="2" />
+                </div>
+            </div>
+
+            <div>
+                <span>User ID</span>
+
+                <div>
+                    <input type="text" size="20" />
+                </div>
+            </div>
+
+            <div>
+                <span>User Email</span>
+
+                <div>
+                    <input type="text" size="20" />
+                </div>
+            </div>
+
+            <div>
+                <span>Paid</span>
+
+                <div>
+                    <input type="text" size="5" />
+
+                    -<input type="text" size="5" />
+                </div>
+            </div>
+
+            <div>
+                <span>Title</span>
+
+                <div>
+                    <input type="text" size="20" />
+                </div>
+            </div>
+
+            <div>
+                <span>Movie ID</span>
+
+                <div>
+                    <input type="text" size="20" />
+                </div>
+            </div>
+
+            <button>Reset</button>
+        </form>;
     }
 
 
