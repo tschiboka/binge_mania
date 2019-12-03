@@ -17,7 +17,7 @@
             justify-content: flex-start;
             align-items: center;
             margin-left: 1%;
-            div {
+            .AdminTransactions__filter-by {
                 margin-right: 2%;
                 display: flex;
                 border: $borderLight;
@@ -64,6 +64,11 @@
                     border-top: none;
                 }
             }
+        }
+        .AdminTransactions__filter--open div{
+            border-bottom: none;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
         }
         .AdminTransactions__pagination {
             margin-right: 1%;
@@ -205,5 +210,16 @@
             }
             button:disabled { color: black; }
         }
+    }
+    #AdminTransactions__filter-settings {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 45%;
+        margin: 1%;
+        background: black;
+        border: $borderLight;
+        border-top: none;
+        z-index: 3001;
     }
 }

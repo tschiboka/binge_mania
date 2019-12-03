@@ -24,6 +24,8 @@ export default class AdminTransactions extends Component {
 
 
     async componentDidMount() {
+        window.addEventListener("resize", () => this.setFilterSettingsCoordsOnResize());
+
         // load first 10 transactions (transactions size may grow really large)
         const trnsResp = await fetch("/api/transactions/10/1");
         const trnsJSON = await trnsResp.json();
@@ -36,6 +38,10 @@ export default class AdminTransactions extends Component {
         totPages = Math.ceil(allTrnsJSON.length / 10);
         this.setState({ ...this.state, transactions: allTrnsJSON.reverse(), showPagination: true, totalPages: totPages });
     }
+
+
+
+    componentWillUnmount() { window.removeEventListener("resize", () => this.setFilterSettingsCoordsOnResize()); }
 
 
 
@@ -216,19 +222,48 @@ export default class AdminTransactions extends Component {
 
 
 
+    setFilterSettingsCoordsOnResize() {
+        if (this.state.openFilterSettings) {
+            const filtersDiv = document.getElementById("AdminTransactions__filter-settings");
+            const form = document.getElementById("AdminTransactions__filter-form");
+            const formRect = form.getBoundingClientRect();
+            const [height, width] = [formRect.height, formRect.width];
+
+            filtersDiv.style.width = width - 2 + "px";
+            filtersDiv.style.top = height + "px";
+        }
+    }
+
+
+
+    renderFilterSettings() {
+        const form = document.getElementById("AdminTransactions__filter-form");
+        const formRect = form.getBoundingClientRect();
+        const [height, width] = [formRect.height, formRect.width];
+
+        return <div
+            id="AdminTransactions__filter-settings"
+            style={{ width: width - 2, top: height }}
+        ></div>;
+    }
+
+
+
     render() {
         return (
             <div className="AdminTransactions">
                 <div className="AdminTransactions__header">
-                    <form>
+                    <form
+                        id="AdminTransactions__filter-form"
+                        className={this.state.openFilterSettings ? "AdminTransactions__filter--open" : ""}
+                        onSubmit={e => e.preventDefault()}>
                         <div className="AdminTransactions__filter-by">
                             <input type="text" />
 
-                            <button>&#9660;</button>
+                            <button onClick={() => this.setState({ ...this.state, openFilterSettings: !this.state.openFilterSettings })}>&#9660;</button>
 
-                            <button>Filter</button>
+                            <button onClick={() => alert("FILTER")}>Filter</button>
                         </div>
-                        <button>Search</button>
                     </form>
 
                     {this.state.showPagination && <div className="AdminTransactions__pagination">
@@ -253,6 +288,8 @@ export default class AdminTransactions extends Component {
 
                         <button>&#x27f3;</button>
                     </div>}
+
+                    {this.state.openFilterSettings && this.renderFilterSettings()}
                 </div>
 
                 <div className="AdminTransactions__body">
