@@ -235,7 +235,7 @@
                 width: 70%;
                 display: flex;
                 justify-content: flex-end;
-                input {margin: 0 1%;}
+                input {margin: 0 1%; padding: 0; text-align: center; }
                 input:invalid { color: deeppink; }
             }
         }

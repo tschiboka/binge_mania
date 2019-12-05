@@ -264,19 +264,31 @@ export default class AdminTransactions extends Component {
             const { maxDay, maxMonth, maxYear } = { ...this.state.filterBy };
             const { minHour, minMin } = { ...this.state.filterBy };
             const { maxHour, maxMin } = { ...this.state.filterBy };
-            console.log(target, propName,
-                [minDay, minMonth, minYear], [maxDay, maxMonth, maxYear],
-                [minHour, minMin], [maxHour, maxMin]);
+            const onlyTimeFields = minHour && minMin && maxHour && maxMin && !minDay && !minMonth && !minYear && !maxDay && !maxMonth && !maxYear;
+            const timeHasNoInterval = Number(minHour * 60) + Number(minMin) >= Number(maxHour * 60) + Number(maxMin);
+            const onlyDateFields = !minHour && !minMin && !maxHour && !maxMin && minDay && minMonth && minYear && maxDay && maxMonth && maxYear;
+            const dateHasNoInterval = new Date(minYear, Number(minMonth) - 1, minDay) >= new Date(maxYear, Number(maxMonth) - 1, maxDay);
+            const allFieldValues = allFields.map(f => f.value).every(fv => fv.length);
+            const [minDate, maxDate] = [new Date(minYear, Number(minMonth) - 1, minDay, minHour, minMin), new Date(maxYear, Number(maxMonth) - 1, maxDay, maxHour, maxMin)];
+            const onlyMinDateAndTime = minHour && minMin && !maxHour && !maxMin && minDay && minMonth && minYear && !maxDay && !maxMonth && !maxYear;
+            const onlyMaxDateAndTime = !minHour && !minMin && maxHour && maxMin && !minDay && !minMonth && !minYear && maxDay && maxMonth && maxYear;
+            const onlyMinDate = !minHour && !minMin && !maxHour && !maxMin && minDay && minMonth && minYear && !maxDay && !maxMonth && !maxYear;
+            const onlyMaxDate = !minHour && !minMin && !maxHour && !maxMin && !minDay && !minMonth && !minYear && maxDay && maxMonth && maxYear;
+            const onlyMinTime = minHour && minMin && !maxHour && !maxMin && !minDay && !minMonth && !minYear && !maxDay && !maxMonth && !maxYear;
+            const onlyMaxTime = !minHour && !minMin && maxHour && maxMin && !minDay && !minMonth && !minYear && !maxDay && !maxMonth && !maxYear;
 
             // check if all fields are valid non empty values (all min max dates and times)
-            const allFieldValues = allFields.map(f => f.value).every(fv => fv.length);
-            let [minDate, maxDate] = [new Date(minYear, Number(minMonth) - 1, minDay, minHour, minMin), new Date(maxYear, Number(maxMonth) - 1, maxDay, maxHour, maxMin)];
-            if (allFieldValues) {
-                if (minDate >= maxDate) this.setState({ ...this.state, filterByMsg: "Dates and times must create a time interval!" });
-            }
+            if (allFieldValues) { if (minDate >= maxDate) this.setState({ ...this.state, filterByMsg: "Dates and times must create a time interval!" }); }
 
-            // check if only time fields are filled 
-            else if (minHour && minMin && maxHour && maxMin && (Number(minHour * 60) + Number(minMin) >= Number(maxHour * 60) + Number(maxMin))) this.setState({ ...this.state, filterByMsg: "Times must create a time interval!" });
+            // if only time fields are filled and dont make interval 
+            else if (onlyTimeFields && timeHasNoInterval) this.setState({ ...this.state, filterByMsg: "Times must create an interval!" });
+
+            // if only date fields are filled and dont make interval 
+            else if (onlyDateFields && dateHasNoInterval) this.setState({ ...this.state, filterByMsg: "Dates must create an interval!" });
+
+            // in any other case if the form is filled up properly give no message
+            else if (onlyDateFields || onlyTimeFields || onlyMaxDateAndTime || onlyMinDateAndTime || onlyMinDate || onlyMaxDate || onlyMinTime || onlyMaxTime) { } //NOTHING HAPPENS HERE
+            else this.setState({ ...this.state, filterByMsg: "Missing date and/or time value(s)!" });
         }
 
         return <form
