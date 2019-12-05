@@ -248,9 +248,18 @@ export default class AdminTransactions extends Component {
                 .map((y, i) => 2000 + i + "|" + ((2000 + i + "").substr(2, 4)))
                 .join("|") + ")$");
         const validateDatesAndTime = (target, propName) => {
+            // set state.filterBy date and time values regardless of validity
             const filterBy = this.state.filterBy;
             filterBy[propName] = target.value;
-            this.setState({ ...this.state, filterBy: filterBy });
+            this.setState({ ...this.state, filterBy: filterBy, filterByMsg: "" });
+
+            // check validity of all related fields and terminate func execution if any of them invalid
+            const allFields = ["Day", "Month", "Year", "Hour", "Min"]
+                .map(e => ["min" + e, "max" + e]).flat()
+                .map(el => document.getElementById("AdminTransactions__filter-settings__" + el));
+            const allFieldsAreValid = allFields.map(f => f.checkValidity()).every(fs => !!fs);
+            if (!allFieldsAreValid) return;
+
             const { minDay, minMonth, minYear } = { ...this.state.filterBy };
             const { maxDay, maxMonth, maxYear } = { ...this.state.filterBy };
             const { minHour, minMin } = { ...this.state.filterBy };
@@ -258,6 +267,16 @@ export default class AdminTransactions extends Component {
             console.log(target, propName,
                 [minDay, minMonth, minYear], [maxDay, maxMonth, maxYear],
                 [minHour, minMin], [maxHour, maxMin]);
+
+            // check if all fields are valid non empty values (all min max dates and times)
+            const allFieldValues = allFields.map(f => f.value).every(fv => fv.length);
+            let [minDate, maxDate] = [new Date(minYear, Number(minMonth) - 1, minDay, minHour, minMin), new Date(maxYear, Number(maxMonth) - 1, maxDay, maxHour, maxMin)];
+            if (allFieldValues) {
+                if (minDate >= maxDate) this.setState({ ...this.state, filterByMsg: "Dates and times must create a time interval!" });
+            }
+
+            // check if only time fields are filled 
+            else if (minHour && minMin && maxHour && maxMin && (Number(minHour * 60) + Number(minMin) >= Number(maxHour * 60) + Number(maxMin))) this.setState({ ...this.state, filterByMsg: "Times must create a time interval!" });
         }
 
         return <form
@@ -289,6 +308,24 @@ export default class AdminTransactions extends Component {
             </div>
 
             <div>
+                <span>From Time</span>
+
+                <div>
+                    <input
+                        id="AdminTransactions__filter-settings__minHour"
+                        type="text" size="2" title="hour" pattern="^(\d|0\d|1\d|2[0-3])$"
+                        onChange={e => validateDatesAndTime(e.target, "minHour", "minTime")}
+                    />
+
+                    :<input
+                        id="AdminTransactions__filter-settings__minMin"
+                        type="text" size="2" pattern="^(\d|[0-5]\d)$" title="minute"
+                        onChange={e => validateDatesAndTime(e.target, "minMin", "minTime")}
+                    />
+                </div>
+            </div>
+
+            <div>
                 <span>To Date</span>
 
                 <div>
@@ -313,25 +350,7 @@ export default class AdminTransactions extends Component {
             </div>
 
             <div>
-                <span>From Time</span>
-
-                <div>
-                    <input
-                        id="AdminTransactions__filter-settings__minHour"
-                        type="text" size="2" title="hour" pattern="^(\d|0\d|1\d|2[0-3])$"
-                        onChange={e => validateDatesAndTime(e.target, "minHour", "minTime")}
-                    />
-
-                    :<input
-                        id="AdminTransactions__filter-settings__minMin"
-                        type="text" size="2" pattern="^(\d|[0-5]\d)$" title="minute"
-                        onChange={e => validateDatesAndTime(e.target, "minMin", "minTime")}
-                    />
-                </div>
-            </div>
-
-            <div>
-                <span>From Time</span>
+                <span>To Time</span>
 
                 <div>
                     <input
@@ -406,6 +425,8 @@ export default class AdminTransactions extends Component {
                     <input type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char" />
                 </div>
             </div>
+
+            {this.state.filterByMsg && <label>{this.state.filterByMsg}</label>}
 
             <button>Reset</button>
         </form>;
