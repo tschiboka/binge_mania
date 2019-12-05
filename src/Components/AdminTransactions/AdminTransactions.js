@@ -236,6 +236,12 @@ export default class AdminTransactions extends Component {
 
 
 
+    submitFilterForm() {
+
+    }
+
+
+
     renderFilterSettings() {
         // get filter form position for styling (on resizes it rerender layout)
         const form = document.getElementById("AdminTransactions__filter-form");
@@ -294,6 +300,7 @@ export default class AdminTransactions extends Component {
         return <form
             id="AdminTransactions__filter-settings"
             style={{ width: width - 1.5, top: height }}
+            onSubmit={() => this.submitFilterForm()}
         >
             <div>
                 <span>From Date</span>
@@ -383,7 +390,10 @@ export default class AdminTransactions extends Component {
                 <span>User ID</span>
 
                 <div>
-                    <input type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char" />
+                    <input
+                        type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char"
+                        onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, userId: e.target.value } })}
+                    />
                 </div>
             </div>
 
@@ -391,7 +401,7 @@ export default class AdminTransactions extends Component {
                 <span>User Email</span>
 
                 <div>
-                    <input type="email" size="20" />
+                    <input type="email" size="20" onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, email: e.target.value } })} />
                 </div>
             </div>
 
@@ -426,7 +436,7 @@ export default class AdminTransactions extends Component {
                 <span>Title</span>
 
                 <div>
-                    <input type="text" size="20" />
+                    <input type="text" size="20" onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, title: e.target.value } })} />
                 </div>
             </div>
 
@@ -434,7 +444,10 @@ export default class AdminTransactions extends Component {
                 <span>Movie ID</span>
 
                 <div>
-                    <input type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char" />
+                    <input
+                        type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char"
+                        onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, movieId: e.target.value } })}
+                    />
                 </div>
             </div>
 
