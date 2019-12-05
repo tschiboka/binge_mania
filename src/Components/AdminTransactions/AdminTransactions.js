@@ -17,7 +17,7 @@ export default class AdminTransactions extends Component {
             sortBy: "default",
             ascending: false,
             totalPages: 0,
-            filterBy: ""
+            filterBy: {}
         };
     }
 
@@ -241,6 +241,13 @@ export default class AdminTransactions extends Component {
         const formRect = form.getBoundingClientRect();
         const [height, width] = [formRect.height, formRect.width];
 
+        const getYears = (currYear = new Date().getFullYear()) => ("^(" +
+            new Array((currYear - 2000) + 1).fill("")
+                .map((y, i) => 2000 + i + "|" + ((2000 + i + "").substr(2, 4)))
+                .join("|") + ")$");
+
+        console.log(getYears());
+
         return <form
             id="AdminTransactions__filter-settings"
             style={{ width: width - 1.5, top: height }}
@@ -249,11 +256,11 @@ export default class AdminTransactions extends Component {
                 <span>From Date</span>
 
                 <div>
-                    <input type="text" size="2" />
+                    <input type="text" size="2" pattern="^([1-9]|0[1-9]|1[0-9]|2[0-9]|30|31)$" title="day" />
 
-                    -<input type="text" size="2" />
+                    -<input type="text" size="2" pattern="^(0[1-9]|[1-9]|10|11|12)$" title="month" />
 
-                    -<input type="text" size="4" />
+                    -<input type="text" size="4" pattern={getYears()} title="year" />
                 </div>
             </div>
 
@@ -261,11 +268,11 @@ export default class AdminTransactions extends Component {
                 <span>To Date</span>
 
                 <div>
-                    <input type="text" size="2" />
+                    <input type="text" size="2" pattern="^([1-9]|0[1-9]|1[0-9]|2[0-9]|30|31)$" title="day" />
 
-                    -<input type="text" size="2" />
+                    -<input type="text" size="2" pattern="^(0[1-9]|[1-9]|10|11|12)$" title="month" />
 
-                    -<input type="text" size="4" />
+                    -<input type="text" size="4" pattern={getYears()} title="year" />
                 </div>
             </div>
 
@@ -273,9 +280,9 @@ export default class AdminTransactions extends Component {
                 <span>From Time</span>
 
                 <div>
-                    <input type="text" size="2" />
+                    <input type="text" size="2" pattern="^(\d|0\d|1\d|2[0-3])$" title="hour" />
 
-                    :<input type="text" size="2" />
+                    :<input type="text" size="2" pattern="^(\d|[0-5]\d)$" title="minute" />
                 </div>
             </div>
 
@@ -283,9 +290,9 @@ export default class AdminTransactions extends Component {
                 <span>From Time</span>
 
                 <div>
-                    <input type="text" size="2" />
+                    <input type="text" size="2" pattern="^(\d|0\d|1\d|2[0-3])$" title="hour" />
 
-                    :<input type="text" size="2" />
+                    :<input type="text" size="2" pattern="^(\d|[0-5]\d)$" title="minute" />
                 </div>
             </div>
 
@@ -293,7 +300,7 @@ export default class AdminTransactions extends Component {
                 <span>User ID</span>
 
                 <div>
-                    <input type="text" size="20" />
+                    <input type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char" />
                 </div>
             </div>
 
@@ -301,7 +308,7 @@ export default class AdminTransactions extends Component {
                 <span>User Email</span>
 
                 <div>
-                    <input type="text" size="20" />
+                    <input type="email" size="20" />
                 </div>
             </div>
 
@@ -309,9 +316,23 @@ export default class AdminTransactions extends Component {
                 <span>Paid</span>
 
                 <div>
-                    <input type="text" size="5" />
+                    <input
+                        type="text" size="5"
+                        pattern="^\d{1,4}((\.\d\d)?|(\.\d))?$"
+                        onChange={e => this.setState(
+                            { ...this.state, filterBy: { ...this.state.filterBy, minPaid: e.target.value } }
+                        )}
+                    />
 
-                    -<input type="text" size="5" />
+                    -<input
+                        type="text" size="5"
+                        min={this.state.filterBy.minPaid ? this.state.minPaid + 0.01 : 0}
+                        pattern="^\d{1,4}((\.\d\d)?|(\.\d))?$"
+                        onChange={(e, min = this.state.filterBy.minPaid || 0) =>
+                            Number(e.target.value <= min)
+                                ? e.target.setCustomValidity(`Value must be larger than ${min}`)
+                                : e.target.setCustomValidity("")}
+                    />
                 </div>
             </div>
 
@@ -327,7 +348,7 @@ export default class AdminTransactions extends Component {
                 <span>Movie ID</span>
 
                 <div>
-                    <input type="text" size="20" />
+                    <input type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char" />
                 </div>
             </div>
 

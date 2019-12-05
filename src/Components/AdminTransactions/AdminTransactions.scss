@@ -236,6 +236,7 @@
                 display: flex;
                 justify-content: flex-end;
                 input {margin: 0 1%;}
+                input:invalid { color: deeppink; }
             }
         }
     }
