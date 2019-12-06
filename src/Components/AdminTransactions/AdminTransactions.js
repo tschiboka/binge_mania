@@ -236,7 +236,8 @@ export default class AdminTransactions extends Component {
 
 
 
-    submitFilterForm() {
+    submitFilterForm(e) {
+        e.preventDefault();
 
     }
 
@@ -287,10 +288,10 @@ export default class AdminTransactions extends Component {
             if (allFieldValues) { if (minDate >= maxDate) this.setState({ ...this.state, filterByMsg: "Dates and times must create a time interval!" }); }
 
             // if only time fields are filled and dont make interval 
-            else if (onlyTimeFields && timeHasNoInterval) this.setState({ ...this.state, filterByMsg: "Times must create an interval!" });
+            else if (onlyTimeFields) { if (timeHasNoInterval) this.setState({ ...this.state, filterByMsg: "Times must create an interval!" }); }
 
             // if only date fields are filled and dont make interval 
-            else if (onlyDateFields && dateHasNoInterval) this.setState({ ...this.state, filterByMsg: "Dates must create an interval!" });
+            else if (onlyDateFields) { if (dateHasNoInterval) this.setState({ ...this.state, filterByMsg: "Dates must create an interval!" }); }
 
             // in any other case if the form is filled up properly give no message
             else if (onlyDateFields || onlyTimeFields || onlyMaxDateAndTime || onlyMinDateAndTime || onlyMinDate || onlyMaxDate || onlyMinTime || onlyMaxTime) { } //NOTHING HAPPENS HERE
@@ -309,19 +310,22 @@ export default class AdminTransactions extends Component {
                     <input
                         id="AdminTransactions__filter-settings__minDay"
                         type="text" size="2" title="day" pattern="^([1-9]|0[1-9]|1[0-9]|2[0-9]|30|31)$"
-                        onChange={e => validateDatesAndTime(e.target, "minDay", "minDate")}
+                        value={this.state.filterBy.minDay || ""}
+                        onChange={e => validateDatesAndTime(e.target, "minDay")}
                     />
 
                     -<input
                         id="AdminTransactions__filter-settings__minMonth"
                         type="text" size="2" title="month" pattern="^(0[1-9]|[1-9]|10|11|12)$"
-                        onChange={e => validateDatesAndTime(e.target, "minMonth", "minDate")}
+                        value={this.state.filterBy.minMonth || ""}
+                        onChange={e => validateDatesAndTime(e.target, "minMonth")}
                     />
 
                     -<input
                         id="AdminTransactions__filter-settings__minYear"
                         type="text" size="4" pattern={getYears()} title="year"
-                        onChange={e => validateDatesAndTime(e.target, "minYear", "minDate")}
+                        value={this.state.filterBy.minYear || ""}
+                        onChange={e => validateDatesAndTime(e.target, "minYear")}
                     />
                 </div>
             </div>
@@ -333,13 +337,15 @@ export default class AdminTransactions extends Component {
                     <input
                         id="AdminTransactions__filter-settings__minHour"
                         type="text" size="2" title="hour" pattern="^(\d|0\d|1\d|2[0-3])$"
-                        onChange={e => validateDatesAndTime(e.target, "minHour", "minTime")}
+                        value={this.state.filterBy.minHour || ""}
+                        onChange={e => validateDatesAndTime(e.target, "minHour")}
                     />
 
                     :<input
                         id="AdminTransactions__filter-settings__minMin"
                         type="text" size="2" pattern="^(\d|[0-5]\d)$" title="minute"
-                        onChange={e => validateDatesAndTime(e.target, "minMin", "minTime")}
+                        value={this.state.filterBy.minMin || ""}
+                        onChange={e => validateDatesAndTime(e.target, "minMin")}
                     />
                 </div>
             </div>
@@ -351,19 +357,22 @@ export default class AdminTransactions extends Component {
                     <input
                         id="AdminTransactions__filter-settings__maxDay"
                         type="text" size="2" pattern="^([1-9]|0[1-9]|1[0-9]|2[0-9]|30|31)$" title="day"
-                        onChange={e => validateDatesAndTime(e.target, "maxDay", "maxDate")}
+                        value={this.state.filterBy.maxDay || ""}
+                        onChange={e => validateDatesAndTime(e.target, "maxDay")}
                     />
 
                     -<input
                         id="AdminTransactions__filter-settings__maxMonth"
                         type="text" size="2" pattern="^(0[1-9]|[1-9]|10|11|12)$" title="month"
-                        onChange={e => validateDatesAndTime(e.target, "maxMonth", "maxDate")}
+                        value={this.state.filterBy.maxMonth || ""}
+                        onChange={e => validateDatesAndTime(e.target, "maxMonth")}
                     />
 
                     -<input
                         id="AdminTransactions__filter-settings__maxYear"
                         type="text" size="4" pattern={getYears()} title="year"
-                        onChange={e => validateDatesAndTime(e.target, "maxYear", "maxDate")}
+                        value={this.state.filterBy.maxYear || ""}
+                        onChange={e => validateDatesAndTime(e.target, "maxYear")}
                     />
                 </div>
             </div>
@@ -375,13 +384,15 @@ export default class AdminTransactions extends Component {
                     <input
                         id="AdminTransactions__filter-settings__maxHour"
                         type="text" size="2" pattern="^(\d|0\d|1\d|2[0-3])$" title="hour"
-                        onChange={e => validateDatesAndTime(e.target, "maxHour", "maxTime")}
+                        value={this.state.filterBy.maxHour || ""}
+                        onChange={e => validateDatesAndTime(e.target, "maxHour")}
                     />
 
                     :<input
                         id="AdminTransactions__filter-settings__maxMin"
                         type="text" size="2" pattern="^(\d|[0-5]\d)$" title="minute"
-                        onChange={e => validateDatesAndTime(e.target, "maxMin", "maxTime")}
+                        value={this.state.filterBy.maxMin || ""}
+                        onChange={e => validateDatesAndTime(e.target, "maxMin")}
                     />
                 </div>
             </div>
@@ -392,6 +403,7 @@ export default class AdminTransactions extends Component {
                 <div>
                     <input
                         type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char"
+                        value={this.state.filterBy.userId || ""}
                         onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, userId: e.target.value } })}
                     />
                 </div>
@@ -401,7 +413,10 @@ export default class AdminTransactions extends Component {
                 <span>User Email</span>
 
                 <div>
-                    <input type="email" size="20" onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, email: e.target.value } })} />
+                    <input
+                        type="email" size="20" value={this.state.filterBy.email || ""}
+                        onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, email: e.target.value } })}
+                    />
                 </div>
             </div>
 
@@ -412,6 +427,7 @@ export default class AdminTransactions extends Component {
                     <input
                         type="text" size="5"
                         pattern="^\d{1,4}((\.\d\d)?|(\.\d))?$"
+                        value={this.state.filterBy.minPaid || ""}
                         onChange={(e, max = Number(this.state.filterBy.maxPaid)) => {
                             if (max && (Number(e.target.value >= max))) { e.target.setCustomValidity(`Value must be less than ${max}`); }
                             else { e.target.setCustomValidity(""); }
@@ -421,6 +437,7 @@ export default class AdminTransactions extends Component {
 
                     -<input
                         type="text" size="5"
+                        value={this.state.filterBy.maxPaid || ""}
                         min={this.state.filterBy.minPaid ? this.state.minPaid + 0.01 : 0}
                         pattern="^\d{1,4}((\.\d\d)?|(\.\d))?$"
                         onChange={(e, min = Number(this.state.filterBy.minPaid) || 0) => {
@@ -436,7 +453,11 @@ export default class AdminTransactions extends Component {
                 <span>Title</span>
 
                 <div>
-                    <input type="text" size="20" onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, title: e.target.value } })} />
+                    <input
+                        type="text" size="20"
+                        value={this.state.filterBy.title || ""}
+                        onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, title: e.target.value } })}
+                    />
                 </div>
             </div>
 
@@ -446,6 +467,7 @@ export default class AdminTransactions extends Component {
                 <div>
                     <input
                         type="text" size="20" pattern="^[a-fA-F0-9]{24}$" title="ID: 24 char"
+                        value={this.state.filterBy.movieId || ""}
                         onChange={e => this.setState({ ...this.state, filterBy: { ...this.state.filterBy, movieId: e.target.value } })}
                     />
                 </div>
@@ -453,13 +475,44 @@ export default class AdminTransactions extends Component {
 
             {this.state.filterByMsg && <label>{this.state.filterByMsg}</label>}
 
-            <button>Reset</button>
+            <button onClick={e => {
+                e.preventDefault();
+                this.setState({ ...this.state, filterBy: {}, filterByMsg: "" });
+            }}>Reset</button>
         </form>;
     }
 
 
 
     render() {
+        const formatFilterText = k => {
+            console.log("FORMAAAT");
+            let keys = k.filter(key => key !== ""), finalText = "", f = this.state.filterBy;
+            const formInputs = [...document.querySelectorAll("#AdminTransactions__filter-settings input")].map(inp => inp.checkValidity()).every(val => !!val);
+            if (formInputs) {
+                if (!this.state.filterByMsg) {
+                    console.log("HERE", keys.minMin);
+                    if ((f.minDay && f.minMonth && f.minYear) || (f.minHour && f.minMin)) finalText += "from "
+                    if (f.minDay && f.minMonth && f.minYear) finalText += `${f.minDay}.${f.minMonth}.${f.minYear} `;
+                    if (f.minHour && f.minMin) finalText += `${f.minHour}:${f.minMin} `;
+                    if ((f.maxDay && f.maxMonth && f.maxYear) || (f.maxHour && f.maxMin)) finalText += "to "
+                    if (f.maxDay && f.maxMonth && f.maxYear) finalText += `${f.maxDay}.${f.maxMonth}.${f.maxYear} `;
+                    if (f.maxHour && f.maxMin) finalText += `${f.maxHour}:${f.maxMin} ,`;
+                }
+                if (f.userId) finalText += `userId: ${f.userId}, `;
+                if (f.email) finalText += `email: ${f.email}, `;
+                if (f.minPaid && f.maxPaid) finalText += `£${f.minPaid} - £${f.maxPaid}, `;
+                else {
+                    if (f.minPaid) finalText += `<= £${f.minPaid}, `;
+                    if (f.maxPaid) finalText += `>= £${f.maxPaid}, `;
+                }
+                if (f.title) finalText += `title: ${f.title}, `;
+                if (f.movieId) finalText += `movieId: ${f.movieId}`
+            }
+
+            return finalText;
+        }
+
         return (
             <div className="AdminTransactions">
                 <div className="AdminTransactions__header">
@@ -468,11 +521,15 @@ export default class AdminTransactions extends Component {
                         className={this.state.openFilterSettings ? "AdminTransactions__filter--open" : ""}
                         onSubmit={e => e.preventDefault()}>
                         <div className="AdminTransactions__filter-by">
-                            <input type="text" disabled />
+                            <input
+                                type="text" readOnly
+                                size="40"
+                                value={formatFilterText(Object.keys(this.state.filterBy))}
+                            />
 
                             <button onClick={() => this.setState({ ...this.state, openFilterSettings: !this.state.openFilterSettings })}>&#9660;</button>
 
-                            <button onClick={() => alert("FILTER")}>Filter</button>
+                            <button onClick={e => this.submitFilterForm(e)}>Filter</button>
                         </div>
                     </form>
 
