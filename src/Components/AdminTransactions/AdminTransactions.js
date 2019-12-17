@@ -133,7 +133,6 @@ export default class AdminTransactions extends Component {
         const transactionsOnPage = this.getCurrentPageTransactions();
         const line = this.state.showInfoOfLine - 1;
         let movies5Ind = this.state.movies5Ind || 0;
-        console.log(transactionsOnPage);
         if (!transactionsOnPage[line].movies[(movies5Ind * 5)]) movies5Ind = 0;
         const movies = transactionsOnPage[line].movies.slice((movies5Ind * 5), (movies5Ind * 5) + 5);
 
@@ -284,7 +283,11 @@ export default class AdminTransactions extends Component {
 
                 if (filter.userId) if (filter.userId !== transaction.user.id) return false;
 
+                if (filter.email) if (filter.email !== transaction.user.email) return false;
 
+                if (filter.minPaid) if (filter.minPaid > transaction.transTotal) return false;
+
+                if (filter.maxPaid) if (filter.maxPaid < transaction.transTotal) return false;
 
                 return true;
             });
@@ -557,16 +560,16 @@ export default class AdminTransactions extends Component {
                 }
                 if (f.userId) finalText += `userId: ${f.userId}, `;
                 if (f.email) finalText += `email: ${f.email}, `;
-                if (f.minPaid && f.maxPaid) finalText += `£${f.minPaid} - £${f.maxPaid}, `;
+                if (f.minPaid && f.maxPaid) finalText += `£${Number(f.minPaid).toFixed(2)} - £${Number(f.maxPaid).toFixed(2)}, `;
                 else {
-                    if (f.minPaid) finalText += `<= £${f.minPaid}, `;
-                    if (f.maxPaid) finalText += `>= £${f.maxPaid}, `;
+                    if (f.minPaid) finalText += `<= £${Number(f.minPaid).toFixed(2)}, `;
+                    if (f.maxPaid) finalText += `>= £${Number(f.maxPaid).toFixed(2)}, `;
                 }
                 if (f.title) finalText += `title: ${f.title}, `;
                 if (f.movieId) finalText += `movieId: ${f.movieId}`
             }
 
-            return finalText;
+            return finalText.replace(/, ?$/g, "");
         }
 
         return (
