@@ -47,7 +47,7 @@ export default class AdminTransactions extends Component {
 
     formatDate(dt, d = new Date(dt)) {
         const add0 = n => n < 10 ? "0" + n : n;
-        const date = `${d.getDate()}.${d.getMonth()}.${(d.getFullYear() + "").replace(/^\d{2}/g, "'")}`;
+        const date = `${d.getDate()}.${Number(d.getMonth()) + 1}.${(d.getFullYear() + "").replace(/^\d{2}/g, "'")}`;
         const time = `${add0(d.getHours())}:${add0(d.getMinutes())}`;
         return date + " " + time;
     }
@@ -133,6 +133,7 @@ export default class AdminTransactions extends Component {
         const transactionsOnPage = this.getCurrentPageTransactions();
         const line = this.state.showInfoOfLine - 1;
         let movies5Ind = this.state.movies5Ind || 0;
+        console.log(transactionsOnPage);
         if (!transactionsOnPage[line].movies[(movies5Ind * 5)]) movies5Ind = 0;
         const movies = transactionsOnPage[line].movies.slice((movies5Ind * 5), (movies5Ind * 5) + 5);
 
@@ -241,14 +242,20 @@ export default class AdminTransactions extends Component {
 
         const filterProps = Object.keys(this.state.filterBy), filter = this.state.filterBy;
 
-        if (filterProps.length === 0) this.setState({ ...this.state, transactions: this.state.originalTransactions }); // empty filter form sets original transactions back
+        if (filterProps.length === 0) this.setState(
+            {
+                ...this.state,
+                transactions: this.state.originalTransactions,
+                showInfoOfLine: 1,
+                page: 1,
+                totalPages: Math.ceil(this.state.originalTransactions.length / 10)
+            }); // empty filter form sets original transactions back
         else {
             const filteredTransactions = this.state.originalTransactions.filter(transaction => { // always filter the original (unfiltered transactions
                 // if date is given --> FROM
                 if (filter.minDay) {
                     const year = filter.minYear.length === 4 ? filter.minYear : "20" + filter.minYear;
-                    const filterDate = new Date(year, filter.minMonth, filter.minDay, filter.minHour || 0, filter.minMin || 0);
-                    console.log(filterDate, new Date(transaction.date));
+                    const filterDate = new Date(year, Number(filter.minMonth - 1), filter.minDay, filter.minHour || 0, filter.minMin || 0);
                     if (filterDate > new Date(transaction.date)) return false; // no reason for further exec of func
                 }
 
@@ -263,9 +270,8 @@ export default class AdminTransactions extends Component {
                 // if date is given --> TO
                 if (filter.maxDay) {
                     const year = filter.maxYear.length === 4 ? filter.maxYear : "20" + filter.maxYear;
-                    const filterDate = new Date(year, filter.maxMonth, Number(filter.maxDay) + 1, filter.maxHour || 0, filter.maxMin || 0);
-                    console.log(filterDate, new Date(transaction.date));
-                    if (filterDate <= new Date(transaction.date)) return false; // no reason for further exec of func
+                    const filterDate = new Date(year, Number(filter.maxMonth) - 1, Number(filter.maxDay) + 1, filter.maxHour || 0, filter.maxMin || 0);
+                    if (filterDate <= new Date(transaction.date)) return false;
                 }
 
                 // if time given without date, filter by time of the any given day --> TO
@@ -276,10 +282,20 @@ export default class AdminTransactions extends Component {
                     if (filterTimeInMins < transactionTimeInMins) return false;
                 }
 
+                if (filter.userId) if (filter.userId !== transaction.user.id) return false;
+
+
+
                 return true;
             });
 
-            this.setState({ ...this.state, transactions: filteredTransactions });
+            this.setState({
+                ...this.state,
+                transactions: filteredTransactions,
+                showInfoOfLine: 1,
+                page: 1,
+                totalPages: Math.ceil(filteredTransactions.length / 10)
+            }, () => console.log(this.state));
         }
     }
 
