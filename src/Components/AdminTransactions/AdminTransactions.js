@@ -289,6 +289,11 @@ export default class AdminTransactions extends Component {
 
                 if (filter.maxPaid) if (filter.maxPaid < transaction.transTotal) return false;
 
+                if (filter.title) {
+                    const hasTitle = !transaction.movies.map(m => m.title).some(t => (new RegExp(filter.title, "gi")).test(t));
+                    if (hasTitle) return false;
+                }
+
                 return true;
             });
 
