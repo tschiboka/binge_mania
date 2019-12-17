@@ -36,7 +36,7 @@ export default class AdminTransactions extends Component {
         const allTrnsResp = await fetch("/api/transactions");
         const allTrnsJSON = await allTrnsResp.json();
         totPages = Math.ceil(allTrnsJSON.length / 10);
-        this.setState({ ...this.state, transactions: allTrnsJSON.reverse(), showPagination: true, totalPages: totPages });
+        this.setState({ ...this.state, transactions: allTrnsJSON.reverse(), showPagination: true, totalPages: totPages, originalTransactions: allTrnsJSON.reverse() });
     }
 
 
@@ -239,6 +239,48 @@ export default class AdminTransactions extends Component {
     submitFilterForm(e) {
         e.preventDefault();
 
+        const filterProps = Object.keys(this.state.filterBy), filter = this.state.filterBy;
+
+        if (filterProps.length === 0) this.setState({ ...this.state, transactions: this.state.originalTransactions }); // empty filter form sets original transactions back
+        else {
+            const filteredTransactions = this.state.originalTransactions.filter(transaction => { // always filter the original (unfiltered transactions
+                // if date is given --> FROM
+                if (filter.minDay) {
+                    const year = filter.minYear.length === 4 ? filter.minYear : "20" + filter.minYear;
+                    const filterDate = new Date(year, filter.minMonth, filter.minDay, filter.minHour || 0, filter.minMin || 0);
+                    console.log(filterDate, new Date(transaction.date));
+                    if (filterDate > new Date(transaction.date)) return false; // no reason for further exec of func
+                }
+
+                // if time given without date, filter by time of the any given day --> FROM
+                if (!filter.minDay && filter.minMin) {
+                    const transactionDate = new Date(transaction.date);
+                    const transactionTimeInMins = (transactionDate.getHours() * 60) + transactionDate.getMinutes();
+                    const filterTimeInMins = (Number(filter.minHour) * 60) + Number(filter.minMin);
+                    if (filterTimeInMins > transactionTimeInMins) return false;
+                }
+
+                // if date is given --> TO
+                if (filter.maxDay) {
+                    const year = filter.maxYear.length === 4 ? filter.maxYear : "20" + filter.maxYear;
+                    const filterDate = new Date(year, filter.maxMonth, Number(filter.maxDay) + 1, filter.maxHour || 0, filter.maxMin || 0);
+                    console.log(filterDate, new Date(transaction.date));
+                    if (filterDate <= new Date(transaction.date)) return false; // no reason for further exec of func
+                }
+
+                // if time given without date, filter by time of the any given day --> TO
+                if (!filter.maxDay && filter.maxMin) {
+                    const transactionDate = new Date(transaction.date);
+                    const transactionTimeInMins = (transactionDate.getHours() * 60) + transactionDate.getMinutes();
+                    const filterTimeInMins = (Number(filter.maxHour) * 60) + Number(filter.maxMin);
+                    if (filterTimeInMins < transactionTimeInMins) return false;
+                }
+
+                return true;
+            });
+
+            this.setState({ ...this.state, transactions: filteredTransactions });
+        }
     }
 
 
@@ -485,13 +527,11 @@ export default class AdminTransactions extends Component {
 
 
     render() {
-        const formatFilterText = k => {
-            console.log("FORMAAAT");
-            let keys = k.filter(key => key !== ""), finalText = "", f = this.state.filterBy;
+        const formatFilterText = () => {
+            let finalText = "", f = this.state.filterBy;
             const formInputs = [...document.querySelectorAll("#AdminTransactions__filter-settings input")].map(inp => inp.checkValidity()).every(val => !!val);
             if (formInputs) {
                 if (!this.state.filterByMsg) {
-                    console.log("HERE", keys.minMin);
                     if ((f.minDay && f.minMonth && f.minYear) || (f.minHour && f.minMin)) finalText += "from "
                     if (f.minDay && f.minMonth && f.minYear) finalText += `${f.minDay}.${f.minMonth}.${f.minYear} `;
                     if (f.minHour && f.minMin) finalText += `${f.minHour}:${f.minMin} `;
@@ -524,7 +564,7 @@ export default class AdminTransactions extends Component {
                             <input
                                 type="text" readOnly
                                 size="40"
-                                value={formatFilterText(Object.keys(this.state.filterBy))}
+                                value={formatFilterText()}
                             />
 
                             <button onClick={() => this.setState({ ...this.state, openFilterSettings: !this.state.openFilterSettings })}>&#9660;</button>
