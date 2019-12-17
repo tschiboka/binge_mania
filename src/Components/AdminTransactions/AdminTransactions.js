@@ -294,6 +294,8 @@ export default class AdminTransactions extends Component {
                     if (hasTitle) return false;
                 }
 
+                if (filter.movieId && !transaction.movies.map(m => m._id).some(id => filter.movieId === id)) return false;
+
                 return true;
             });
 
