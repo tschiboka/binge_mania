@@ -238,6 +238,9 @@ export default class AdminTransactions extends Component {
 
     submitFilterForm(e) {
         e.preventDefault();
+        e.stopPropagation();
+
+        if (this.state.filterByMsg) return; // dont execute form while error message is on form
 
         const filterProps = Object.keys(this.state.filterBy), filter = this.state.filterBy;
 
@@ -369,7 +372,7 @@ export default class AdminTransactions extends Component {
         return <form
             id="AdminTransactions__filter-settings"
             style={{ width: width - 1.5, top: height }}
-            onSubmit={() => this.submitFilterForm()}
+            onKeyDown={e => { if (e.keyCode === 13) this.submitFilterForm(e) }}
         >
             <div>
                 <span>From Date</span>
@@ -595,7 +598,7 @@ export default class AdminTransactions extends Component {
 
                             <button onClick={() => this.setState({ ...this.state, openFilterSettings: !this.state.openFilterSettings })}>&#9660;</button>
 
-                            <button onClick={e => this.submitFilterForm(e)}>Filter</button>
+                            <button onClick={e => this.state.openFilterSettings ? this.submitFilterForm(e) : this.setState({ ...this.state, openFilterSettings: true })}>Filter</button>
                         </div>
                     </form>
 
