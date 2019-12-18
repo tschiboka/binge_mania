@@ -17,14 +17,15 @@ export default class AdminTransactions extends Component {
             sortBy: "default",
             ascending: false,
             totalPages: 0,
-            filterBy: {}
+            filterBy: {},
+            openFilterSettings: false
         };
     }
 
 
 
     async componentDidMount() {
-        window.addEventListener("resize", () => this.setFilterSettingsCoordsOnResize());
+        window.addEventListener("resize", this.setFilterSettingsCoordsOnResize.bind(this));
 
         // load first 10 transactions (transactions size may grow really large) so user can see the first table
         try {
@@ -38,10 +39,6 @@ export default class AdminTransactions extends Component {
         // load the rest of the transactions
         this.loadTransactions();
     }
-
-
-
-    componentWillUnmount() { window.removeEventListener("resize", () => this.setFilterSettingsCoordsOnResize()); }
 
 
 
@@ -248,6 +245,7 @@ export default class AdminTransactions extends Component {
     setFilterSettingsCoordsOnResize() {
         if (this.state.openFilterSettings) {
             const filtersDiv = document.getElementById("AdminTransactions__filter-settings");
+            if (!filtersDiv) return; // in case AdminTransactions is not in DOM
             const form = document.getElementById("AdminTransactions__filter-form");
             const formRect = form.getBoundingClientRect();
             const [height, width] = [formRect.height, formRect.width];
@@ -660,7 +658,7 @@ export default class AdminTransactions extends Component {
                 <div className="AdminTransactions__body">
                     <table className="Admintransactions__main-table"><tbody>
                         <tr>
-                            <th></th> {/* Placeholder for active line arrow*/}
+                            <th></th>{/* Placeholder for active line arrow*/}
 
                             <th onClick={() => this.sortTable("default")}><span>Date</span>{this.addSortArrow("default")}</th>
 

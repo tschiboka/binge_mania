@@ -183,7 +183,7 @@ export default class AdminMovies extends Component {
                     <th>Poster</th>
                 </tr>
                 {movieList[this.state.movieListPage].map((movie, i) => <tr key={"Admin-movie-list-" + movie.title + i}>
-                    <td>{movie.title}</td><td /> {/* empty <td /> is for the ColumnResizer*/}
+                    <td>{movie.title}</td><td />{/* empty <td /> is for the ColumnResizer*/}
 
                     <td
                         className="AdminMovies__movie__stock"
