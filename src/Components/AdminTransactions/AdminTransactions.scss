@@ -132,7 +132,7 @@
         z-index: 3000;
         .Admintransactions__main-table {
             width: 100%;
-            padding: 0 2%;
+            //padding: 0 2%;
             border-collapse: collapse;
             cursor: pointer;
             tr th { position: relative; }
@@ -219,6 +219,7 @@
         left: 0;
         height: 65vh;
         margin: 1%;
+        padding: 1% 0;
         background: black;
         border: $borderLight;
         border-top: none;
@@ -226,6 +227,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        .LoadingSpinner { display: block; }
         & > div {
             width: 98%;
             margin: 1%;

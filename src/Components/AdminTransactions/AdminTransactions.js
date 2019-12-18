@@ -26,22 +26,43 @@ export default class AdminTransactions extends Component {
     async componentDidMount() {
         window.addEventListener("resize", () => this.setFilterSettingsCoordsOnResize());
 
-        // load first 10 transactions (transactions size may grow really large)
-        const trnsResp = await fetch("/api/transactions/10/1");
-        const trnsJSON = await trnsResp.json();
-        let totPages = Math.ceil(trnsJSON.length / 10);
-        this.setState({ ...this.state, transactions: trnsJSON.reverse(), isLoading: false, totalPages: totPages });
+        // load first 10 transactions (transactions size may grow really large) so user can see the first table
+        try {
+            const trnsResp = await fetch("/api/transactions/10/1");
+            const trnsJSON = await trnsResp.json();
+            const totPages = Math.ceil(trnsJSON.length / 10);
+
+            this.setState({ ...this.state, transactions: trnsJSON.reverse(), totalPages: totPages });
+        } catch (err) { console.log(err); }
 
         // load the rest of the transactions
-        const allTrnsResp = await fetch("/api/transactions");
-        const allTrnsJSON = await allTrnsResp.json();
-        totPages = Math.ceil(allTrnsJSON.length / 10);
-        this.setState({ ...this.state, transactions: allTrnsJSON.reverse(), showPagination: true, totalPages: totPages, originalTransactions: allTrnsJSON.reverse() });
+        this.loadTransactions();
     }
 
 
 
     componentWillUnmount() { window.removeEventListener("resize", () => this.setFilterSettingsCoordsOnResize()); }
+
+
+
+    async loadTransactions() {
+        if (!this.state.isLoading) this.setState({ ...this.state, isLoading: true });
+        try {
+            const allTrnsResp = await fetch("/api/transactions");
+            const allTrnsJSON = await allTrnsResp.json();
+            const totPages = Math.ceil(allTrnsJSON.length / 10);
+
+            this.setState(
+                {
+                    ...this.state,
+                    transactions: allTrnsJSON.reverse(),
+                    isLoading: false,
+                    showPagination: true,
+                    totalPages: totPages,
+                    originalTransactions: allTrnsJSON.reverse()
+                });
+        } catch (err) { console.log(err); }
+    }
 
 
 
@@ -135,11 +156,13 @@ export default class AdminTransactions extends Component {
         let movies5Ind = this.state.movies5Ind || 0;
         if (!transactionsOnPage[line].movies[(movies5Ind * 5)]) movies5Ind = 0;
         const movies = transactionsOnPage[line].movies.slice((movies5Ind * 5), (movies5Ind * 5) + 5);
+        const filterMsg = Object.keys(this.state.filterBy).length ? `filtered ${this.state.transactions.length} out of ` : "";
+        const totLength = this.state.originalTransactions ? this.state.originalTransactions.length : this.state.transactions.length;
 
         return (
             <div className="AdminTransactions__complete-line-info">
 
-                <p>[ Page {this.state.page} of {this.state.totalPages}, line {line + 1}, filtered x out of total {this.state.transactions.length} transactions. ]</p>
+                <p>[ Page {this.state.page} of {this.state.totalPages}, line {line + 1}, {filterMsg} total {totLength} transactions. ]</p>
 
                 <table><tbody>
                     <tr>
@@ -253,6 +276,8 @@ export default class AdminTransactions extends Component {
                 totalPages: Math.ceil(this.state.originalTransactions.length / 10)
             }); // empty filter form sets original transactions back
         else {
+            this.setState({ ...this.state, filterFormIsLoading: true }); // start loader in case transaction DB has larger size
+
             const filteredTransactions = this.state.originalTransactions.filter(transaction => { // always filter the original (unfiltered transactions
                 // if date is given --> FROM
                 if (filter.minDay) {
@@ -307,7 +332,9 @@ export default class AdminTransactions extends Component {
                 transactions: filteredTransactions,
                 showInfoOfLine: 1,
                 page: 1,
-                totalPages: Math.ceil(filteredTransactions.length / 10)
+                totalPages: Math.ceil(filteredTransactions.length / 10),
+                filterFormIsLoading: false,
+                openFilterSettings: false
             }, () => console.log(this.state));
         }
     }
@@ -550,6 +577,8 @@ export default class AdminTransactions extends Component {
                 e.preventDefault();
                 this.setState({ ...this.state, filterBy: {}, filterByMsg: "" });
             }}>Reset</button>
+
+            <LoadingSpinner isLoading={this.state.filterFormIsLoading} />
         </form>;
     }
 
@@ -622,7 +651,7 @@ export default class AdminTransactions extends Component {
                             onClick={() => this.handlePaginationButtonClicked(1)}
                         >&#9658;</button>
 
-                        <button>&#x27f3;</button>
+                        <button onClick={() => this.loadTransactions()}>&#x27f3;</button>
                     </div>}
 
                     {this.state.openFilterSettings && this.renderFilterSettings()}
