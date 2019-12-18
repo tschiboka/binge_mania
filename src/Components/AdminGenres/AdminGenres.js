@@ -32,6 +32,12 @@ export default class AdminGenres extends Component {
 
 
 
+    updateGenre(newGenre) {
+        console.log(newGenre);
+    }
+
+
+
     renderGenresTable() {
         return (this.state.genres || []).map((genre, i) => (
             <div className="AdminGenres__genre" key={"AdminGenre" + i}>
@@ -42,7 +48,14 @@ export default class AdminGenres extends Component {
                 <div>{genre.showInMenu + ""}</div>
 
                 <div>
-                    <div className={"AdminGenres-genre--" + (genre.showInMenu ? "checked" : "unchecked")}>
+                    <div
+                        className={"AdminGenres-genre--" + (genre.showInMenu ? "checked" : "unchecked")}
+                        onClick={() => {
+                            genre.showInMenu = !genre.showInMenu;
+                            this.updateGenre(genre);
+                            this.fetchGenresFromDB();
+                        }}
+                    >
                         {genre.showInMenu ? <span>&#10004;</span> : <span>&times;</span>}
                     </div>
                 </div>

@@ -30,4 +30,21 @@ router.post("/", async (req, res) => {
 
 
 
+router.put("/", async (req, res) => {
+    try {
+        if (!req.body.id) return res.status(400).send("Request body needs a genre id!");
+
+        const genre = await Genre.findById(req.body.id);
+
+        if (!genre) return res.status(400).send(`No genre on _id:${req.body.id}`);
+
+        if (req.body.moviesWithGenre) genre.moviesWithGenre = req.body.moviesWithGenre;
+        if (req.body.showInMenu) genre.showInMenu = req.body.showInMenu;
+
+        res.send(await genre.save());
+    } catch (err) { res.status(500).send(err); }
+});
+
+
+
 module.exports = router;
