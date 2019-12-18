@@ -5,6 +5,7 @@ import "./Admin.scss";
 import AdminUsers from "../AdminUsers/AdminUsers";
 import AdminMovies from "../AdminMovies/AdminMovies";
 import AdminTransactions from "../AdminTransactions/AdminTransactions";
+import AdminGenres from "../AdminGenres/AdminGenres";
 
 
 
@@ -100,7 +101,7 @@ export default class Admin extends Component {
 
                 {this.state.activeTag === "transactions" && <AdminTransactions />}
 
-                {this.state.activeTag === "genres" && <div>Genres</div>}
+                {this.state.activeTag === "genres" && <AdminGenres />}
             </div>
         </div>
     }
