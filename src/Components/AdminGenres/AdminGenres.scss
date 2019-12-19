@@ -47,8 +47,16 @@
                 span {
                     width: 100%;
                     height: 100%;
-                    transform: translateY(-3px);
                 }
+            }
+            div:last-child .AdminGenres-genre--checked {
+                color: #98e78c;
+                line-height: 15px;
+            }
+            div:last-child .AdminGenres-genre--unchecked {
+                color: deeppink;
+                font-size: 22px;
+                line-height: 15px;
             }
             div { padding: 0 1%; }
         }

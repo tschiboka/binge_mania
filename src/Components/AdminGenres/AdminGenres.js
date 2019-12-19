@@ -32,8 +32,23 @@ export default class AdminGenres extends Component {
 
 
 
-    updateGenre(newGenre) {
-        console.log(newGenre);
+    async updateGenre(newGenre) {
+        const BODY = {};
+        BODY.id = newGenre._id + "";
+        BODY.showInMenu = newGenre.showInMenu + "";
+        BODY.moviesWithGenre = newGenre.moviesWithGenre + "";
+
+        const HEADER = {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(BODY)
+        };
+
+        const response = await fetch("/api/genres", HEADER);
+        return await response.json();
     }
 
 
@@ -50,10 +65,12 @@ export default class AdminGenres extends Component {
                 <div>
                     <div
                         className={"AdminGenres-genre--" + (genre.showInMenu ? "checked" : "unchecked")}
-                        onClick={() => {
+                        onClick={async () => {
                             genre.showInMenu = !genre.showInMenu;
-                            this.updateGenre(genre);
-                            this.fetchGenresFromDB();
+                            const newGenre = await this.updateGenre(genre);
+                            const newGenres = [...this.state.genres];
+                            newGenres[i] = newGenre;
+                            this.setState({ ...this.state, genres: newGenres });
                         }}
                     >
                         {genre.showInMenu ? <span>&#10004;</span> : <span>&times;</span>}

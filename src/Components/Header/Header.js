@@ -26,9 +26,8 @@ export default class Header extends Component {
             try {
                 const response = await fetch("/api/genres");
                 const genres = await response.json();
-                const newState = this.state;
-                newState.genres = genres;
-                this.setState(newState);
+
+                this.setState({ ...this.state, genres: genres.filter(g => g.showInMenu) });
             } catch (exp) { console.error("ERROR WHILE FETCHING GENRES\n" + exp) }
         }
         getGenres();
