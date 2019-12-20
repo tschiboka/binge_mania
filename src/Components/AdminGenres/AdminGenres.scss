@@ -1,12 +1,13 @@
 @import "../variables.scss";
 
 .AdminGenres {
-    width: 100%;
-    height: 100%;
+    width: 98%;
+    height: 98%;
     padding: 2%;
     color: #eee;
     font-size: $mediumFontSize;
     .AdminGenres__box {
+        position: relative;
         width: 96%;
         height: 96%;
         display: flex;
@@ -14,8 +15,30 @@
         flex-direction: column;
         align-items: center;
         border: $borderLight;
+        button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 2px;
+            border: $borderLight;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.2) 50%, black 100%);
+            color: #80d1e7;
+            font-family: $mainFontFamily;
+            font-size: 2vh;
+            white-space: nowrap;
+            cursor: pointer;
+            &:hover {
+                background: rgba(255, 255, 255, 0.05) linear-gradient(black 0%, rgba(255, 255, 255, 0.09) 50%, black 100%);
+                border: $borderLight;
+                border-left: none;
+                border-top: none;
+            }
+        }
         .AdminGenres__header, .AdminGenres__genre {
-            min-width: 200px;
+            min-width: 240px;
             max-width: 500px;
             height: 4.2%;
             width: 40%;
@@ -32,6 +55,7 @@
         .AdminGenres__genre {
             div:first-child { width: 50%; }
             div:nth-child(2) { width: 30%; text-align: center; }
+            div:nth-child(2) span { color: deeppink; }
             div:nth-child(3) { width: calc(20% - 20px); }
             div:last-child { width: 20px; display: flex; align-items: center; }
             div:last-child > div {
