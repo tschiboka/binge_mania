@@ -15,10 +15,12 @@
         flex-direction: column;
         align-items: center;
         border: $borderLight;
-        button {
+        & > button {
             position: absolute;
             bottom: 0;
             right: 0;
+        }
+        button {
             padding: 2px;
             border: $borderLight;
             border-right: none;
@@ -48,16 +50,16 @@
         }
         .AdminGenres__header {
             text-align: center;
-            div:first-child { width: 50%; }
-            div:nth-child(2) { width: 30%; text-align: center; }
+            div:first-child { width: 40%; }
+            div:nth-child(2) { width: 40%; text-align: center; }
             div:last-child { width: 30%; }
         }
         .AdminGenres__genre {
-            div:first-child { width: 50%; }
-            div:nth-child(2) { width: 30%; text-align: center; }
-            div:nth-child(2) span { color: deeppink; }
-            div:nth-child(3) { width: calc(20% - 20px); }
-            div:last-child { width: 20px; display: flex; align-items: center; }
+            div:first-child { width: 40%; padding-left: 1%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+            div:nth-child(2) { width: 40%; text-align: center; }
+            div:nth-child(2) span { color: deeppink; padding-right: 4px;}
+            div:nth-child(3) { width: calc(30% - 20px); text-align: right; padding-right: 1%;}
+            div:last-child { width: 20px; display: flex; align-items: center; padding-right: 1%; }
             div:last-child > div {
                 width: 15px;
                 height: 15px;
@@ -82,7 +84,6 @@
                 font-size: 22px;
                 line-height: 15px;
             }
-            div { padding: 0 1%; }
         }
         .AdminGenres__genre:hover { background: rgba(255, 255, 255, 0.05); }
         .AdminGenres__genre:last-child { border-bottom: $borderLight; }

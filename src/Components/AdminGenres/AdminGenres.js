@@ -53,15 +53,33 @@ export default class AdminGenres extends Component {
 
 
 
+    swapToCorrectGenreNum(corrNum, genre) {
+        const newGenre = genre;
+        genre.moviesWithGenre = corrNum;
+        this.updateGenre(newGenre);
+
+        const genres = [...this.state.genres];
+        const index = genres.findIndex(g => g.name === newGenre.name);
+        delete genres[index].correctMoviesWithGenres;
+
+        this.setState({ ...this.state, genres: genres, isLoading: false });
+    }
+
+
+
     renderGenresTable() {
         return (this.state.genres || []).map((genre, i) => (
             <div className="AdminGenres__genre" key={"AdminGenre" + i}>
                 <div>{genre.name}</div>
 
-                <div title={genre.correctMoviesWithGenres === undefined ? "" : "correct num shold be: " + genre.correctMoviesWithGenres}>
+                <div title={genre.correctMoviesWithGenres === undefined ? "" : "correct amount should be: " + genre.correctMoviesWithGenres}>
                     {genre.moviesWithGenre}
 
                     {<span>{genre.correctMoviesWithGenres === undefined ? "" : "!"}</span>}
+
+                    {(genre.correctMoviesWithGenres !== undefined) &&
+                        <button onClick={() => this.swapToCorrectGenreNum(genre.correctMoviesWithGenres, genre)}>
+                            &#8644; {genre.correctMoviesWithGenres}</button>}
                 </div>
 
                 <div>{genre.showInMenu + ""}</div>
@@ -124,13 +142,8 @@ export default class AdminGenres extends Component {
             newGenresWithWarningProp.push(dbGenre);
         });
 
-        /*
-                Object.keys(correctGenres).map(key => {
-                    const dbGenre = this.state.genres.find(dbg => dbg.name.toLowerCase().replace(/\s/, "") === key);
-                    const isCorrect = dbGenre.moviesWithGenre == correctGenres[key];
-                });
-        */
         if (genresWithWarning) this.setState({ ...this.state, genres: newGenresWithWarningProp, isLoading: false });
+        else this.setState({ ...this.state, isLoading: false });
     }
 
 
