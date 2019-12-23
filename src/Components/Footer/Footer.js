@@ -9,7 +9,7 @@ export default class Footer extends Component {
         return (
             <div className="Footer">
                 <div className="Attribution-logo"></div>
-                <label>This product uses the TMDb API but is not endorsed or certified by TMDb.</label>
+                <p>This product uses the TMDb API but is not endorsed or certified by TMDb.</p>
             </div>
         )
     }

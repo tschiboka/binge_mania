@@ -21,31 +21,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .Header__logo__img {
-    padding: 0 0.5vw;
-    width: $mainFontSize;
-    height: $mainFontSize;
-    background-image: url("../../images/tv-logo.png");
-    background-color: transparent;
-    background-size: contain;
+    height: 9vh;
+    width: 45vw;
+    background-image: url("../../images/bingemania_text-logo.png");
     background-repeat: no-repeat;
-    background-position: center;
-    transform-origin: center;
-    transform: rotate(-15deg);
-    font-size: 4.5vh;
+    background-size: contain;
+    background-position: 0 50%;
   }
-  
-  .Header__logo__text {
-    font-family: "Anurati";
-    font-size: 4vh;
-    color: #ffb366;
-    padding: 0.5vh 0;
-    border-radius: 20px;
-    transform: translateX(-0.7vw);
-  }
- 
   
   .Header__icons {
     display: flex;
