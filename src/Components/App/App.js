@@ -7,6 +7,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import MovieCollection from "../MovieCollection/MovieCollection";
 import MovieDetails from "../MovieDetails/MovieDetails";
 import History from "../History/History";
+import Footer from "../Footer/Footer";
 import { Scrollbars } from 'react-custom-scrollbars';
 import './App.scss';
 import _ from "lodash";
@@ -226,6 +227,8 @@ export default class App extends Component {
                 <MovieCollection collectionName="Crime" movies={this.state.categories.crimeMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
                 <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
+
+                <footer><Footer /></footer>
               </div>
             }
             {
