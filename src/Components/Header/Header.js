@@ -149,9 +149,7 @@ export default class Header extends Component {
         return (
             <header className="Header">
                 <div className="Header__logo">
-                    <div className="Header__logo__img"></div>
-
-                    <div className="Header__logo__text">Binge Mania</div>
+                    <div className="Header__logo__text">BINGE&nbsp;&nbsp;&nbsp;MANIA</div>
                 </div>
 
                 <div className="Header__icons">

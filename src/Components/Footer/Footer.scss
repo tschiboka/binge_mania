@@ -1,5 +1,23 @@
 @import "../variables.scss";
 
 .Footer {
-    
+    width: 100%;
+    height: 80px;   
+    margin-top: 5%;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    color: #bfa8c2;
+    text-align: right;
+    border-top: $borderLight;
+    .Attribution-logo {
+        width: 150px;
+        height: 50px;
+        background-image: url("../../images/tmdb-logo.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    label {
+        width: calc(100% - 150px);
+    }
 }
