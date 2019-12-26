@@ -202,7 +202,6 @@ export default class App extends Component {
             {this.state.categories && !this.state.showAllMoviesWithCertainGenre &&
               <div
                 className="App__content"
-                tabIndex={0}
               >
                 <MovieCollection collectionName="Latest Release" movies={this.state.categories.currentYearMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
@@ -228,7 +227,7 @@ export default class App extends Component {
 
                 <MovieCollection collectionName="Last Pieces" movies={this.state.categories.lowStockMovies} showMovieDetails={this.showMovieDetails.bind(this)} />
 
-                <footer><Footer /></footer>
+                <Footer />
               </div>
             }
             {
@@ -247,6 +246,8 @@ export default class App extends Component {
                 <div className="App__movies-by-genre__back-btn">
                   <button onClick={() => this.setState({ ...this.state, showAllMoviesWithCertainGenre: false })}>&larr; Back to Browse</button>
                 </div>
+
+                <Footer />
               </div>
             }
           </CustomScrollbars>
