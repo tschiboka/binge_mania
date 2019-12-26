@@ -131,6 +131,8 @@ export default class AdminMovies extends Component {
 
 
     renderMovieList() {
+        if (!this.state.movies.length) return <div className="AdminMovies__movies"></div>
+        
         function fillMovieArrayWithPlaceholders(lastChunk) {
             let last = [];
             const placeholderObj = { title: "-", inStock: "-", _id: "-", genres: ["-"], year: "-", time: "-", cast: ["-"], descrtiption: "-", coverImgUrl: "-" };

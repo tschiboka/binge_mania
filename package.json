@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "dotenv": "^8.2.0",
     "fawn": "^2.1.5",
     "joi": "^14.3.1",
     "lodash": "^4.17.15",
@@ -16,7 +17,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.9.0",
     "react-lazy-load": "^3.0.13",
-    "react-scripts": "3.1.2"
+    "react-scripts": "^3.3.0"
   },
   "scripts": {
     "dev": "run-p server start",

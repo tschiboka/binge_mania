@@ -1,6 +1,7 @@
 const express = require("express");
 const route = express.Router();
 const fetch = require("node-fetch");
+require('dotenv').config();
 
 route.get("/:search", async (req, res) => {
     const URL = "https://api.themoviedb.org/3/search/movie?";

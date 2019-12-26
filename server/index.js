@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -10,10 +11,12 @@ const transactionsRoute = require("./routes/transactions");
 const searchTitleRoute = require("./routes/searchTitle");
 const searchMovieId = require("./routes/searchMovieId");
 const mongoose = require("mongoose");
+const DB_KEY = process.env.DB_PASSWORD;
+const mongoConnectStr = `mongodb+srv://tschiboka:${DB_KEY}@cluster0-xwshl.mongodb.net/test?retryWrites=true&w=majority`;
 
+console.log(process.env.TMDB_API_KEY);
 
-
-mongoose.connect("mongodb://localhost/binge_mania", { useNewUrlParser: true })
+mongoose.connect(mongoConnectStr, { useNewUrlParser: true })
     .then(() => console.log("Connected to binge_mania database..."))
     .catch(err => console.error("Error: Could not connect to db:\n" + err));
 
